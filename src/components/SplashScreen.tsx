@@ -26,7 +26,7 @@ const HoverImage: React.FC<HoverImageProps> = ({
   return (
     <div className="relative group">
       <div
-        className="w-16 h-16 md:w-20 md:h-20 rounded-lg overflow-hidden cursor-pointer transform transition-all duration-300 hover:scale-110 hover:shadow-xl border-2 border-gray-300"
+        className="w-12 h-12 md:w-16 md:h-16 rounded-lg overflow-hidden cursor-pointer transform transition-all duration-300 hover:scale-110 hover:shadow-xl border-2 border-white/30"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
@@ -45,7 +45,7 @@ const HoverImage: React.FC<HoverImageProps> = ({
             position === 'left' ? 'left-full ml-4' : 'right-full mr-4'
           } top-1/2 transform -translate-y-1/2 animate-fade-in`}
         >
-          <Card className="w-80 shadow-2xl border-gray-300 bg-white">
+          <Card className="w-80 shadow-2xl border-white/30 bg-black">
             <CardContent className="p-6">
               <div className="flex items-center space-x-4">
                 <img
@@ -54,8 +54,8 @@ const HoverImage: React.FC<HoverImageProps> = ({
                   className="w-16 h-16 rounded-lg object-cover grayscale"
                 />
                 <div>
-                  <h3 className="font-semibold text-lg text-black">{title}</h3>
-                  <p className="text-sm text-gray-600 mt-1">{description}</p>
+                  <h3 className="font-semibold text-lg text-white">{title}</h3>
+                  <p className="text-sm text-gray-300 mt-1">{description}</p>
                 </div>
               </div>
             </CardContent>
@@ -112,19 +112,36 @@ const SplashScreen: React.FC = () => {
     }
   ];
 
+  const leftImages = allImages.slice(0, 3);
+  const rightImages = allImages.slice(3, 6);
+
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center px-4 py-8">
+    <div className="min-h-screen bg-black flex items-center justify-center px-4 py-8">
       <div className="w-full max-w-7xl mx-auto">
-        <div className="flex flex-col items-center justify-center space-y-12">
+        <div className="flex items-center justify-center space-x-6 md:space-x-8 lg:space-x-12">
+          {/* Left Images */}
+          {leftImages.map((image, index) => (
+            <HoverImage
+              key={index}
+              src={image.src}
+              alt={image.alt}
+              title={image.title}
+              description={image.description}
+              popupImage={image.popupImage}
+              position="left"
+              index={index}
+            />
+          ))}
+
           {/* Center Name Image */}
           <div className="flex-shrink-0">
             <div className="relative group">
-              <div className="w-64 h-32 md:w-80 md:h-40 lg:w-96 lg:h-48 bg-black rounded-xl shadow-2xl flex items-center justify-center transform transition-all duration-500 hover:scale-105">
+              <div className="w-48 h-24 md:w-64 md:h-32 lg:w-80 lg:h-40 bg-white rounded-xl shadow-2xl flex items-center justify-center transform transition-all duration-500 hover:scale-105">
                 <div className="text-center">
-                  <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white tracking-wide">
+                  <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-black tracking-wide">
                     Your Name
                   </h1>
-                  <p className="text-gray-300 text-sm md:text-base mt-2 font-light">
+                  <p className="text-gray-600 text-xs md:text-sm mt-1 font-light">
                     Professional Title
                   </p>
                 </div>
@@ -132,27 +149,25 @@ const SplashScreen: React.FC = () => {
             </div>
           </div>
 
-          {/* Horizontal Images Row */}
-          <div className="flex flex-wrap items-center justify-center gap-6 md:gap-8 lg:gap-12 max-w-5xl">
-            {allImages.map((image, index) => (
-              <HoverImage
-                key={index}
-                src={image.src}
-                alt={image.alt}
-                title={image.title}
-                description={image.description}
-                popupImage={image.popupImage}
-                position={index < 3 ? 'left' : 'right'}
-                index={index}
-              />
-            ))}
-          </div>
+          {/* Right Images */}
+          {rightImages.map((image, index) => (
+            <HoverImage
+              key={index + 3}
+              src={image.src}
+              alt={image.alt}
+              title={image.title}
+              description={image.description}
+              popupImage={image.popupImage}
+              position="right"
+              index={index + 3}
+            />
+          ))}
         </div>
 
         {/* Scroll Indicator */}
         <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-          <div className="w-6 h-10 border-2 border-black rounded-full flex justify-center">
-            <div className="w-1 h-3 bg-black rounded-full mt-2 animate-pulse" />
+          <div className="w-6 h-10 border-2 border-white rounded-full flex justify-center">
+            <div className="w-1 h-3 bg-white rounded-full mt-2 animate-pulse" />
           </div>
         </div>
       </div>

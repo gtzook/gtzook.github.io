@@ -13,23 +13,23 @@ const PlaceholderSection: React.FC<PlaceholderSectionProps> = ({
   id, 
   title, 
   description, 
-  bgColor = "bg-white" 
+  bgColor = "bg-black" 
 }) => {
   return (
     <section id={id} className={`min-h-screen flex items-center justify-center py-20 ${bgColor}`}>
       <div className="max-w-4xl mx-auto px-4 text-center">
-        <Card className="shadow-lg border-0 bg-white/80 backdrop-blur-sm">
+        <Card className="shadow-lg border-white/20 bg-black/80 backdrop-blur-sm">
           <CardHeader className="pb-4">
-            <CardTitle className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+            <CardTitle className="text-4xl md:text-5xl font-bold text-white mb-4">
               {title}
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-xl text-gray-600 leading-relaxed max-w-2xl mx-auto">
+            <p className="text-xl text-gray-300 leading-relaxed max-w-2xl mx-auto">
               {description}
             </p>
-            <div className="mt-8 p-6 bg-gray-50 rounded-lg">
-              <p className="text-gray-500 italic">
+            <div className="mt-8 p-6 bg-white/10 rounded-lg">
+              <p className="text-gray-400 italic">
                 This section is ready for your content. You can customize it with your personal information, 
                 work experience, projects, or any other details you'd like to showcase.
               </p>
