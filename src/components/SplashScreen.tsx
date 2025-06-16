@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 
@@ -23,17 +22,33 @@ const HoverImage: React.FC<HoverImageProps> = ({
 }) => {
   const [isHovered, setIsHovered] = useState(false);
 
+  // Different animation styles based on index
+  const getAnimationClass = () => {
+    const animations = [
+      'hover:animate-spin',
+      'hover:animate-bounce',
+      'hover:animate-pulse',
+      'hover:[transform:rotateY(180deg)]',
+      'hover:animate-ping',
+      'hover:[transform:rotateX(180deg)]'
+    ];
+    return animations[index % animations.length];
+  };
+
   return (
     <div className="relative group">
       <div
-        className="w-12 h-12 md:w-16 md:h-16 rounded-lg overflow-hidden cursor-pointer transform transition-all duration-300 hover:scale-110 hover:shadow-xl border-2 border-white/30"
+        className={`w-16 h-16 rounded-lg overflow-hidden cursor-pointer transition-all duration-500 border-2 border-white/30 ${getAnimationClass()}`}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
+        style={{
+          transformStyle: 'preserve-3d',
+        }}
       >
         <img
           src={src}
           alt={alt}
-          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105 grayscale"
+          className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-300"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
       </div>
@@ -119,49 +134,59 @@ const SplashScreen: React.FC = () => {
     <div className="min-h-screen bg-black flex items-center justify-center px-4 py-8">
       <div className="w-full max-w-7xl mx-auto">
         <div className="flex items-center justify-center space-x-6 md:space-x-8 lg:space-x-12">
-          {/* Left Images */}
-          {leftImages.map((image, index) => (
-            <HoverImage
-              key={index}
-              src={image.src}
-              alt={image.alt}
-              title={image.title}
-              description={image.description}
-              popupImage={image.popupImage}
-              position="left"
-              index={index}
-            />
-          ))}
-
-          {/* Center Name Image */}
-          <div className="flex-shrink-0">
-            <div className="relative group">
-              <div className="w-48 h-24 md:w-64 md:h-32 lg:w-80 lg:h-40 bg-white rounded-xl shadow-2xl flex items-center justify-center transform transition-all duration-500 hover:scale-105">
-                <div className="text-center">
-                  <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-black tracking-wide">
-                    Your Name
-                  </h1>
-                  <p className="text-gray-600 text-xs md:text-sm mt-1 font-light">
-                    Professional Title
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Right Images */}
-          {rightImages.map((image, index) => (
-            <HoverImage
-              key={index + 3}
-              src={image.src}
-              alt={image.alt}
-              title={image.title}
-              description={image.description}
-              popupImage={image.popupImage}
-              position="right"
-              index={index + 3}
-            />
-          ))}
+          {/* All Images in a single row */}
+          {allImages.map((image, index) => {
+            const position = index < 3 ? 'left' : 'right';
+            
+            // Insert the center name image at index 3
+            if (index === 3) {
+              return (
+                <React.Fragment key="center">
+                  <HoverImage
+                    src={image.src}
+                    alt={image.alt}
+                    title={image.title}
+                    description={image.description}
+                    popupImage={image.popupImage}
+                    position={position}
+                    index={index}
+                  />
+                  
+                  {/* Center Name Image */}
+                  <div className="flex-shrink-0 mx-4">
+                    <div className="relative group">
+                      <div className="w-48 h-24 md:w-64 md:h-32 lg:w-80 lg:h-40 bg-white rounded-xl shadow-2xl flex items-center justify-center transform transition-all duration-500 hover:scale-105 hover:[transform:rotateY(5deg)_rotateX(5deg)] hover:shadow-3xl">
+                        <div className="text-center">
+                          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-black tracking-wide">
+                            Your Name
+                          </h1>
+                          <p className="text-gray-600 text-xs md:text-sm mt-1 font-light">
+                            Professional Title
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </React.Fragment>
+              );
+            }
+            
+            // Skip index 3 since we handled it above
+            if (index === 3) return null;
+            
+            return (
+              <HoverImage
+                key={index}
+                src={image.src}
+                alt={image.alt}
+                title={image.title}
+                description={image.description}
+                popupImage={image.popupImage}
+                position={position}
+                index={index}
+              />
+            );
+          })}
         </div>
 
         {/* Scroll Indicator */}
