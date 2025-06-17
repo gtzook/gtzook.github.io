@@ -9,6 +9,7 @@ interface HoverImageProps {
   popupImage: string;
   position: 'left' | 'right';
   index: number;
+  sizeClass?: string; // Optional size class prop
 }
 
 const HoverImage: React.FC<HoverImageProps> = ({ 
@@ -18,7 +19,8 @@ const HoverImage: React.FC<HoverImageProps> = ({
   description, 
   popupImage, 
   position,
-  index 
+  index,
+  sizeClass = 'h-16 w-16' // Default size
 }) => {
   const [isHovered, setIsHovered] = useState(false);
 
@@ -38,7 +40,7 @@ const HoverImage: React.FC<HoverImageProps> = ({
   return (
     <div className="relative group">
       <div
-        className={`w-16 h-16 rounded-lg overflow-hidden cursor-pointer transition-all duration-500 border-2 border-white/30 ${getAnimationClass()}`}
+        className={`rounded-lg overflow-hidden cursor-pointer transition-all duration-500 border-2 border-white/30 ${getAnimationClass()}`}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         style={{
@@ -48,7 +50,7 @@ const HoverImage: React.FC<HoverImageProps> = ({
         <img
           src={src}
           alt={alt}
-          className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-300"
+          className={`object-cover grayscale hover:grayscale-0 transition-all duration-300 ${sizeClass}`}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
       </div>
@@ -80,6 +82,33 @@ const HoverImage: React.FC<HoverImageProps> = ({
     </div>
   );
 };
+
+const SIDE_ICON_SIZE = 'h-8 w-8 md:h-10 md:w-10 lg:h-14 lg:w-14'; // smaller and consistent
+const CENTER_IMAGE_HEIGHT = 'h-40 md:h-56 lg:h-72'; // smaller center image
+
+const HexagonInteractive: React.FC = () => (
+  <div className="relative group flex items-end justify-center" style={{height: '100%'}}>
+    <div
+      className={`rounded-lg overflow-hidden cursor-pointer transition-all duration-500 hover:scale-110 relative ${SIDE_ICON_SIZE}`}
+      style={{ minWidth: '2rem', minHeight: '2rem', border: 'none', transform: 'translateY(-100%)' }}
+    >
+      <img
+        src="/hexagon.png"
+        alt="Hexagon"
+        className="object-cover grayscale group-hover:hidden w-full h-full transition-all duration-300"
+        draggable="false"
+      />
+      <video
+        src="/morph.webm"
+        className="object-cover hidden group-hover:block absolute top-0 left-0 w-full h-full"
+        autoPlay
+        loop
+        muted
+        playsInline
+      />
+    </div>
+  </div>
+);
 
 const SplashScreen: React.FC = () => {
   const allImages = [
@@ -131,62 +160,32 @@ const SplashScreen: React.FC = () => {
   const rightImages = allImages.slice(3, 6);
 
   return (
-    <div className="min-h-screen bg-black flex items-center justify-center px-4 py-8">
-      <div className="w-full max-w-7xl mx-auto">
-        <div className="flex items-center justify-center space-x-6 md:space-x-8 lg:space-x-12">
-          {/* All Images in a single row */}
-          {allImages.map((image, index) => {
-            const position = index < 3 ? 'left' : 'right';
-            
-            // Insert the center name image at index 3
-            if (index === 3) {
-              return (
-                <React.Fragment key="center">
-                  <HoverImage
-                    src={image.src}
-                    alt={image.alt}
-                    title={image.title}
-                    description={image.description}
-                    popupImage={image.popupImage}
-                    position={position}
-                    index={index}
-                  />
-                  
-                  {/* Center Name Image */}
-                  <div className="flex-shrink-0 mx-4">
-                    <div className="relative group">
-                      <div className="w-48 h-24 md:w-64 md:h-32 lg:w-80 lg:h-40 bg-white rounded-xl shadow-2xl flex items-center justify-center transform transition-all duration-500 hover:scale-105 hover:[transform:rotateY(5deg)_rotateX(5deg)] hover:shadow-3xl">
-                        <div className="text-center">
-                          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-black tracking-wide">
-                            Your Name
-                          </h1>
-                          <p className="text-gray-600 text-xs md:text-sm mt-1 font-light">
-                            Professional Title
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </React.Fragment>
-              );
-            }
-            
-            // Skip index 3 since we handled it above
-            if (index === 3) return null;
-            
-            return (
-              <HoverImage
-                key={index}
-                src={image.src}
-                alt={image.alt}
-                title={image.title}
-                description={image.description}
-                popupImage={image.popupImage}
-                position={position}
-                index={index}
-              />
-            );
-          })}
+    <div className="min-h-screen bg-black flex items-start justify-center pt-8 pb-2 px-2">
+      <div className="w-full max-w-5xl mx-auto">
+        <div className="flex items-end justify-center space-x-2 md:space-x-4 lg:space-x-8" style={{height: '100%'}}>
+          {/* 3 left hexagons */}
+          <HexagonInteractive />
+          <HexagonInteractive />
+          <HexagonInteractive />
+
+          {/* Center Name Image, bottom-aligned with side icons */}
+          <div className="flex-shrink-0 mx-2 flex items-end" style={{height: '100%'}}>
+            <div className="relative group flex items-end">
+              <div className="flex items-end justify-center transform transition-all duration-500 hover:scale-105 hover:[transform:rotateY(5deg)_rotateX(5deg)]">
+                <img
+                  src="/name_img.png"
+                  alt="Name"
+                  className={`mx-auto ${CENTER_IMAGE_HEIGHT} object-contain align-bottom`}
+                  style={{display: 'block'}}
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* 3 right hexagons */}
+          <HexagonInteractive />
+          <HexagonInteractive />
+          <HexagonInteractive />
         </div>
 
         {/* Scroll Indicator */}

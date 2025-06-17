@@ -1,8 +1,8 @@
-
 import React from 'react';
 import SplashScreen from '@/components/SplashScreen';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import PlaceholderSection from '@/components/PlaceholderSection';
+import BookGallery from '@/components/BookGallery';
 
 const Index = () => {
   return (
@@ -10,6 +10,11 @@ const Index = () => {
       {/* Splash Screen - Always at the top */}
       <section id="splash">
         <SplashScreen />
+      </section>
+
+      {/* Book Covers Gallery - Below the splash screen */}
+      <section id="books">
+        <BookGallery />
       </section>
 
       {/* Tabs Section */}

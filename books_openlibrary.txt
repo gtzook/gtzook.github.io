@@ -1,0 +1,7 @@
+Infinite jest	David Foster Wallace	=""	https://covers.openlibrary.org/b/id/8237639-L.jpg
+House of Leaves	Mark Z. Danielewski	=""	https://covers.openlibrary.org/b/id/6450442-L.jpg
+If on a Winter's Night a Traveler	Italo Calvino	=""	https://covers.openlibrary.org/b/id/12007967-L.jpg
+The Five People You Meet in Heaven	Mitch Albom	="9780786868711"	https://covers.openlibrary.org/b/id/12553870-L.jpg
+The Box Man	Kōbō Abe	="9780375726514"	https://covers.openlibrary.org/b/id/656169-L.jpg
+A Personal Matter (Oe, Kenzaburo)	Kenzaburō Ōe	="9780802150615"	
+One Hundred Years of Solitude	Gabriel García Márquez	=""	https://covers.openlibrary.org/b/id/15093420-L.jpg
