@@ -1,7 +1,8 @@
-Infinite jest	David Foster Wallace	=""	https://covers.openlibrary.org/b/id/8237639-L.jpg
-House of Leaves	Mark Z. Danielewski	=""	https://covers.openlibrary.org/b/id/6450442-L.jpg
-If on a Winter's Night a Traveler	Italo Calvino	=""	https://covers.openlibrary.org/b/id/12007967-L.jpg
-The Five People You Meet in Heaven	Mitch Albom	="9780786868711"	https://covers.openlibrary.org/b/id/12553870-L.jpg
-The Box Man	Kōbō Abe	="9780375726514"	https://covers.openlibrary.org/b/id/656169-L.jpg
-A Personal Matter (Oe, Kenzaburo)	Kenzaburō Ōe	="9780802150615"	
-One Hundred Years of Solitude	Gabriel García Márquez	=""	https://covers.openlibrary.org/b/id/15093420-L.jpg
+Determined	Robert M. Sapolsky	9780525560975	/book_covers/9780525560975.jpg
+Infinite jest	David Foster Wallace		/book_covers/Infinite_Jest.jpg
+House of Leaves	Mark Z. Danielewski		/book_covers/House_of_Leaves.jpg
+If on a Winter's Night a Traveler	Italo Calvino		/book_covers/If_on_a_Winters_Night_a_Traveler.jpg
+The Five People You Meet in Heaven	Mitch Albom	9780786868711	/book_covers/9780786868711.jpg
+The Box Man	Kōbō Abe	9780375726514	/book_covers/9780375726514.jpg
+A personal matter	Kenzaburō Ōe	9780802150615	/book_covers/9780802150615.jpg
+One Hundred Years of Solitude	Gabriel García Márquez		/book_covers/One_Hundred_Years_of_Solitude.jpg
