@@ -98,7 +98,7 @@ const SplashScreen: React.FC = () => {
               )}
               {showInput && (
                 <div style={{ height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-                  <label style={{ fontSize: 20, marginBottom: 8, color: '#000', fontWeight: 500, textAlign: 'center' }}>What is my other name?</label>
+                  <label style={{ fontSize: 20, marginBottom: 8, color: '#000', fontWeight: 500, textAlign: 'center' }}>My other name.</label>
                   <input
                     type="password"
                     value={inputValue}
@@ -138,7 +138,7 @@ const SplashScreen: React.FC = () => {
                   />
                   {showError && (
                     <div style={{ color: '#ff4444', fontSize: 15, marginTop: 2, fontFamily: 'Fira Mono, Consolas, monospace', textAlign: 'center' }}>
-                      Incorrect password. Please try again.
+                      Incorrect.
                     </div>
                   )}
                 </div>
@@ -162,11 +162,11 @@ const SplashScreen: React.FC = () => {
         </div>
 
         {/* Right side elements - responsive positions */}
-        <div className="absolute" style={{ right: '2vw', top: '0vh', scale: '0.9', zIndex: 30 }}>
+        <div className="absolute" style={{ right: '2vw', top: '0vh', scale: '0.9', zIndex: 100 }}>
           <CoupleShakeImage />
         </div>
 
-        <div className="absolute" style={{ right: '20vw', top: '45vh', zIndex: 30 }}>
+        <div className="absolute" style={{ right: '20vw', top: '45vh', zIndex: 100 }}>
           <SvgPopupButton
             src="/rice_ring.svg"
             alt="Rice Ring"
@@ -182,7 +182,7 @@ const SplashScreen: React.FC = () => {
           />
         </div>
 
-        <div className="absolute" style={{ right: '5vw', top: '45vh', zIndex: 30 }}>
+        <div className="absolute" style={{ right: '5vw', top: '45vh', zIndex: 100 }}>
           <SvgPopupButton
             src="/ucsb_flag.svg"
             alt="UCSB Flag"
@@ -234,7 +234,7 @@ const SplashScreen: React.FC = () => {
         </div>
 
         {/* Left side interactive elements - responsive positions */}
-        <div className="absolute" style={{ left: '15vw', top: '35vh', scale: '0.75', zIndex: 20 }}>
+        <div className="absolute" style={{ left: '15vw', top: '35vh', scale: '0.75', zIndex: 100 }}>
           <QuarterSpinButton />
         </div>
 
@@ -242,11 +242,11 @@ const SplashScreen: React.FC = () => {
           <StampPeelButton popupSide="right" />
         </div>
 
-        <div className="absolute" style={{ left: '3vw', top: '30vh', scale: '1', zIndex: 21 }}>
+        <div className="absolute" style={{ left: '3vw', top: '30vh', scale: '1', zIndex: 100 }}>
           <PaperclipBendButton popupSide="right" />
         </div>
 
-        <div className="absolute" style={{ left: '6vw', top: '7vh', zIndex: 21 }}>
+        <div className="absolute" style={{ left: '6vw', top: '7vh', zIndex: 100 }}>
           <CoffeeStainButton />
         </div>
       </div>
