@@ -26,19 +26,19 @@ const SplashScreen: React.FC = () => {
       <div className="w-full max-w-7xl mx-auto relative flex items-center justify-center min-h-screen px-4">
         
         {/* Left side interactive elements - responsive positions */}
-        <div className="absolute" style={{ left: '5vw', top: '20vh', zIndex: 20 }}>
+        <div className="absolute" style={{ left: '15vw', top: '35vh', scale: '0.75', zIndex: 20 }}>
           <QuarterSpinButton />
         </div>
-        
-        <div className="absolute" style={{ left: '8vw', top: '35vh', zIndex: 21 }}>
+
+        <div className="absolute" style={{ left: '15vw', top: '15vh', scale: '0.75', zIndex: 21 }}>
           <StampPeelButton popupSide="right" />
         </div>
-        
-        <div className="absolute" style={{ left: '3vw', top: '45vh', zIndex: 21 }}>
+
+        <div className="absolute" style={{ left: '3vw', top: '30vh', scale: '1', zIndex: 21 }}>
           <PaperclipBendButton popupSide="right" />
         </div>
-
-        <div className="absolute" style={{ left: '2vw', top: '10vh', zIndex: 21 }}>
+      2
+        <div className="absolute" style={{ left: '6vw', top: '7vh', zIndex: 21 }}>
           <CoffeeStainButton />
         </div>
 
@@ -49,7 +49,8 @@ const SplashScreen: React.FC = () => {
           className="absolute pointer-events-none"
           style={{
             left: '-6vw',
-            top: '5vh',
+            top: '-10vh',
+            scale: '2',
             width: '20vw',
             height: '20vw',
             maxWidth: '300px',
@@ -59,10 +60,11 @@ const SplashScreen: React.FC = () => {
         />
 
         {/* Center content area */}
-        <div className="flex items-center justify-center space-x-32 relative z-10">
-          
+        <div className="flex items-center justify-center space-x-32 relative z-10"
+            style={{ left: '15vw', top: '-15vw', zIndex: 30 }}>
           {/* Book Gallery - left of center */}
-          <div className="relative">
+          <div className="relative"
+            style={{ left: '15vw', top: '25vw', zIndex: 30, scale: '1.5' }}>
             <BookGallery />
           </div>
 
@@ -80,17 +82,18 @@ const SplashScreen: React.FC = () => {
           </div>
 
           {/* Album Gallery - right of center */}
-          <div className="relative">
+          <div className="relative"
+            style={{ right: '23vw', top: '28vw', zIndex: 30 }}>
             <AlbumGallery />
           </div>
         </div>
 
         {/* Right side elements - responsive positions */}
-        <div className="absolute" style={{ right: '8vw', top: '25vh', zIndex: 30 }}>
+        <div className="absolute" style={{ right: '2vw', top: '0vh', scale: '0.9', zIndex: 30 }}>
           <CoupleShakeImage />
         </div>
 
-        <div className="absolute" style={{ right: '5vw', top: '45vh', zIndex: 30 }}>
+        <div className="absolute" style={{ right: '20vw', top: '45vh', zIndex: 30 }}>
           <SvgPopupButton
             src="/rice_ring.svg"
             alt="Rice Ring"
@@ -102,11 +105,11 @@ const SplashScreen: React.FC = () => {
             }
             position={{ left: 0, top: 0 }}
             scale={1.5}
-            popupOffset={{ x: -400, y: 25 }}
+            popupOffset={{ x: -700, y: 25 }}
           />
         </div>
 
-        <div className="absolute" style={{ right: '2vw', top: '45vh', zIndex: 30 }}>
+        <div className="absolute" style={{ right: '5vw', top: '45vh', zIndex: 30 }}>
           <SvgPopupButton
             src="/ucsb_flag.svg"
             alt="UCSB Flag"
@@ -118,17 +121,17 @@ const SplashScreen: React.FC = () => {
             }
             position={{ left: 0, top: 0 }}
             scale={2}
-            popupOffset={{ x: -500, y: 50 }}
+            popupOffset={{ x: -800, y: 50 }}
           />
         </div>
 
         {/* Bag with cycling items - bottom center responsive */}
-        <div className="absolute" style={{ bottom: '5vh', left: '50%', transform: 'translateX(-50%)', zIndex: 30 }}>
+        <div className="absolute" style={{ bottom: '5vh', left: '60vh', scale: '1.8', zIndex: 30 }}>
           <BagCycleButton
             position={{ left: 0, top: 0 }}
             scale={1.2}
-            itemOffset={{ x: 80, y: -80 }}
-            itemSize={60}
+            itemOffset={{ x: 150, y: -80 }}
+            itemSize={130}
             bagSize={200}
           />
         </div>
