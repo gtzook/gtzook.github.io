@@ -5,7 +5,7 @@ import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-  base: '/glance-resume-splash/', // <-- Add this line for GitHub Pages
+  base: '/', // For user/organization GitHub Pages repo
   server: {
     host: "::",
     port: 8080,
