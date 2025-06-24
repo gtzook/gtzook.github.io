@@ -2,7 +2,10 @@
 import React from 'react';
 import SplashScreen from '@/components/SplashScreen';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import PlaceholderSection from '@/components/PlaceholderSection';
+import AboutSection from '@/components/AboutSection';
+import ExperienceSection from '@/components/ExperienceSection';
+import ProjectsSection from '@/components/ProjectsSection';
+import ContactSection from '@/components/ContactSection';
 
 const Index = () => {
   return (
@@ -47,39 +50,19 @@ const Index = () => {
           </div>
 
           <TabsContent value="about" className="mt-0">
-            <PlaceholderSection
-              id="about"
-              title="About Me"
-              description="This section will contain your personal story, background, and what drives your passion for your field."
-              bgColor="bg-black"
-            />
+            <AboutSection />
           </TabsContent>
 
           <TabsContent value="experience" className="mt-0">
-            <PlaceholderSection
-              id="experience"
-              title="Experience"
-              description="Showcase your professional journey, key roles, and achievements that define your career."
-              bgColor="bg-black"
-            />
+            <ExperienceSection />
           </TabsContent>
 
           <TabsContent value="projects" className="mt-0">
-            <PlaceholderSection
-              id="projects"
-              title="Projects"
-              description="Highlight your most impactful work, creative solutions, and technical accomplishments."
-              bgColor="bg-black"
-            />
+            <ProjectsSection />
           </TabsContent>
 
           <TabsContent value="contact" className="mt-0">
-            <PlaceholderSection
-              id="contact"
-              title="Get In Touch"
-              description="Ready to connect? This section will contain your contact information and ways to reach out."
-              bgColor="bg-black"
-            />
+            <ContactSection />
           </TabsContent>
         </Tabs>
       </div>
