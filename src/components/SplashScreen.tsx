@@ -688,6 +688,7 @@ const BagCycleButton: React.FC<{
   const [hovered, setHovered] = React.useState(false);
   const [itemHovered, setItemHovered] = React.useState(false);
   const [popupHovered, setPopupHovered] = React.useState(false);
+  const [shake, setShake] = React.useState(false);
 
   const handleClick = () => {
     setItemIndex((prev) => {
