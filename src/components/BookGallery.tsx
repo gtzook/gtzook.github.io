@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 
 interface Book {
@@ -6,6 +7,34 @@ interface Book {
   isbn: string;
   cover: string;
 }
+
+// Fallback books data in case the file can't be loaded
+const FALLBACK_BOOKS: Book[] = [
+  {
+    title: "House of Leaves",
+    author: "Mark Z. Danielewski",
+    isbn: "House_of_Leaves",
+    cover: "/book_covers/House_of_Leaves.jpg"
+  },
+  {
+    title: "Infinite Jest",
+    author: "David Foster Wallace", 
+    isbn: "Infinite_Jest",
+    cover: "/book_covers/Infinite_Jest.jpg"
+  },
+  {
+    title: "One Hundred Years of Solitude",
+    author: "Gabriel García Márquez",
+    isbn: "One_Hundred_Years_of_Solitude", 
+    cover: "/book_covers/One_Hundred_Years_of_Solitude.jpg"
+  },
+  {
+    title: "If on a Winter's Night a Traveler",
+    author: "Italo Calvino",
+    isbn: "If_on_a_Winters_Night_a_Traveler",
+    cover: "/book_covers/If_on_a_Winters_Night_a_Traveler.jpg"
+  }
+];
 
 // Utility to parse the books_openlibrary.txt file
 function parseBooks(text: string): Book[] {
@@ -26,8 +55,17 @@ const BookGallery: React.FC = () => {
 
   useEffect(() => {
     fetch('/books_openlibrary.txt')
-      .then(res => res.text())
-      .then(text => setBooks(parseBooks(text)));
+      .then(res => {
+        if (!res.ok) {
+          throw new Error('File not found');
+        }
+        return res.text();
+      })
+      .then(text => setBooks(parseBooks(text)))
+      .catch(error => {
+        console.log('Using fallback books data:', error.message);
+        setBooks(FALLBACK_BOOKS);
+      });
   }, []);
 
   // Preload all book cover images
@@ -84,15 +122,20 @@ const BookGallery: React.FC = () => {
   const authorFontSize = getScaledFontSize(book.author, maxTextWidth, 15, '400');
 
   return (
-    <div className="flex flex-col items-center justify-center h-full">
+    <div className="relative w-0 h-0">
       <div
         className={`bookgallery-tilt${hovered ? ' bookgallery-tilt-hover' : ''}`}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
         style={{
-          transform: 'scale(1.7) translate(-350px, -40px)',
+          position: 'absolute',
+          left: '-20vw',
+          top: '-15vh',
+          transform: 'scale(1.2)',
           transformOrigin: 'top left',
-          width: 0,
+          width: 120,
+          height: 180,
+          zIndex: 10,
         }}
       >
         <div style={{ position: 'relative', width: 120, height: 180 }}>

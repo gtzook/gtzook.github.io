@@ -12,7 +12,7 @@ interface HoverImageProps {
   popupImage: string;
   position: 'left' | 'right';
   index: number;
-  sizeClass?: string; // Optional size class prop
+  sizeClass?: string;
 }
 
 const HoverImage: React.FC<HoverImageProps> = ({
@@ -23,15 +23,14 @@ const HoverImage: React.FC<HoverImageProps> = ({
   popupImage,
   position,
   index,
-  sizeClass = 'h-16 w-16' // Default size
+  sizeClass = 'h-16 w-16'
 }) => {
   const [isHovered, setIsHovered] = useState(false);
 
-  // Different animation styles based on index
   const getAnimationClass = () => {
     const animations = [
       'hover:animate-spin',
-      'hover:animate-bounce',
+      'hover:animate-bounce', 
       'hover:animate-pulse',
       'hover:[transform:rotateY(180deg)]',
       'hover:animate-ping',
@@ -58,7 +57,6 @@ const HoverImage: React.FC<HoverImageProps> = ({
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
       </div>
 
-      {/* Popup */}
       {isHovered && (
         <div
           className={`absolute z-50 ${position === 'left' ? 'left-full ml-4' : 'right-full mr-4'
@@ -85,14 +83,10 @@ const HoverImage: React.FC<HoverImageProps> = ({
   );
 };
 
-const SIDE_ICON_SIZE = 'h-8 w-8 md:h-10 md:w-10 lg:h-14 lg:w-14'; // smaller and consistent
-const CENTER_IMAGE_HEIGHT = 'h-40 md:h-56 lg:h-72'; // smaller center image
-
 const SplashScreen: React.FC = () => {
-
   return (
     <div
-      className="min-h-screen bg-black flex items-start justify-center pt-8 pb-2 px-2"
+      className="min-h-screen bg-black flex items-center justify-center relative overflow-hidden"
       style={{
         backgroundImage: 'url(/splash_bg.jpg)',
         backgroundSize: 'cover',
@@ -100,115 +94,112 @@ const SplashScreen: React.FC = () => {
         backgroundRepeat: 'no-repeat',
       }}
     >
-      <div className="w-full max-w-5xl mx-auto relative">
-        {/* Absolutely position the quarter button at its original spot */}
-        <div style={{ position: 'absolute', left: 200, top: 300, transform: 'translate(-250px, -100px)', zIndex: 20 }}>
+      <div className="w-full max-w-7xl mx-auto relative flex items-center justify-center min-h-screen px-4">
+        
+        {/* Left side interactive elements - positioned relative to viewport */}
+        <div className="absolute left-[5vw] top-[20vh] z-20">
           <QuarterSpinButton />
         </div>
-        {/* Absolutely position the stamp button in the top left, farther right and higher */}
-        <div style={{ position: 'absolute', left: 210, top: 100, zIndex: 21 }}>
+        
+        <div className="absolute left-[8vw] top-[35vh] z-21">
           <StampPeelButton popupSide="right" />
         </div>
-        {/* Absolutely position the paperclip button straight down from the stamp, slightly lower than the quarter */}
-        <div style={{ position: 'absolute', left: 150, top: 270, zIndex: 21 }}>
+        
+        <div className="absolute left-[3vw] top-[45vh] z-21">
           <PaperclipBendButton popupSide="right" />
         </div>
-        {/* Center Name Image */}
-        <div className="flex items-end justify-center" style={{ height: '100%' }}>
-          <div className="flex-shrink-0 flex items-end">
-            <div className="relative group flex items-end">
-              <div className="flex items-end justify-center transform transition-all duration-500 hover:scale-105 hover:[transform:rotateY(5deg)_rotateX(5deg)]">
-                <img
-                  src="/name_img.webp"
-                  alt="Name"
-                  className={`mx-auto ${CENTER_IMAGE_HEIGHT} object-contain align-bottom`}
-                  style={{ display: 'block' }} />
-              </div>
-            </div>
-          </div>
-        </div>
 
-        {/* BookGallery absolutely positioned over background */}
-        <div
-          style={{
-            position: 'absolute',
-            left: '25vw', // adjust as needed for your background
-            top: '40vh', // adjust as needed for your background
-            width: 0, // fixed width for gallery
-            zIndex: 10,
-          }}
-        >
-          <BookGallery />
-        </div>
-        {/* AlbumGallery fixed at the bottom center */}
-        <div
-          style={{
-            position: 'absolute',
-            left: 1000,
-            bottom: -495, // 2rem from bottom
-            zIndex: 30,
-          }}
-        >
-          <AlbumGallery />
-        </div>
-
-        {/* Coffee Cup: static, position manually */}
-        <img
-          src="/coffee_cup.webp"
-          alt="Coffee Cup"
-          style={{
-            position: 'absolute',
-            left: -300, // <-- set this as you like
-            top: -300,  // <-- set this as you like
-            width: 520,
-            height: 520,
-            zIndex: 22,
-            pointerEvents: 'none',
-          }}
-        />
-        {/* Coffee Stain Button */}
-        <div style={{ position: 'absolute', left: 40, top: 0, zIndex: 21 }}>
+        <div className="absolute left-[2vw] top-[10vh] z-21">
           <CoffeeStainButton />
         </div>
 
-        {/* Couple Image: shakes on hover, position manually */}
-        <CoupleShakeImage />
+        {/* Coffee Cup - positioned relative to viewport */}
+        <img
+          src="/coffee_cup.webp"
+          alt="Coffee Cup"
+          className="absolute left-[-5vw] top-[5vh] w-[25vw] h-[25vw] max-w-[400px] max-h-[400px] z-22 pointer-events-none"
+        />
 
-        {/* SVG Popup Buttons */}
-        <SvgPopupButton
-          src="/rice_ring.svg"
-          alt="Rice Ring"
-          popupText={
-            `<b>Attended Rice University</b> (2020-2024)\n` +
-            `<i>BS in Electrical Engineering</i> (magna cum laude)\n` +
-            `<i>BA in Philosophy</i> (cum laude)\n` +
-            `<i> Undergraduate Researcher in MAHI Lab</i>`
-          }
-          position={{ left: 1200, top: 400 }}
-          scale={1.5}
-          popupOffset={{ x: -700, y: 25 }} />
-        <SvgPopupButton
-          src="/ucsb_flag.svg"
-          alt="UCSB Flag"
-          popupText={
-            `<b>Attending UCSB</b> (2024-)\n` +
-            `Pursuing <i>MS/PhD in Electrical & Computer Engineering</i>\n` +
-            `<i>Researcher in Ikuko Smith Lab</i>\n` +
-            'Focus on audiovisual processing in mouse model'
-          }
-          position={{ left: 1450, top: 400 }}
-          scale={2}
-          popupOffset={{ x: -800, y: 50 }} />
-      </div>
-      <BagCycleButton
-        position={{ left: 525, top: 700 }}
-        scale={1.2}
-        itemOffset={{ x: 325, y: -100 }}
-        itemSize={200}/>
-      {/* Scroll Indicator at the bottom center of the splash screen */}
-      <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce z-50">
-        <div className="w-6 h-10 border-2 border-black rounded-full flex justify-center">
-          <div className="w-1 h-3 bg-black rounded-full mt-2 animate-pulse" />
+        {/* Center content area */}
+        <div className="flex items-center justify-center space-x-[8vw] relative z-10">
+          
+          {/* Book Gallery - left of center */}
+          <div className="relative">
+            <BookGallery />
+          </div>
+
+          {/* Center Name Image */}
+          <div className="flex-shrink-0">
+            <div className="relative group">
+              <div className="transform transition-all duration-500 hover:scale-105 hover-3d">
+                <img
+                  src="/name_img.webp"
+                  alt="Name"
+                  className="h-40 md:h-56 lg:h-72 object-contain grayscale"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Album Gallery - right of center */}
+          <div className="relative">
+            <AlbumGallery />
+          </div>
+        </div>
+
+        {/* Right side elements */}
+        <div className="absolute right-[8vw] top-[25vh] z-30">
+          <CoupleShakeImage />
+        </div>
+
+        <div className="absolute right-[5vw] top-[45vh] z-30">
+          <SvgPopupButton
+            src="/rice_ring.svg"
+            alt="Rice Ring"
+            popupText={
+              `<b>Attended Rice University</b> (2020-2024)\n` +
+              `<i>BS in Electrical Engineering</i> (magna cum laude)\n` +
+              `<i>BA in Philosophy</i> (cum laude)\n` +
+              `<i> Undergraduate Researcher in MAHI Lab</i>`
+            }
+            position={{ left: 0, top: 0 }}
+            scale={1.5}
+            popupOffset={{ x: -400, y: 25 }}
+          />
+        </div>
+
+        <div className="absolute right-[2vw] top-[45vh] z-30">
+          <SvgPopupButton
+            src="/ucsb_flag.svg"
+            alt="UCSB Flag"
+            popupText={
+              `<b>Attending UCSB</b> (2024-)\n` +
+              `Pursuing <i>MS/PhD in Electrical & Computer Engineering</i>\n` +
+              `<i>Researcher in Ikuko Smith Lab</i>\n` +
+              'Focus on audiovisual processing in mouse model'
+            }
+            position={{ left: 0, top: 0 }}
+            scale={2}
+            popupOffset={{ x: -500, y: 50 }}
+          />
+        </div>
+
+        {/* Bag with cycling items - bottom center */}
+        <div className="absolute bottom-[5vh] left-1/2 transform -translate-x-1/2 z-30">
+          <BagCycleButton
+            position={{ left: 0, top: 0 }}
+            scale={1.2}
+            itemOffset={{ x: 80, y: -80 }}
+            itemSize={60}
+            bagSize={200}
+          />
+        </div>
+
+        {/* Scroll Indicator */}
+        <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce z-50">
+          <div className="w-6 h-10 border-2 border-white rounded-full flex justify-center">
+            <div className="w-1 h-3 bg-white rounded-full mt-2 animate-pulse" />
+          </div>
         </div>
       </div>
     </div>
@@ -217,15 +208,15 @@ const SplashScreen: React.FC = () => {
 
 const QuarterSpinButton: React.FC = () => {
   const [hovered, setHovered] = useState(false);
-  const [speed, setSpeed] = useState(0); // degrees per frame
-  const [angle, setAngle] = useState(0); // current rotation angle
+  const [speed, setSpeed] = useState(0);
+  const [angle, setAngle] = useState(0);
   const [popupPos, setPopupPos] = useState<{ left: number, top: number } | null>(null);
   const btnRef = useRef<HTMLButtonElement>(null);
   const requestRef = useRef<number | null>(null);
-  const minSpeed = 0; // stopped
-  const maxSpeed = 8; // max degrees per frame (tune as needed)
-  const accel = 0.25; // acceleration per frame
-  const decel = 0.12; // deceleration per frame
+  const minSpeed = 0;
+  const maxSpeed = 8;
+  const accel = 0.25;
+  const decel = 0.12;
 
   useEffect(() => {
     function animate() {
@@ -241,16 +232,14 @@ const QuarterSpinButton: React.FC = () => {
     return () => {
       if (requestRef.current) cancelAnimationFrame(requestRef.current);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hovered, speed]);
 
-  // Calculate popup position on hover
   useEffect(() => {
     if (hovered && btnRef.current) {
       const rect = btnRef.current.getBoundingClientRect();
       setPopupPos({
-        left: rect.right + 24, // 24px gap to the right
-        top: rect.top + rect.height / 2 - 220, // center vertically for 440px popup height
+        left: rect.right + 24,
+        top: rect.top + rect.height / 2 - 220,
       });
     } else if (!hovered) {
       setPopupPos(null);
@@ -270,12 +259,11 @@ const QuarterSpinButton: React.FC = () => {
         <img
           src="/quarter.webp"
           alt="Quarter Button"
+          className="w-32 h-32 md:w-40 md:h-40"
           style={{
-            display: 'block',
-            width: 160,
-            height: 160,
             transform: `rotate(${angle}deg)`,
             transition: speed === 0 ? 'transform 0.2s cubic-bezier(0.23, 1, 0.32, 1)' : 'none',
+            filter: 'grayscale(100%)',
           }}
         />
       </button>
@@ -302,7 +290,7 @@ const QuarterSpinButton: React.FC = () => {
           <img
             src="/mountains.jpg"
             alt="Mountains"
-            style={{ height: 300, objectFit: 'cover', borderRadius: 14, flexShrink: 0, marginBottom: 0 }}
+            style={{ height: 300, objectFit: 'cover', borderRadius: 14, flexShrink: 0, marginBottom: 0, filter: 'grayscale(100%)' }}
           />
           <div style={{ color: '#fff', fontSize: 22, fontFamily: 'inherit', maxWidth: 400 }}>
             Mt. Olympus! (2023)
@@ -314,7 +302,6 @@ const QuarterSpinButton: React.FC = () => {
   );
 };
 
-// Helper for consistent popup style (based on Quarter)
 const popupBoxStyle = {
   background: 'rgba(30,30,30,0.97)',
   borderRadius: 16,
@@ -329,7 +316,6 @@ const popupBoxStyle = {
   pointerEvents: 'auto' as const,
 };
 
-// Update StampPeelButton to accept popupSide prop and position popup accordingly
 const StampPeelButton: React.FC<{ popupSide?: 'left' | 'right' }> = ({ popupSide = 'right' }) => {
   const [hovered, setHovered] = useState(false);
   const [popupPos, setPopupPos] = useState<{ left: number, top: number } | null>(null);
@@ -360,7 +346,7 @@ const StampPeelButton: React.FC<{ popupSide?: 'left' | 'right' }> = ({ popupSide
           padding: 0,
           cursor: 'pointer',
           transition: 'transform 0.3s cubic-bezier(0.23, 1, 0.32, 1)',
-          transform: hovered ? 'rotate(-8deg) scale(1.28) skewY(-8deg) translateY(-8px)' : 'scale(1.2)', // 20% bigger
+          transform: hovered ? 'rotate(-8deg) scale(1.28) skewY(-8deg) translateY(-8px)' : 'scale(1.2)',
         }}
         aria-label="Stamp Button"
         onMouseEnter={() => setHovered(true)}
@@ -369,14 +355,12 @@ const StampPeelButton: React.FC<{ popupSide?: 'left' | 'right' }> = ({ popupSide
         <img
           src="/stamp.webp"
           alt="Stamp"
+          className="w-24 h-24 md:w-32 md:h-32"
           style={{
-            display: 'block',
-            width: 144,
-            height: 144,
             boxShadow: 'none',
             borderRadius: 12,
             transition: 'box-shadow 0.3s, filter 0.3s',
-            filter: hovered ? 'drop-shadow(0 8px 16px rgba(0,0,0,0.18))' : 'none',
+            filter: hovered ? 'drop-shadow(0 8px 16px rgba(0,0,0,0.18)) grayscale(100%)' : 'grayscale(100%)',
             border: 'none',
             outline: 'none',
             background: 'none',
@@ -396,7 +380,7 @@ const StampPeelButton: React.FC<{ popupSide?: 'left' | 'right' }> = ({ popupSide
           <img
             src="/pose.jpg"
             alt="Pose"
-            style={{ width: 300, height: 300, objectFit: 'cover', borderRadius: 10, marginBottom: 10 }}
+            style={{ width: 300, height: 300, objectFit: 'cover', borderRadius: 10, marginBottom: 10, filter: 'grayscale(100%)' }}
           />
           <div style={{ color: '#fff', fontSize: 22, fontFamily: 'inherit', maxWidth: 200 }}>
             Glacier National Park (2025)
@@ -408,7 +392,6 @@ const StampPeelButton: React.FC<{ popupSide?: 'left' | 'right' }> = ({ popupSide
   );
 };
 
-// Add this new component before export
 const PaperclipBendButton: React.FC<{ popupSide?: 'left' | 'right' }> = ({ popupSide = 'right' }) => {
   const [hovered, setHovered] = useState(false);
   const [popupPos, setPopupPos] = useState<{ left: number, top: number } | null>(null);
@@ -441,7 +424,7 @@ const PaperclipBendButton: React.FC<{ popupSide?: 'left' | 'right' }> = ({ popup
           transition: 'transform 0.3s cubic-bezier(0.23, 1, 0.32, 1)',
           transform: hovered
             ? 'perspective(300px) rotateY(-12deg) scale(1.04) translateY(-2px)'
-            : 'scale(1)', // very minor 3D rotation
+            : 'scale(1)',
         }}
         aria-label="Paperclip Button"
         onMouseEnter={() => setHovered(true)}
@@ -450,14 +433,13 @@ const PaperclipBendButton: React.FC<{ popupSide?: 'left' | 'right' }> = ({ popup
         <img
           src="/paperclip.webp"
           alt="Paperclip"
+          className="h-32 md:h-40"
           style={{
-            display: 'block',
-            height: 200,
             boxShadow: 'none',
             borderRadius: 8,
             transition: 'box-shadow 0.3s, filter 0.3s',
-            transform: 'rotate(10deg)', // slight rotation for effect
-            filter: hovered ? 'drop-shadow(0 8px 16px rgba(0,0,0,0.12))' : 'none',
+            transform: 'rotate(10deg)',
+            filter: hovered ? 'drop-shadow(0 8px 16px rgba(0,0,0,0.12)) grayscale(100%)' : 'grayscale(100%)',
             border: 'none',
             outline: 'none',
             background: 'none',
@@ -477,7 +459,7 @@ const PaperclipBendButton: React.FC<{ popupSide?: 'left' | 'right' }> = ({ popup
           <img
             src="/banff.JPG"
             alt="Banff"
-            style={{ width: 320, height: 160, objectFit: 'cover', borderRadius: 14, flexShrink: 0, marginBottom: 0 }}
+            style={{ width: 320, height: 160, objectFit: 'cover', borderRadius: 14, flexShrink: 0, marginBottom: 0, filter: 'grayscale(100%)' }}
           />
           <div style={{ color: '#fff', fontSize: 22, fontFamily: 'inherit', maxWidth: 160 }}>
             Banff National Park (2024)
@@ -489,7 +471,6 @@ const PaperclipBendButton: React.FC<{ popupSide?: 'left' | 'right' }> = ({ popup
   );
 };
 
-// Add this new component before export
 const CoffeeStainButton: React.FC = () => {
   const [hovered, setHovered] = useState(false);
   const [popupPos, setPopupPos] = useState<{ left: number, top: number } | null>(null);
@@ -520,7 +501,7 @@ const CoffeeStainButton: React.FC = () => {
           padding: 0,
           cursor: 'pointer',
           transition: 'transform 0.3s cubic-bezier(0.23, 1, 0.32, 1)',
-          filter: hovered ? 'brightness(0.5)' : 'none',
+          filter: hovered ? 'brightness(0.5) grayscale(100%)' : 'grayscale(100%)',
         }}
         aria-label="Coffee Stain Button"
         onMouseEnter={() => setHovered(true)}
@@ -529,21 +510,17 @@ const CoffeeStainButton: React.FC = () => {
         <img
           src="/coffee_stain.webp"
           alt="Coffee Stain"
+          className="h-32 md:h-40"
           style={{
-            display: 'block',
-            //width: 120,
-            height: 200,
             borderRadius: 60,
             transition: 'box-shadow 0.3s, filter 0.3s',
-            transform: 'rotate(30deg)', // slight rotation for effect
-            filter: hovered ? 'brightness(0.5)' : 'none',
+            transform: 'rotate(30deg)',
             border: 'none',
             outline: 'none',
             background: 'none',
           }}
         />
       </button>
-      {/* Example popup, you can customize as needed */}
       {hovered && popupPos && ReactDOM.createPortal(
         <div
           style={{
@@ -557,7 +534,7 @@ const CoffeeStainButton: React.FC = () => {
           <img
             src="/white_sands.JPG"
             alt="White Sands"
-            style={{ height: 200, objectFit: 'cover', borderRadius: 10, marginBottom: 10 }}
+            style={{ height: 200, objectFit: 'cover', borderRadius: 10, marginBottom: 10, filter: 'grayscale(100%)' }}
           />
           <div style={{ color: '#fff', fontSize: 22, fontFamily: 'inherit', maxWidth: 200 }}>
             White Sands National Park
@@ -569,24 +546,17 @@ const CoffeeStainButton: React.FC = () => {
   );
 };
 
-// Add this new component before export
 const CoupleShakeImage: React.FC = () => {
   const [hovered, setHovered] = React.useState(false);
   return (
     <img
       src="/couple.webp"
       alt="Couple"
+      className="h-64 md:h-80 transition-transform duration-100 pointer-events-auto select-none"
       style={{
-        position: 'absolute',
-        left: 1200, // Adjust as needed
-        top: 0,  // Adjust as needed
-        height: 360,
-        transition: 'transform 0.1s',
         transform: hovered ? 'rotate(-14deg) scale(1.04)' : 'none',
-        animation: hovered ? 'shake-coule 0.4s infinite alternate' : 'none',
-        zIndex: 100,
-        pointerEvents: 'auto',
-        userSelect: 'none',
+        animation: hovered ? 'shake-couple 0.4s infinite alternate' : 'none',
+        filter: 'grayscale(100%)',
       }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
@@ -595,7 +565,6 @@ const CoupleShakeImage: React.FC = () => {
   );
 };
 
-// Generic SVG image button with popup
 function SvgPopupButton({
   src, alt, popupText, position, size = 100, scale = 1, popupOffset = { x: 0, y: 0 }
 }: {
@@ -623,7 +592,7 @@ function SvgPopupButton({
   return (
     <div
       ref={btnRef}
-      style={{ position: 'absolute', ...position, zIndex: 30, cursor: 'pointer', width: size, height: size, transform: `scale(${scale})` }}
+      style={{ position: 'relative', cursor: 'pointer', width: size, height: size, transform: `scale(${scale})` }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
@@ -633,7 +602,7 @@ function SvgPopupButton({
         style={{
           width: size,
           height: size,
-          filter: hovered ? 'brightness(0.7)' : 'none',
+          filter: hovered ? 'brightness(0.7) grayscale(100%)' : 'grayscale(100%)',
           transition: 'filter 0.2s',
           display: 'block',
         }}
@@ -654,7 +623,6 @@ function SvgPopupButton({
             zIndex: 1000,
             whiteSpace: 'pre-line',
           }}
-          // Render HTML tags in popupText
           dangerouslySetInnerHTML={{ __html: popupText }}
         />,
         document.body
@@ -663,14 +631,12 @@ function SvgPopupButton({
   );
 }
 
-// BagCycleButton: cycles through images on click
 const BAG_ITEMS = [
   { src: '/tamogotchi.svg', alt: 'Tamagotchi' },
   { src: '/camera.svg', alt: 'Camera' },
   { src: '/pickleball.svg', alt: 'Pickleball' },
 ];
 
-// Unique popup text for each bag item
 const BAG_ITEM_POPUPS = [
   "This is my Tamagotchi! It kept me company during long study sessions.",
   "Some photos I took: https://www.instagram.com/gabetakesphotos111/",
@@ -688,22 +654,21 @@ const BagCycleButton: React.FC<{
   const [hovered, setHovered] = React.useState(false);
   const [itemHovered, setItemHovered] = React.useState(false);
   const [popupHovered, setPopupHovered] = React.useState(false);
-  const [shake, setShake] = React.useState(false);
+  const [shakeAnimation, setShakeAnimation] = React.useState(false);
 
   const handleClick = () => {
     setItemIndex((prev) => {
-      setShake(true);
-      setTimeout(() => setShake(false), 400); // duration matches animation
+      setShakeAnimation(true);
+      setTimeout(() => setShakeAnimation(false), 400);
       return (prev + 1) % BAG_ITEMS.length;
     });
   };
 
-  // Show popup if either the item or the popup itself is hovered
   const showPopup = itemHovered || popupHovered;
 
   return (
     <div
-      style={{ position: 'absolute', ...position, zIndex: 40, cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', transform: `scale(${scale})` }}
+      style={{ position: 'relative', cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', transform: `scale(${scale})` }}
       onClick={handleClick}
     >
       <img
@@ -712,10 +677,10 @@ const BagCycleButton: React.FC<{
         style={{
           width: bagSize,
           marginBottom: 8,
-          filter: hovered ? 'drop-shadow(0 2px 8px rgba(0,0,0,0.18)) brightness(0.7)' : 'drop-shadow(0 2px 8px rgba(0,0,0,0.18))',
+          filter: hovered ? 'drop-shadow(0 2px 8px rgba(0,0,0,0.18)) brightness(0.7) grayscale(100%)' : 'drop-shadow(0 2px 8px rgba(0,0,0,0.18)) grayscale(100%)',
           transition: 'filter 0.2s',
           zIndex: 1,
-          animation: shake ? 'bag-shake 0.4s cubic-bezier(.36,.07,.19,.97) both' : undefined,
+          animation: shakeAnimation ? 'bag-shake 0.4s cubic-bezier(.36,.07,.19,.97) both' : undefined,
         }}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
@@ -735,9 +700,8 @@ const BagCycleButton: React.FC<{
         <img
           src={BAG_ITEMS[itemIndex].src}
           alt={BAG_ITEMS[itemIndex].alt}
-          style={{ width: itemSize, height: itemSize, display: 'block', pointerEvents: 'none' }}
+          style={{ width: itemSize, height: itemSize, display: 'block', pointerEvents: 'none', filter: 'grayscale(100%)' }}
         />
-        {/* Transparent overlay for popup trigger */}
         <div
           style={{
             position: 'absolute',
@@ -779,13 +743,17 @@ const BagCycleButton: React.FC<{
           )}
         </div>
       </div>
-      {/* Keyframes for shake animation */}
       <style>{`
         @keyframes bag-shake {
           10%, 90% { transform: translateX(-2px) rotate(-2deg); }
           20%, 80% { transform: translateX(4px) rotate(2deg); }
           30%, 50%, 70% { transform: translateX(-8px) rotate(-4deg); }
           40%, 60% { transform: translateX(8px) rotate(4deg); }
+        }
+        @keyframes shake-couple {
+          0%, 100% { transform: rotate(-14deg) scale(1.04) translateX(0); }
+          25% { transform: rotate(-14deg) scale(1.04) translateX(-2px); }
+          75% { transform: rotate(-14deg) scale(1.04) translateX(2px); }
         }
       `}</style>
     </div>
