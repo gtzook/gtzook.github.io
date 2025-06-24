@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 
@@ -37,7 +36,6 @@ const StampPeelButton: React.FC<{ popupSide?: 'left' | 'right' }> = ({ popupSide
     <>
       <button
         ref={btnRef}
-        className="flex items-center justify-center focus:outline-none"
         style={{
           background: 'none',
           border: 'none',
@@ -45,26 +43,30 @@ const StampPeelButton: React.FC<{ popupSide?: 'left' | 'right' }> = ({ popupSide
           boxShadow: 'none',
           padding: 0,
           cursor: 'pointer',
-          transition: 'transform 0.3s cubic-bezier(0.23, 1, 0.32, 1)',
-          transform: hovered ? 'rotate(-8deg) scale(1.28) skewY(-8deg) translateY(-8px)' : 'scale(1.2)',
+          width: 'auto',
+          height: 'auto',
+          display: 'block',
         }}
         aria-label="Stamp Button"
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
       >
         <img
           src="/stamp.webp"
           alt="Stamp"
-          className="w-24 h-24 md:w-32 md:h-32"
           style={{
             boxShadow: 'none',
             borderRadius: 12,
-            transition: 'box-shadow 0.3s, filter 0.3s',
+            transition: 'box-shadow 0.3s, filter 0.3s, transform 0.3s cubic-bezier(0.23, 1, 0.32, 1)',
             filter: hovered ? 'drop-shadow(0 8px 16px rgba(0,0,0,0.18))' : 'none',
             border: 'none',
             outline: 'none',
             background: 'none',
+            transform: hovered ? 'rotate(-8deg) scale(1.28) skewY(-8deg) translateY(-8px)' : 'scale(1.2)',
+            width: '100%',
+            height: '100%',
+            display: 'block',
           }}
+          onMouseEnter={() => setHovered(true)}
+          onMouseLeave={() => setHovered(false)}
         />
       </button>
       {hovered && popupPos && ReactDOM.createPortal(

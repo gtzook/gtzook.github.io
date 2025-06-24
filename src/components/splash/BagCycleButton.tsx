@@ -1,16 +1,9 @@
-
 import React from 'react';
 
 const BAG_ITEMS = [
-  { src: '/tamogotchi.svg', alt: 'Tamagotchi' },
-  { src: '/camera.svg', alt: 'Camera' },
-  { src: '/pickleball.svg', alt: 'Pickleball' },
-];
-
-const BAG_ITEM_POPUPS = [
-  "This is my Tamagotchi! It kept me company during long study sessions.",
-  "Some photos I took: https://www.instagram.com/gabetakesphotos111/",
-  "Pickleball paddle – for when it's time to play!",
+  { src: '/tamogotchi.svg', alt: 'Tamagotchi', link: null },
+  { src: '/camera.svg', alt: 'Camera', link: 'https://www.instagram.com/gabetakesphotos111/' },
+  { src: '/pickleball.svg', alt: 'Pickleball', link: null },
 ];
 
 interface BagCycleButtonProps {
@@ -27,7 +20,6 @@ const BagCycleButton: React.FC<BagCycleButtonProps> = ({
   const [itemIndex, setItemIndex] = React.useState(0);
   const [hovered, setHovered] = React.useState(false);
   const [itemHovered, setItemHovered] = React.useState(false);
-  const [popupHovered, setPopupHovered] = React.useState(false);
   const [shakeAnimation, setShakeAnimation] = React.useState(false);
 
   const handleClick = () => {
@@ -37,8 +29,6 @@ const BagCycleButton: React.FC<BagCycleButtonProps> = ({
       return (prev + 1) % BAG_ITEMS.length;
     });
   };
-
-  const showPopup = itemHovered || popupHovered;
 
   return (
     <div
@@ -68,54 +58,17 @@ const BagCycleButton: React.FC<BagCycleButtonProps> = ({
           height: itemSize,
           zIndex: 2,
         }}
-        onMouseEnter={() => setItemHovered(true)}
-        onMouseLeave={() => setItemHovered(false)}
       >
         <img
           src={BAG_ITEMS[itemIndex].src}
           alt={BAG_ITEMS[itemIndex].alt}
-          style={{ width: itemSize, height: itemSize, display: 'block', pointerEvents: 'none' }}
-        />
-        <div
-          style={{
-            position: 'absolute',
-            left: 0,
-            top: 0,
-            width: itemSize,
-            height: itemSize,
-            cursor: 'pointer',
-            background: 'transparent',
-            pointerEvents: 'auto',
+          style={{ width: itemSize, height: itemSize, display: 'block', pointerEvents: 'auto', cursor: BAG_ITEMS[itemIndex].link ? 'pointer' : 'default' }}
+          onClick={e => {
+            e.stopPropagation();
+            const link = BAG_ITEMS[itemIndex].link;
+            if (link) window.open(link, '_blank');
           }}
-          onMouseEnter={() => setItemHovered(true)}
-          onMouseLeave={() => setItemHovered(false)}
-        >
-          {showPopup && (
-            <div
-              style={{
-                position: 'absolute',
-                left: itemSize + 10,
-                top: 0,
-                zIndex: 10,
-                background: 'rgba(255,255,255,0.98)',
-                borderRadius: 14,
-                boxShadow: '0 4px 24px 0 rgba(0,0,0,0.18)',
-                padding: 18,
-                minWidth: 180,
-                fontFamily: "'Indie Flower', cursive",
-                fontSize: 18,
-                color: '#333',
-                textAlign: 'center',
-                pointerEvents: 'auto',
-                whiteSpace: 'pre-line',
-              }}
-              onMouseEnter={() => setPopupHovered(true)}
-              onMouseLeave={() => setPopupHovered(false)}
-            >
-              {BAG_ITEM_POPUPS[itemIndex]}
-            </div>
-          )}
-        </div>
+        />
       </div>
       <style>{`
         @keyframes bag-shake {
