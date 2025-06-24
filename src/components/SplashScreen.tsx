@@ -56,28 +56,33 @@ const SplashScreen: React.FC = () => {
   };
 
   return (
-    <div
-      className="min-h-screen bg-black flex items-center justify-center relative overflow-hidden"
-      style={{
-        backgroundImage: 'url(/splash_bg.jpg)',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-      }}
-    >
-      <div className="w-full max-w-7xl mx-auto relative flex items-center justify-center min-h-screen px-4">
+    <div className="w-screen h-screen flex items-center justify-center bg-black overflow-hidden">
+      <div
+        className="relative"
+        style={{
+          aspectRatio: '16/9',
+          width: '100vw',
+          maxWidth: '100vw',
+          height: '56.25vw', // 16:9 ratio
+          maxHeight: '100vh',
+          backgroundImage: 'url(/splash_bg.jpg)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+        }}
+      >
         {/* Book Gallery - fixed left side */}
-        <div className="absolute" style={{ left: '30vw', bottom: '30vh', scale: '1.5', zIndex: 30 }}>
+        <div style={{ position: 'absolute', left: '25%', bottom: '30%', scale: '1.25', zIndex: 30 }}>
           <BookGallery />
         </div>
 
         {/* Album Gallery - fixed right side */}
-        <div className="absolute" style={{ right: '9vw', bottom: '8vh', zIndex: 30 }}>
+        <div style={{ position: 'absolute', right: '10%', bottom: '8%', zIndex: 30 }}>
           <AlbumGallery />
         </div>
 
         {/* Center Name Image */}
-        <div className="flex flex-col items-center justify-start w-full z-40" style={{ minHeight: '40vh', marginBottom: '40vh' }}>
+        <div style={{ position: 'absolute', left: '50%', top: '10%', transform: 'translate(-50%, 0)', zIndex: 40, width: '70%' }}>
           <div className="flex-shrink-0">
             <div className="relative group" style={{ height: '12rem', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               {/* Remove hover classes, add shake/fall animation */}
@@ -162,8 +167,10 @@ const SplashScreen: React.FC = () => {
         </div>
 
         {/* Right side elements - responsive positions */}
-        <div className="absolute" style={{ right: '2vw', top: '0vh', scale: '0.9', zIndex: 100 }}>
-          <CoupleShakeImage />
+        <div style={{ position: 'absolute', right: '2%', top: '2%', zIndex: 32, scale: '85%' }}>
+          <div style={{ display: 'inline-block', pointerEvents: 'auto' }}>
+            <CoupleShakeImage />
+          </div>
         </div>
 
         <div className="absolute" style={{ right: '20vw', top: '45vh', zIndex: 100 }}>
@@ -215,14 +222,11 @@ const SplashScreen: React.FC = () => {
           alt="Coffee Cup"
           className="absolute pointer-events-none"
           style={{
-            left: '-6vw',
-            top: '-10vh',
-            scale: '2',
-            width: '20vw',
-            height: '20vw',
-            maxWidth: '300px',
-            maxHeight: '300px',
-            zIndex: 22
+            left: '-15%',
+            top: '-20%',
+            width: '30%',
+            height: 'auto',
+            zIndex: 101
           }}
         />
 
