@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { Card, CardContent } from '@/components/ui/card';
@@ -18,6 +19,21 @@ const BAG_ITEMS = [
 ];
 
 const SplashScreen: React.FC = () => {
+  const [isOptimalSize, setIsOptimalSize] = useState(true);
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      // Check if screen is close to 1920x1080 (with some tolerance)
+      setIsOptimalSize(width >= 1800 && height >= 900);
+    };
+
+    checkScreenSize();
+    window.addEventListener('resize', checkScreenSize);
+    return () => window.removeEventListener('resize', checkScreenSize);
+  }, []);
+
   // Title image interaction state
   const [titleClicks, setTitleClicks] = useState(0);
   const [shakeTitle, setShakeTitle] = useState(false);
@@ -55,6 +71,16 @@ const SplashScreen: React.FC = () => {
     }
   };
 
+  const containerStyle = isOptimalSize ? {} : {
+    transform: 'scale(0.7)',
+    transformOrigin: 'center center',
+    width: '142.857%', // 100% / 0.7 to maintain full container coverage
+    height: '142.857%',
+    position: 'relative' as const,
+    left: '-21.4285%', // (142.857% - 100%) / 2
+    top: '-21.4285%'
+  };
+
   return (
     <div
       className="min-h-screen bg-black flex items-center justify-center relative overflow-hidden"
@@ -65,18 +91,22 @@ const SplashScreen: React.FC = () => {
         backgroundRepeat: 'no-repeat',
       }}
     >
-      <div className="w-full max-w-7xl mx-auto relative flex items-center justify-center min-h-screen px-4">
-        {/* Book Gallery - fixed left side */}
-        <div className="absolute" style={{ left: '30vw', bottom: '30vh', scale: '1.5', zIndex: 30 }}>
-          <BookGallery />
-        </div>
+      <div className="w-full max-w-7xl mx-auto relative flex items-center justify-center min-h-screen px-4" style={containerStyle}>
+        {/* Book Gallery - only show on optimal size or scale down */}
+        {isOptimalSize && (
+          <div className="absolute" style={{ left: '30vw', bottom: '30vh', scale: '1.5', zIndex: 30 }}>
+            <BookGallery />
+          </div>
+        )}
 
-        {/* Album Gallery - fixed right side */}
-        <div className="absolute" style={{ right: '9vw', bottom: '8vh', zIndex: 30 }}>
-          <AlbumGallery />
-        </div>
+        {/* Album Gallery - only show on optimal size or scale down */}
+        {isOptimalSize && (
+          <div className="absolute" style={{ right: '9vw', bottom: '8vh', zIndex: 30 }}>
+            <AlbumGallery />
+          </div>
+        )}
 
-        {/* Center Name Image */}
+        {/* Center Name Image - always visible */}
         <div className="flex flex-col items-center justify-start w-full z-40" style={{ minHeight: '40vh', marginBottom: '40vh' }}>
           <div className="flex-shrink-0">
             <div className="relative group" style={{ height: '12rem', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -161,55 +191,76 @@ const SplashScreen: React.FC = () => {
           </div>
         </div>
 
-        {/* Right side elements - responsive positions */}
-        <div className="absolute" style={{ right: '2vw', top: '0vh', scale: '0.9', zIndex: 100 }}>
-          <CoupleShakeImage />
-        </div>
+        {/* Right side elements - only show on optimal size */}
+        {isOptimalSize && (
+          <>
+            <div className="absolute" style={{ right: '2vw', top: '0vh', scale: '0.9', zIndex: 100 }}>
+              <CoupleShakeImage />
+            </div>
 
-        <div className="absolute" style={{ right: '20vw', top: '45vh', zIndex: 100 }}>
-          <SvgPopupButton
-            src="/rice_ring.svg"
-            alt="Rice Ring"
-            popupText={
-              `<b>Attended Rice University</b> (2020-2024)\n` +
-              `<i>BS in Electrical Engineering</i> (magna cum laude)\n` +
-              `<i>BA in Philosophy</i> (cum laude)\n` +
-              `<i> Undergraduate Researcher in MAHI Lab</i>`
-            }
-            position={{ left: 0, top: 0 }}
-            scale={1.5}
-            popupOffset={{ x: -700, y: 25 }}
-          />
-        </div>
+            <div className="absolute" style={{ right: '20vw', top: '45vh', zIndex: 100 }}>
+              <SvgPopupButton
+                src="/rice_ring.svg"
+                alt="Rice Ring"
+                popupText={
+                  `<b>Attended Rice University</b> (2020-2024)\n` +
+                  `<i>BS in Electrical Engineering</i> (magna cum laude)\n` +
+                  `<i>BA in Philosophy</i> (cum laude)\n` +
+                  `<i> Undergraduate Researcher in MAHI Lab</i>`
+                }
+                position={{ left: 0, top: 0 }}
+                scale={1.5}
+                popupOffset={{ x: -700, y: 25 }}
+              />
+            </div>
 
-        <div className="absolute" style={{ right: '5vw', top: '45vh', zIndex: 100 }}>
-          <SvgPopupButton
-            src="/ucsb_flag.svg"
-            alt="UCSB Flag"
-            popupText={
-              `<b>Attending UCSB</b> (2024-)\n` +
-              `Pursuing <i>MS/PhD in Electrical & Computer Engineering</i>\n` +
-              `<i>Researcher in Ikuko Smith Lab</i>\n` +
-              'Focus on audiovisual processing in mouse model'
-            }
-            position={{ left: 0, top: 0 }}
-            scale={2}
-            popupOffset={{ x: -800, y: 50 }}
-          />
-        </div>
+            <div className="absolute" style={{ right: '5vw', top: '45vh', zIndex: 100 }}>
+              <SvgPopupButton
+                src="/ucsb_flag.svg"
+                alt="UCSB Flag"
+                popupText={
+                  `<b>Attending UCSB</b> (2024-)\n` +
+                  `Pursuing <i>MS/PhD in Electrical & Computer Engineering</i>\n` +
+                  `<i>Researcher in Ikuko Smith Lab</i>\n` +
+                  'Focus on audiovisual processing in mouse model'
+                }
+                position={{ left: 0, top: 0 }}
+                scale={2}
+                popupOffset={{ x: -800, y: 50 }}
+              />
+            </div>
 
-        {/* Bag with cycling items - bottom center responsive */}
-        <div className="absolute" style={{ bottom: '10vh', left: '65vh', scale: '1.8', zIndex: 30 }}>
-          <BagCycleButton
-            position={{ left: 0, top: 0 }}
-            scale={1.2}
-            itemOffset={{ x: 150, y: -60 }}
-            itemSize={130}
-            bagSize={200}
-          />
-        </div>
+            {/* Bag with cycling items - bottom center responsive */}
+            <div className="absolute" style={{ bottom: '10vh', left: '65vh', scale: '1.8', zIndex: 30 }}>
+              <BagCycleButton
+                position={{ left: 0, top: 0 }}
+                scale={1.2}
+                itemOffset={{ x: 150, y: -60 }}
+                itemSize={130}
+                bagSize={200}
+              />
+            </div>
 
-        {/* Coffee Cup - positioned responsively */}
+            {/* Left side interactive elements */}
+            <div className="absolute" style={{ left: '15vw', top: '35vh', scale: '0.75', zIndex: 100 }}>
+              <QuarterSpinButton />
+            </div>
+
+            <div className="absolute" style={{ left: '-7vw', top: '-30vh', scale: '0.2', zIndex: 999 }}>
+              <StampPeelButton popupSide="right" />
+            </div>
+
+            <div className="absolute" style={{ left: '3vw', top: '30vh', scale: '1', zIndex: 100 }}>
+              <PaperclipBendButton popupSide="right" />
+            </div>
+
+            <div className="absolute" style={{ left: '6vw', top: '7vh', zIndex: 100 }}>
+              <CoffeeStainButton />
+            </div>
+          </>
+        )}
+
+        {/* Coffee Cup - always visible with z-index 101 */}
         <img
           src="/coffee_cup.webp"
           alt="Coffee Cup"
@@ -222,32 +273,15 @@ const SplashScreen: React.FC = () => {
             height: '20vw',
             maxWidth: '300px',
             maxHeight: '300px',
-            zIndex: 22
+            zIndex: 101
           }}
         />
 
-        {/* Scroll Indicator */}
+        {/* Scroll Indicator - always visible */}
         <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce z-50">
           <div className="w-6 h-10 border-2 border-black rounded-full flex justify-center">
             <div className="w-1 h-3 bg-black rounded-full mt-2 animate-pulse" />
           </div>
-        </div>
-
-        {/* Left side interactive elements - responsive positions */}
-        <div className="absolute" style={{ left: '15vw', top: '35vh', scale: '0.75', zIndex: 100 }}>
-          <QuarterSpinButton />
-        </div>
-
-        <div className="absolute" style={{ left: '-7vw', top: '-30vh', scale: '0.2', zIndex: 999 }}>
-          <StampPeelButton popupSide="right" />
-        </div>
-
-        <div className="absolute" style={{ left: '3vw', top: '30vh', scale: '1', zIndex: 100 }}>
-          <PaperclipBendButton popupSide="right" />
-        </div>
-
-        <div className="absolute" style={{ left: '6vw', top: '7vh', zIndex: 100 }}>
-          <CoffeeStainButton />
         </div>
       </div>
     </div>
