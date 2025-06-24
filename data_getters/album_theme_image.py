@@ -133,8 +133,8 @@ def make_album_theme_image(album_cover_path, output_path, circle_radii, color_ke
         overlay = Image.open(overlay_img_path).convert('RGBA').resize(canvas.size, Image.LANCZOS)
         canvas = Image.alpha_composite(canvas, overlay)
 
-    # Overlay the result on top of record.png
-    record_path = os.path.join(os.path.dirname(__file__), '../public/record.png')
+    # Overlay the result on top of record.webp (not record.png)
+    record_path = os.path.join(os.path.dirname(__file__), '../public/record.webp')
     if os.path.exists(record_path):
         record_img = Image.open(record_path).convert('RGBA')
         # Downsize the record image to 800x800

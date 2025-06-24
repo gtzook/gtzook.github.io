@@ -83,35 +83,20 @@ const AlbumGallery: React.FC = () => {
           &#8635;
         </button>
         <div className="relative flex flex-col items-center" style={{ width: 420, height: 420 }}>
-          {/* Needle overlay */}
-          <img
-            src="/needle.webp"
-            alt="Needle"
-            style={{
-              position: 'absolute',
-              left: 285, // your custom position
-              top: 85,  // your custom position
-              width: 120,
-              height: 180,
-              zIndex: 2,
-              pointerEvents: 'none',
-              transform: 'scale(150%)', // your custom transform
-              transformOrigin: '20% 10%',
-            }}
-          />
+          {/* Themed album image (already includes record) */}
           <a
             href={album.url}
             target="_blank"
             rel="noopener noreferrer"
             style={{
               display: 'block',
-              width: 380,
-              height: 380,
+              width: 420,
+              height: 420,
               borderRadius: '50%',
               overflow: 'hidden',
               position: 'absolute',
-              left: 0,
-              top: 0,
+              left: 20,
+              top: 10,
               zIndex: 1,
             }}
             onMouseEnter={() => setIsHovered(true)}
@@ -121,15 +106,32 @@ const AlbumGallery: React.FC = () => {
               src={themedImg}
               alt={album.album}
               style={{
-                width: 430,
-                height: 430,
+                width: 420,
+                height: 420,
                 objectFit: 'cover',
                 transition: 'transform 0.3s, filter 0.2s',
                 transform: `rotate(${angle}deg)` ,
                 filter: isHovered ? 'brightness(0.5)' : 'none',
+                borderRadius: '50%',
               }}
             />
           </a>
+          {/* Needle overlay */}
+          <img
+            src="/needle.webp"
+            alt="Needle"
+            style={{
+              position: 'absolute',
+              left: 285,
+              top: 85,
+              width: 120,
+              height: 180,
+              zIndex: 2,
+              pointerEvents: 'none',
+              transform: 'scale(150%)',
+              transformOrigin: '20% 10%',
+            }}
+          />
         </div>
       </div>
     </div>
