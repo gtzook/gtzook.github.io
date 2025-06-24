@@ -52,7 +52,7 @@ const HoverImage: React.FC<HoverImageProps> = ({
         <img
           src={src}
           alt={alt}
-          className={`object-cover grayscale hover:grayscale-0 transition-all duration-300 ${sizeClass}`}
+          className={`object-cover hover:grayscale-0 transition-all duration-300 ${sizeClass}`}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
       </div>
@@ -68,7 +68,7 @@ const HoverImage: React.FC<HoverImageProps> = ({
                 <img
                   src={popupImage}
                   alt={title}
-                  className="w-16 h-16 rounded-lg object-cover grayscale"
+                  className="w-16 h-16 rounded-lg object-cover"
                 />
                 <div>
                   <h3 className="font-semibold text-lg text-white">{title}</h3>
@@ -96,32 +96,39 @@ const SplashScreen: React.FC = () => {
     >
       <div className="w-full max-w-7xl mx-auto relative flex items-center justify-center min-h-screen px-4">
         
-        {/* Left side interactive elements - positioned relative to viewport */}
-        <div className="absolute left-[5vw] top-[20vh] z-20">
+        {/* Left side interactive elements - fixed positions */}
+        <div className="absolute" style={{ left: '80px', top: '20vh', zIndex: 20 }}>
           <QuarterSpinButton />
         </div>
         
-        <div className="absolute left-[8vw] top-[35vh] z-21">
+        <div className="absolute" style={{ left: '120px', top: '35vh', zIndex: 21 }}>
           <StampPeelButton popupSide="right" />
         </div>
         
-        <div className="absolute left-[3vw] top-[45vh] z-21">
+        <div className="absolute" style={{ left: '50px', top: '45vh', zIndex: 21 }}>
           <PaperclipBendButton popupSide="right" />
         </div>
 
-        <div className="absolute left-[2vw] top-[10vh] z-21">
+        <div className="absolute" style={{ left: '30px', top: '10vh', zIndex: 21 }}>
           <CoffeeStainButton />
         </div>
 
-        {/* Coffee Cup - positioned relative to viewport */}
+        {/* Coffee Cup - positioned fixed */}
         <img
           src="/coffee_cup.webp"
           alt="Coffee Cup"
-          className="absolute left-[-5vw] top-[5vh] w-[25vw] h-[25vw] max-w-[400px] max-h-[400px] z-22 pointer-events-none"
+          className="absolute pointer-events-none"
+          style={{
+            left: '-100px',
+            top: '50px',
+            width: '300px',
+            height: '300px',
+            zIndex: 22
+          }}
         />
 
         {/* Center content area */}
-        <div className="flex items-center justify-center space-x-[8vw] relative z-10">
+        <div className="flex items-center justify-center space-x-32 relative z-10">
           
           {/* Book Gallery - left of center */}
           <div className="relative">
@@ -135,7 +142,7 @@ const SplashScreen: React.FC = () => {
                 <img
                   src="/name_img.webp"
                   alt="Name"
-                  className="h-40 md:h-56 lg:h-72 object-contain grayscale"
+                  className="h-40 md:h-56 lg:h-72 object-contain"
                 />
               </div>
             </div>
@@ -147,12 +154,12 @@ const SplashScreen: React.FC = () => {
           </div>
         </div>
 
-        {/* Right side elements */}
-        <div className="absolute right-[8vw] top-[25vh] z-30">
+        {/* Right side elements - fixed positions */}
+        <div className="absolute" style={{ right: '120px', top: '25vh', zIndex: 30 }}>
           <CoupleShakeImage />
         </div>
 
-        <div className="absolute right-[5vw] top-[45vh] z-30">
+        <div className="absolute" style={{ right: '80px', top: '45vh', zIndex: 30 }}>
           <SvgPopupButton
             src="/rice_ring.svg"
             alt="Rice Ring"
@@ -168,7 +175,7 @@ const SplashScreen: React.FC = () => {
           />
         </div>
 
-        <div className="absolute right-[2vw] top-[45vh] z-30">
+        <div className="absolute" style={{ right: '30px', top: '45vh', zIndex: 30 }}>
           <SvgPopupButton
             src="/ucsb_flag.svg"
             alt="UCSB Flag"
@@ -184,8 +191,8 @@ const SplashScreen: React.FC = () => {
           />
         </div>
 
-        {/* Bag with cycling items - bottom center */}
-        <div className="absolute bottom-[5vh] left-1/2 transform -translate-x-1/2 z-30">
+        {/* Bag with cycling items - bottom center fixed */}
+        <div className="absolute" style={{ bottom: '50px', left: '50%', transform: 'translateX(-50%)', zIndex: 30 }}>
           <BagCycleButton
             position={{ left: 0, top: 0 }}
             scale={1.2}
@@ -263,7 +270,6 @@ const QuarterSpinButton: React.FC = () => {
           style={{
             transform: `rotate(${angle}deg)`,
             transition: speed === 0 ? 'transform 0.2s cubic-bezier(0.23, 1, 0.32, 1)' : 'none',
-            filter: 'grayscale(100%)',
           }}
         />
       </button>
@@ -290,7 +296,7 @@ const QuarterSpinButton: React.FC = () => {
           <img
             src="/mountains.jpg"
             alt="Mountains"
-            style={{ height: 300, objectFit: 'cover', borderRadius: 14, flexShrink: 0, marginBottom: 0, filter: 'grayscale(100%)' }}
+            style={{ height: 300, objectFit: 'cover', borderRadius: 14, flexShrink: 0, marginBottom: 0 }}
           />
           <div style={{ color: '#fff', fontSize: 22, fontFamily: 'inherit', maxWidth: 400 }}>
             Mt. Olympus! (2023)
@@ -360,7 +366,7 @@ const StampPeelButton: React.FC<{ popupSide?: 'left' | 'right' }> = ({ popupSide
             boxShadow: 'none',
             borderRadius: 12,
             transition: 'box-shadow 0.3s, filter 0.3s',
-            filter: hovered ? 'drop-shadow(0 8px 16px rgba(0,0,0,0.18)) grayscale(100%)' : 'grayscale(100%)',
+            filter: hovered ? 'drop-shadow(0 8px 16px rgba(0,0,0,0.18))' : 'none',
             border: 'none',
             outline: 'none',
             background: 'none',
@@ -380,7 +386,7 @@ const StampPeelButton: React.FC<{ popupSide?: 'left' | 'right' }> = ({ popupSide
           <img
             src="/pose.jpg"
             alt="Pose"
-            style={{ width: 300, height: 300, objectFit: 'cover', borderRadius: 10, marginBottom: 10, filter: 'grayscale(100%)' }}
+            style={{ width: 300, height: 300, objectFit: 'cover', borderRadius: 10, marginBottom: 10 }}
           />
           <div style={{ color: '#fff', fontSize: 22, fontFamily: 'inherit', maxWidth: 200 }}>
             Glacier National Park (2025)
@@ -439,7 +445,7 @@ const PaperclipBendButton: React.FC<{ popupSide?: 'left' | 'right' }> = ({ popup
             borderRadius: 8,
             transition: 'box-shadow 0.3s, filter 0.3s',
             transform: 'rotate(10deg)',
-            filter: hovered ? 'drop-shadow(0 8px 16px rgba(0,0,0,0.12)) grayscale(100%)' : 'grayscale(100%)',
+            filter: hovered ? 'drop-shadow(0 8px 16px rgba(0,0,0,0.12))' : 'none',
             border: 'none',
             outline: 'none',
             background: 'none',
@@ -459,7 +465,7 @@ const PaperclipBendButton: React.FC<{ popupSide?: 'left' | 'right' }> = ({ popup
           <img
             src="/banff.JPG"
             alt="Banff"
-            style={{ width: 320, height: 160, objectFit: 'cover', borderRadius: 14, flexShrink: 0, marginBottom: 0, filter: 'grayscale(100%)' }}
+            style={{ width: 320, height: 160, objectFit: 'cover', borderRadius: 14, flexShrink: 0, marginBottom: 0 }}
           />
           <div style={{ color: '#fff', fontSize: 22, fontFamily: 'inherit', maxWidth: 160 }}>
             Banff National Park (2024)
@@ -501,7 +507,7 @@ const CoffeeStainButton: React.FC = () => {
           padding: 0,
           cursor: 'pointer',
           transition: 'transform 0.3s cubic-bezier(0.23, 1, 0.32, 1)',
-          filter: hovered ? 'brightness(0.5) grayscale(100%)' : 'grayscale(100%)',
+          filter: hovered ? 'brightness(0.5)' : 'none',
         }}
         aria-label="Coffee Stain Button"
         onMouseEnter={() => setHovered(true)}
@@ -534,7 +540,7 @@ const CoffeeStainButton: React.FC = () => {
           <img
             src="/white_sands.JPG"
             alt="White Sands"
-            style={{ height: 200, objectFit: 'cover', borderRadius: 10, marginBottom: 10, filter: 'grayscale(100%)' }}
+            style={{ height: 200, objectFit: 'cover', borderRadius: 10, marginBottom: 10 }}
           />
           <div style={{ color: '#fff', fontSize: 22, fontFamily: 'inherit', maxWidth: 200 }}>
             White Sands National Park
@@ -556,7 +562,6 @@ const CoupleShakeImage: React.FC = () => {
       style={{
         transform: hovered ? 'rotate(-14deg) scale(1.04)' : 'none',
         animation: hovered ? 'shake-couple 0.4s infinite alternate' : 'none',
-        filter: 'grayscale(100%)',
       }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
@@ -602,7 +607,7 @@ function SvgPopupButton({
         style={{
           width: size,
           height: size,
-          filter: hovered ? 'brightness(0.7) grayscale(100%)' : 'grayscale(100%)',
+          filter: hovered ? 'brightness(0.7)' : 'none',
           transition: 'filter 0.2s',
           display: 'block',
         }}
@@ -677,7 +682,7 @@ const BagCycleButton: React.FC<{
         style={{
           width: bagSize,
           marginBottom: 8,
-          filter: hovered ? 'drop-shadow(0 2px 8px rgba(0,0,0,0.18)) brightness(0.7) grayscale(100%)' : 'drop-shadow(0 2px 8px rgba(0,0,0,0.18)) grayscale(100%)',
+          filter: hovered ? 'drop-shadow(0 2px 8px rgba(0,0,0,0.18)) brightness(0.7)' : 'drop-shadow(0 2px 8px rgba(0,0,0,0.18))',
           transition: 'filter 0.2s',
           zIndex: 1,
           animation: shakeAnimation ? 'bag-shake 0.4s cubic-bezier(.36,.07,.19,.97) both' : undefined,
@@ -700,7 +705,7 @@ const BagCycleButton: React.FC<{
         <img
           src={BAG_ITEMS[itemIndex].src}
           alt={BAG_ITEMS[itemIndex].alt}
-          style={{ width: itemSize, height: itemSize, display: 'block', pointerEvents: 'none', filter: 'grayscale(100%)' }}
+          style={{ width: itemSize, height: itemSize, display: 'block', pointerEvents: 'none' }}
         />
         <div
           style={{
