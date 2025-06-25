@@ -59,20 +59,17 @@ const SplashScreen: React.FC = () => {
 
   // Always render the full splash screen
   return (
-    <div
-      className="min-h-screen min-w-screen bg-black flex items-center justify-center relative overflow-auto"
+    <section
+      className="w-full flex items-center justify-center relative bg-black"
       style={{
-        width: '100vw',
-        height: '100vh',
         backgroundImage: 'url(/splash_bg.jpg)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
-        overflow: 'auto',
       }}
     >
       <div
-        className="relative mx-auto my-auto flex items-center justify-center"
+        className="relative mx-auto my-0 flex items-center justify-center"
         style={{
           width: 1920,
           height: 1080,
@@ -247,13 +244,13 @@ const SplashScreen: React.FC = () => {
           }}
         />
         {/* Scroll Indicator */}
-        <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce z-50">
+        <div className="sticky bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce z-50">
           <div className="w-6 h-10 border-2 border-black rounded-full flex justify-center">
             <div className="w-1 h-3 bg-black rounded-full mt-2 animate-pulse" />
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 
