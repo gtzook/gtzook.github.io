@@ -50,8 +50,13 @@ async function main() {
   try {
     const accessToken = await getAccessToken();
     const topAlbums = await getTopAlbums(accessToken);
-    fs.writeFileSync('glance-resume-splash/public/top_albums.json', JSON.stringify(topAlbums, null, 2));
-    console.log('Top albums written to glance-resume-splash/public/top_albums.json');
+    // Ensure the public directory exists
+    const outDir = 'public';
+    if (!fs.existsSync(outDir)) {
+      fs.mkdirSync(outDir, { recursive: true });
+    }
+    fs.writeFileSync(`${outDir}/top_albums.json`, JSON.stringify(topAlbums, null, 2));
+    console.log('Top albums written to public/top_albums.json');
   } catch (err) {
     console.error(err);
     process.exit(1);
