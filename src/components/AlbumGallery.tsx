@@ -68,62 +68,99 @@ const AlbumGallery: React.FC = () => {
 
   const showNext = () => setIndex(i => (i === albums.length - 1 ? 0 : i + 1));
 
-  if (!albums.length) return null;
-  const album = albums[index];
-  const themedImg = getThemedImagePath(album.cover);
+  // Always render the same structure, fallback only changes the image and disables the link
+  const hasAlbums = albums.length > 0;
+  const album = hasAlbums ? albums[index] : null;
+  const themedImg = hasAlbums ? getThemedImagePath(album.cover) : undefined;
+  const recordImg = hasAlbums ? themedImg : '/record.webp';
+  const recordAlt = hasAlbums ? album.album : 'Record';
+  const recordLink = hasAlbums ? album.url : undefined;
 
   return (
     <div className="flex flex-col items-center justify-center h-full">
       <div className="flex items-center">
-        <button
-          onClick={showNext}
-          className="text-white bg-black/40 rounded-full w-16 h-16 flex items-center justify-center text-3xl hover:bg-black/80"
-          aria-label="Next album"
-        >
-          &#8635;
-        </button>
+        {hasAlbums && (
+          <button
+            onClick={showNext}
+            className="text-white bg-black/40 rounded-full w-16 h-16 flex items-center justify-center text-3xl hover:bg-black/80"
+            aria-label="Next album"
+          >
+            &#8635;
+          </button>
+        )}
         <div className="relative flex flex-col items-center" style={{ width: 420, height: 420 }}>
-          {/* Themed album image (already includes record) */}
-          <a
-            href={album.url}
-            target="_blank"
-            rel="noopener noreferrer"
+          {/* Record Player SVG, always rendered at the back */}
+          <img
+            src="/record_player.svg"
+            alt="Record Player"
             style={{
-              display: 'block',
+              position: 'absolute',
+              left: 0,
+              top: 0,
               width: 420,
               height: 420,
-              borderRadius: '50%',
-              overflow: 'hidden',
-              position: 'absolute',
-              left: 20,
-              top: 10,
-              zIndex: 1,
+              zIndex: -1,
+              pointerEvents: 'none',
             }}
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-          >
-            <img
-              src={themedImg}
-              alt={album.album}
+          />
+          {/* Rotating record or themed album image, always centered and same size/position */}
+          {hasAlbums ? (
+            <a
+              href={recordLink}
+              target="_blank"
+              rel="noopener noreferrer"
               style={{
-                width: 420,
-                height: 420,
+                display: 'block',
+                width: 340,
+                height: 340,
+                overflow: 'hidden',
+                position: 'absolute',
+                left: '36%',
+                top: '50%',
+                transform: 'translate(-50%, -50%)',
+                zIndex: 1,
+              }}
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
+            >
+              <img
+                src={recordImg}
+                alt={recordAlt}
+                style={{
+                  width: 340,
+                  height: 340,
+                  objectFit: 'cover',
+                  transition: 'transform 0.3s, filter 0.2s',
+                  transform: `rotate(${angle}deg)` ,
+                  filter: isHovered ? 'brightness(0.5)' : 'none',
+                }}
+              />
+            </a>
+          ) : (
+            <img
+              src={recordImg}
+              alt={recordAlt}
+              style={{
+                width: 340,
+                height: 340,
                 objectFit: 'cover',
+                position: 'absolute',
+                left: '36%',
+                top: '50%',
+                transform: `translate(-50%, -50%) rotate(${angle}deg)` ,
+                zIndex: 1,
                 transition: 'transform 0.3s, filter 0.2s',
-                transform: `rotate(${angle}deg)` ,
-                filter: isHovered ? 'brightness(0.5)' : 'none',
-                borderRadius: '50%',
               }}
             />
-          </a>
+          )}
           {/* Needle overlay */}
           <img
             src="/needle.webp"
             alt="Needle"
             style={{
               position: 'absolute',
-              left: 285,
-              top: 85,
+              right: '20%',
+              top: '20%',
               width: 120,
               height: 180,
               zIndex: 2,
