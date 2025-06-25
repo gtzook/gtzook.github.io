@@ -34,9 +34,9 @@ const AlbumGallery: React.FC = () => {
   const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
-    fetch('/top_albums.txt')
-      .then(res => res.text())
-      .then(text => setAlbums(parseAlbums(text)));
+    fetch('/top_albums.json')
+      .then(res => res.json())
+      .then(data => setAlbums(data));
   }, []);
 
   // Preload all themed images
