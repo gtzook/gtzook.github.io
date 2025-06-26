@@ -2,9 +2,9 @@ import requests
 import time
 import os
 
-INPUT_FILE = 'glance-resume-splash/books_from_export.txt'
-OUTPUT_FILE = 'glance-resume-splash/public/books_openlibrary.txt'
-COVERS_DIR = 'glance-resume-splash/public/book_covers'
+INPUT_FILE = 'books_from_export.txt'
+OUTPUT_FILE = 'public/books_openlibrary.txt'
+COVERS_DIR = 'public/book_covers'
 OPENLIBRARY_API = 'https://openlibrary.org/api/books?bibkeys=ISBN:{}&format=json&jscmd=data'
 
 os.makedirs(COVERS_DIR, exist_ok=True)
