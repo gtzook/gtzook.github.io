@@ -24,12 +24,23 @@ jobs:
       - name: Install node-fetch
         run: npm install node-fetch@3
 
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install Python dependencies
+        run: pip install pillow requests
+
       - name: Fetch top albums and write to file
         run: |
           node .github/scripts/fetch_top_albums.js
+
+      - name: Composite album covers on record
+        run: python scripts/composite_album_covers.py
 
       - name: Commit and push changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: 'chore: update top albums [bot]'
-          file_pattern: 'public/top_albums.json'
+          file_pattern: 'public/top_albums.json public/album_covers/* public/album_composites/*'

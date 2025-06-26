@@ -5,26 +5,17 @@ interface Album {
   artist: string;
   cover: string;
   url: string;
+  albumId?: string;
 }
 
-function parseAlbums(text: string): Album[] {
-  return text.split('\n')
-    .map(line => line.trim())
-    .filter(line => line)
-    .map(line => {
-      const [album, artist, cover, url] = line.split('\t');
-      return { album, artist, cover, url };
-    })
-    .filter(album => album.cover);
-}
-
-function getThemedImagePath(cover: string) {
-  // cover: '/album_covers/ALBUMID.jpg' => '/album_themes/ALBUMID_theme.webp'
-  const match = cover.match(/\/album_covers\/(.+)\.jpg$/);
-  if (match) {
-    return `/album_themes/${match[1]}_theme.webp`;
+function getCompositeImagePath(album: Album) {
+  // Use albumId if available, fallback to cover basename
+  if (album.albumId) {
+    return `/album_composites/${album.albumId}_on_record.webp`;
   }
-  return cover;
+  // fallback: use basename from cover url
+  const coverName = album.cover.split('/').pop()?.split('.')[0] || 'unknown';
+  return `/album_composites/${coverName}_on_record.webp`;
 }
 
 const AlbumGallery: React.FC = () => {
@@ -39,16 +30,15 @@ const AlbumGallery: React.FC = () => {
       .then(data => setAlbums(data));
   }, []);
 
-  // Preload all themed images
+  // Preload all composite images
   useEffect(() => {
     albums.forEach(album => {
-      const themed = getThemedImagePath(album.cover);
+      const composite = getCompositeImagePath(album);
       const img = new window.Image();
-      img.src = themed;
+      img.src = composite;
     });
   }, [albums]);
 
-  // Smoothly rotate the image, pause on hover
   useEffect(() => {
     let animationFrame: number;
     let lastTimestamp = performance.now();
@@ -56,7 +46,7 @@ const AlbumGallery: React.FC = () => {
       if (!isHovered) {
         const delta = timestamp - lastTimestamp;
         lastTimestamp = timestamp;
-        setAngle(prev => (prev + delta * 0.02)); // 0.02 deg/ms
+        setAngle(prev => (prev + delta * 0.02));
       } else {
         lastTimestamp = timestamp;
       }
@@ -68,11 +58,9 @@ const AlbumGallery: React.FC = () => {
 
   const showNext = () => setIndex(i => (i === albums.length - 1 ? 0 : i + 1));
 
-  // Always render the same structure, fallback only changes the image and disables the link
   const hasAlbums = albums.length > 0;
   const album = hasAlbums ? albums[index] : null;
-  const themedImg = hasAlbums ? getThemedImagePath(album.cover) : undefined;
-  const recordImg = hasAlbums ? themedImg : '/record.webp';
+  const compositeImg = hasAlbums && album ? getCompositeImagePath(album) : '/record.webp';
   const recordAlt = hasAlbums ? album.album : 'Record';
   const recordLink = hasAlbums ? album.url : undefined;
 
@@ -89,7 +77,6 @@ const AlbumGallery: React.FC = () => {
           </button>
         )}
         <div className="relative flex flex-col items-center" style={{ width: 420, height: 420 }}>
-          {/* Record Player SVG, always rendered at the back */}
           <img
             src="/record_player.svg"
             alt="Record Player"
@@ -103,7 +90,6 @@ const AlbumGallery: React.FC = () => {
               pointerEvents: 'none',
             }}
           />
-          {/* Rotating record or themed album image, always centered and same size/position */}
           {hasAlbums ? (
             <a
               href={recordLink}
@@ -124,7 +110,7 @@ const AlbumGallery: React.FC = () => {
               onMouseLeave={() => setIsHovered(false)}
             >
               <img
-                src={recordImg}
+                src={compositeImg}
                 alt={recordAlt}
                 style={{
                   width: 340,
@@ -138,7 +124,7 @@ const AlbumGallery: React.FC = () => {
             </a>
           ) : (
             <img
-              src={recordImg}
+              src={compositeImg}
               alt={recordAlt}
               style={{
                 width: 340,
@@ -153,7 +139,6 @@ const AlbumGallery: React.FC = () => {
               }}
             />
           )}
-          {/* Needle overlay */}
           <img
             src="/needle.webp"
             alt="Needle"
