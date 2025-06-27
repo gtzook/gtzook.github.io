@@ -26,6 +26,17 @@ const About = () => {
 
         {/* Right: Stacked Cards + Social */}
         <div className="flex flex-col gap-6">
+          {/* Bio */}
+          <Card>
+            <CardContent className="p-4">
+              <h2 className="text-xl font-semibold mb-2">Bio</h2>
+              <p className="text-white-700">
+              I grew up in Bellevue, WA, and was entranced by engineering at four years old, when I would steal out past bedtime to program my brother's FLL robot. 
+              I believe the best innovations are found where broad expertise intersects. Accordingly, I am currently entrenched in the world of neuroscience ad the Ikuko Smith lab at UCSB,
+              where I hope to gain core competence in neural processing to better apply my engineering background.
+              </p>
+            </CardContent>
+          </Card>
           {/* Awards */}
           <Card>
             <CardContent className="p-4">
@@ -40,10 +51,10 @@ const About = () => {
           {/* Newsworthy */}
             <Card>
               <CardContent className="p-4">
-                <h2 className="text-xl font-semibold mb-2">In the News</h2>
+                <h2 className="text-xl font-semibold mb-2">News</h2>
                 <ul className="list-disc pl-4 space-y-1">
-                  <li><a href='https://mech.rice.edu/news/zook-brothers-bring-hardware-and-software-together'>The Brothers Zook (bad hair day)</a></li>
-                  <li><a href='https://snip.ly/9uy3xv'>ACT Score</a></li>
+                  <li><a href='https://mech.rice.edu/news/zook-brothers-bring-hardware-and-software-together' className='underline'>The Brothers Zook</a> (bad hair day)</li>
+                  <li><a href='https://snip.ly/9uy3xv' className='underline'>Test Score</a></li>
                 </ul>
               </CardContent>
             </Card>

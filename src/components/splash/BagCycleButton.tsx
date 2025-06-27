@@ -64,7 +64,7 @@ const BagCycleButton: React.FC<BagCycleButtonProps> = ({
         if (!latestGame) return null;
 
         const pgn = latestGame.pgn || '';
-        const openingMatch = pgn.match(/\[Opening "(.*?)"\]/);
+        const openingMatch = pgn.match(/^\[Opening "(.*?)"\]/m);
         const opening = openingMatch ? openingMatch[1] : 'Unknown Opening';
 
         const isWhite = latestGame.white.username.toLowerCase() === 'gzook';
@@ -179,7 +179,6 @@ const BagCycleButton: React.FC<BagCycleButtonProps> = ({
                 <>
                   <strong>Rapid Rating:</strong> {chessData.rating ?? 'N/A'}<br />
                   <strong>Last Played:</strong> {new Date(chessData.lastOnline * 1000).toLocaleDateString()}<br />
-                  <strong>Opening:</strong> {chessData.opening}<br />
                   {chessData.result && (() => {
                     const formatted = formatResult(chessData.result);
                     return (

@@ -15,7 +15,7 @@ const ProjectsSection: React.FC = () => {
       description: "Automated analysis and simulation-based (NEURON) model of dendritic hotspots in mice."
     },
     {
-      title: "Free=moving Behavior Box Refurbishment",
+      title: "Free-moving Behavior Box Refurbishment",
       year: "2024",
       description: "Refurbishment of a 4 behavior boxes for free-moving mice, including new electronics and overhauled software."
     },
@@ -28,6 +28,11 @@ const ProjectsSection: React.FC = () => {
       title: "LIF-network simualation of kindling/anti-kindling neuron stimulation",
       year: "2024",
       description: "LIF neuron based simulation of seizure inducing and inhibiting stimulation (for class)."
+    },
+    {
+      title: "CYANO",
+      year: "2023",
+      description: "Bag-based bioreactor for cyanobacteria cultivation, including custom electronics and software for monitoring and control."
     },
     {
       title: "Sobriety Encouraging Remote Control Car",
@@ -69,18 +74,17 @@ const ProjectsSection: React.FC = () => {
   const skills = {
     software: [
       "ROS", "Linux", "EAGLE", "AutoCAD", "Solidworks", "Unity", "Matlab", 
-      "LTSpice", "libGDX", "RobotC", "EasyC", "MS Office Suite"
+      "LTSpice", "libGDX", "Arduino", "OpenCV", "GIMP", "Git"
     ],
     hardware: [
-      "PCB Design", "Pick & Place machine", "Microsoldering", "3D Printing"
+      "PCB Design", "Microsoldering", "Pump systems", "3D Printing"
     ],
     programming: [
-      "Python", "Java", "C", "C++", "iVerilog"
+      "Python", "Java", "C", "C++", "iVerilog", "MATLAB", "LabVIEW", "Ruby"
     ],
     skills: [
-      "Data analysis", "Data presentation", "Human subject experiments",
-      "Lesson planning", "Curriculum building", "Electrical device characterization",
-      "Computer vision", "Machine learning"
+      "Interdisciplinary communication", "Data presentation", "Experimental design",
+       "Curriculum building"
     ]
   };
 
