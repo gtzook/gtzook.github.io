@@ -96,6 +96,17 @@ const ExperienceSection: React.FC = () => {
             </div>
           </CardContent>
         </Card>
+          {/* Awards */}
+          <Card>
+            <CardContent className="p-4">
+              <h2 className="text-xl font-semibold mb-2">Awards</h2>
+              <ul className="list-disc pl-4 space-y-1">
+                <li>2024 NSF GRFP Honorable Mention</li>
+                <li>IEEE-Eta Kappa Nu Inductee</li>
+                <li>Chevron Scholarship Recipient (2022)</li>
+              </ul>
+            </CardContent>
+          </Card>
       </div>
     </section>
   );

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import { Card, CardContent } from '@/components/ui/card';
 import BookGallery from './BookGallery';
@@ -39,28 +39,10 @@ const SplashScreen: React.FC = () => {
     });
   };
 
-  // Responsive scaling for a range of sizes (min 1600x900, max 1920x1080)
-  const [scale, setScale] = useState(1);
-  useEffect(() => {
-    const handleResize = () => {
-      const minW = 1600, minH = 900, maxW = 1920, maxH = 1080;
-      const scaleW = Math.min(window.innerWidth / maxW, 1);
-      const scaleH = Math.min(window.innerHeight / maxH, 1);
-      const minScaleW = window.innerWidth / minW;
-      const minScaleH = window.innerHeight / minH;
-      // Clamp scale between min and max
-      const scale = Math.max(Math.min(scaleW, scaleH), Math.min(minScaleW, minScaleH), 1);
-      setScale(scale < 1 ? scale : 1);
-    };
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
   // Always render the full splash screen
   return (
     <section
-      className="w-full flex items-center justify-center relative bg-black"
+      className="w-full h-screen flex items-center justify-center relative bg-black"
       style={{
         backgroundImage: 'url(/splash_bg.jpg)',
         backgroundSize: 'cover',
@@ -69,37 +51,30 @@ const SplashScreen: React.FC = () => {
       }}
     >
       <div
-        className="relative mx-auto my-0 flex items-center justify-center"
-        style={{
-          width: 1920,
-          height: 1080,
-          minWidth: 1600,
-          minHeight: 900,
-          maxWidth: 1920,
-          maxHeight: 1080,
-          transform: `scale(${scale})`,
-          transformOrigin: 'top left',
-        }}
+        className="relative mx-auto my-0 flex items-center justify-center w-[100vw] h-[100vh] min-w-0 min-h-0 max-w-none max-h-none"
+        style={{}}
       >
         {/* Book Gallery - fixed left side */}
-        <div className="absolute" style={{ left: '30vw', bottom: '30vh', scale: '1.5', zIndex: 30 }}>
+        <div className="absolute" style={{ left: '10vw', bottom: '33vh', zIndex: 30 }}>
           <BookGallery />
         </div>
         {/* Album Gallery - fixed right side */}
-        <div className="absolute" style={{ right: '5vw', bottom: '0vh', zIndex: 30 }}>
+        <div className="absolute" style={{ right: '3vw', bottom: '35vh', zIndex: 30 }}>
           <AlbumGallery />
         </div>
         {/* Center Name Image */}
-        <div className="absolute" style={{ left: '50%', top: '10%', transform: 'translate(-50%, 0)', zIndex: 40, width: '70%' }}>
+        <div className="absolute" style={{ left: '50vw', top: '15vh', transform: 'translate(-50%, 0)', zIndex: 40, width: '60vw' }}>
           <div className="flex-shrink-0">
-            <div className="relative group" style={{ height: '12rem', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <div className="relative group" style={{ height: '15vh', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               {/* Remove hover classes, add shake/fall animation */}
               {!showInput && (
                 <img
                   src="/name_img.webp"
                   alt="Name"
-                  className="h-40 md:h-56 lg:h-72 object-contain select-none"
+                  className="object-contain select-none"
                   style={{
+                    height: '40vh',
+                    width: 'auto',
                     cursor: 'pointer',
                     transition: 'transform 0.4s',
                     animation: shakeTitle ? 'title-shake 0.4s' : fallTitle ? 'title-fall 0.7s forwards' : undefined,
@@ -111,7 +86,7 @@ const SplashScreen: React.FC = () => {
               )}
               {showInput && (
                 <div style={{ height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-                  <label style={{ fontSize: 20, marginBottom: 8, color: '#000', fontWeight: 500, textAlign: 'center' }}>What is my other name?</label>
+                  <label style={{ fontSize: '2vw', marginBottom: '1vh', color: '#000', fontWeight: 500, textAlign: 'center' }}>What is my other name?</label>
                   <input
                     type="password"
                     value={inputValue}
@@ -121,19 +96,19 @@ const SplashScreen: React.FC = () => {
                     }}
                     placeholder="Enter your answer..."
                     style={{
-                      fontSize: 32,
-                      padding: 12,
-                      borderRadius: 8,
-                      border: '2px solid #888',
+                      fontSize: '2vw',
+                      padding: '1vw',
+                      borderRadius: '1vw',
+                      border: '0.2vw solid #888',
                       outline: 'none',
-                      width: 320,
+                      width: '20vw',
                       textAlign: 'center',
-                      height: '3.5rem',
+                      height: '5vh',
                       boxSizing: 'border-box',
                       background: '#111',
                       color: '#39FF14',
                       letterSpacing: 2,
-                      marginBottom: 8,
+                      marginBottom: '1vh',
                     }}
                     onKeyDown={e => {
                       if (e.key === 'Enter') {
@@ -150,7 +125,7 @@ const SplashScreen: React.FC = () => {
                     }}
                   />
                   {showError && (
-                    <div style={{ color: '#ff4444', fontSize: 15, marginTop: 2, fontFamily: 'Fira Mono, Consolas, monospace', textAlign: 'center' }}>
+                    <div style={{ color: '#ff4444', fontSize: '1vw', marginTop: '0.5vh', fontFamily: 'Fira Mono, Consolas, monospace', textAlign: 'center' }}>
                       Incorrect password. Please try again.
                     </div>
                   )}
@@ -158,10 +133,10 @@ const SplashScreen: React.FC = () => {
               )}
               <style>{`
                 @keyframes title-shake {
-                  10%, 90% { transform: translateX(-2px) rotate(-2deg); }
-                  20%, 80% { transform: translateX(4px) rotate(2deg); }
-                  30%, 50%, 70% { transform: translateX(-8px) rotate(-4deg); }
-                  40%, 60% { transform: translateX(8px) rotate(4deg); }
+                  10%, 90% { transform: translateX(-0.2vw) rotate(-2deg); }
+                  20%, 80% { transform: translateX(0.4vw) rotate(2deg); }
+                  30%, 50%, 70% { transform: translateX(-0.8vw) rotate(-4deg); }
+                  40%, 60% { transform: translateX(0.8vw) rotate(4deg); }
                 }
                 @keyframes title-fall {
                   to {
@@ -174,10 +149,10 @@ const SplashScreen: React.FC = () => {
           </div>
         </div>
         {/* Right side elements - responsive positions */}
-        <div className="absolute" style={{ right: '2vw', top: '0vh', scale: '0.9', zIndex: 100 }}>
+        <div className="absolute" style={{ right: '2vw', top: '2vh', height: '15vh', zIndex: 100 }}>
           <CoupleShakeImage />
         </div>
-        <div className="absolute" style={{ right: '20vw', top: '45vh', zIndex: 100 }}>
+        <div className="absolute" style={{ right: '20vw', top: '50vh', height: '12vh', zIndex: 100 }}>
           <SvgPopupButton
             src="/rice_ring.svg"
             alt="Rice Ring"
@@ -192,7 +167,7 @@ const SplashScreen: React.FC = () => {
             popupOffset={{ x: -700, y: 25 }}
           />
         </div>
-        <div className="absolute" style={{ right: '5vw', top: '45vh', zIndex: 100 }}>
+        <div className="absolute" style={{ right: '5vw', top: '50vh', height: '12vh', zIndex: 100 }}>
           <SvgPopupButton
             src="/ucsb_flag.svg"
             alt="UCSB Flag"
@@ -208,26 +183,26 @@ const SplashScreen: React.FC = () => {
           />
         </div>
         {/* Bag with cycling items */}
-        <div className="absolute" style={{ bottom: '20vh', left: '65vh', scale: '1.8', zIndex: 30 }}>
+        <div className="absolute" style={{ bottom: '15vh', left: '35vw', zIndex: 41 }}>
           <BagCycleButton
             position={{ left: 0, top: 0 }}
-            scale={1.2}
+            scale={2.5}
             itemOffset={{ x: 150, y: -60 }}
             itemSize={130}
             bagSize={100}
           />
         </div>
         {/* Left side interactive elements */}
-        <div className="absolute" style={{ left: '15vw', top: '35vh', scale: '0.75', zIndex: 100 }}>
+        <div className="absolute" style={{ left: '20vw', top: '40vh', height: '12vh', zIndex: 100 }}>
           <QuarterSpinButton />
         </div>
-        <div className="absolute" style={{ left: '-7vw', top: '-30vh', scale: '0.2', zIndex: 999 }}>
+        <div className="absolute" style={{ left: '18vw', top: '7vh',zIndex: 999 }}>
           <StampPeelButton popupSide="right" />
         </div>
-        <div className="absolute" style={{ left: '3vw', top: '30vh', scale: '1', zIndex: 100 }}>
+        <div className="absolute" style={{ left: '8vw', top: '25vh', height: '12vh', zIndex: 100 }}>
           <PaperclipBendButton popupSide="right" />
         </div>
-        <div className="absolute" style={{ left: '6vw', top: '7vh', zIndex: 100 }}>
+        <div className="absolute" style={{ left: '6vw', top: '7vh', height: '12vh', zIndex: 100 }}>
           <CoffeeStainButton />
         </div>
         {/* Coffee Cup */}
@@ -236,17 +211,16 @@ const SplashScreen: React.FC = () => {
           alt="Coffee Cup"
           className="absolute pointer-events-none"
           style={{
-            left: '-15%',
-            top: '-20%',
-            width: '30%',
-            height: 'auto',
+            left: '-20vw',
+            top: '-35vh',
+            width: '40vw',
             zIndex: 101
           }}
         />
-        {/* Scroll Indicator */}
-        <div className="sticky bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce z-50">
-          <div className="w-6 h-10 border-2 border-black rounded-full flex justify-center">
-            <div className="w-1 h-3 bg-black rounded-full mt-2 animate-pulse" />
+        {/* Scroll Indicator at the very bottom center of the splash screen */}
+        <div className="absolute left-1/2 bottom-[3vh] transform -translate-x-1/2 animate-bounce z-50 pointer-events-none">
+          <div className="w-[3vw] h-[6vh] border-2 border-black rounded-full flex justify-center bg-white/80">
+            <div className="w-[0.5vw] h-[2vh] bg-black rounded-full mt-[1vh] animate-pulse" />
           </div>
         </div>
       </div>

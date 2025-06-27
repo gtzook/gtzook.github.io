@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 
 interface Book {
@@ -52,6 +51,7 @@ const BookGallery: React.FC = () => {
   const [books, setBooks] = useState<Book[]>([]);
   const [index, setIndex] = useState(0);
   const [hovered, setHovered] = useState(false);
+  const [buttonHovered, setButtonHovered] = useState(false);
 
   useEffect(() => {
     fetch('/books_openlibrary.txt')
@@ -91,8 +91,8 @@ const BookGallery: React.FC = () => {
     return undefined;
   }
 
-  // Helper to scale text down if it exceeds max width
-  function getScaledFontSize(text: string, maxWidth: number, baseSize: number, fontWeight = '600', fontFamily = 'Indie Flower, cursive') {
+  // Helper to scale text down if it exceeds max width, but not below minSize
+  function getScaledFontSize(text: string, maxWidth: number, baseSize: number, minSize: number, fontWeight = '600', fontFamily = 'Indie Flower, cursive') {
     if (typeof window === 'undefined') return baseSize;
     const span = document.createElement('span');
     span.style.visibility = 'hidden';
@@ -103,12 +103,12 @@ const BookGallery: React.FC = () => {
     span.innerText = text;
     document.body.appendChild(span);
     let size = baseSize;
-    while (span.offsetWidth > maxWidth && size > 10) {
+    while (span.offsetWidth > maxWidth && size > minSize) {
       size -= 1;
       span.style.fontSize = size + 'px';
     }
     document.body.removeChild(span);
-    return size;
+    return Math.max(size, minSize);
   }
 
   if (!books.length) return null;
@@ -117,89 +117,119 @@ const BookGallery: React.FC = () => {
   const bookBg = getBookBgPath(book.cover);
 
   // In the render, set max width for title/author
-  const maxTextWidth = 110;
-  const titleFontSize = getScaledFontSize(book.title, maxTextWidth, 16, '600');
-  const authorFontSize = getScaledFontSize(book.author, maxTextWidth, 15, '400');
+  const maxTextWidth = 8 * window.innerWidth / 100;
+  const titleFontSize = getScaledFontSize(book.title, maxTextWidth, 2.5 * window.innerWidth / 100, 18, '600');
+  const authorFontSize = getScaledFontSize(book.author, maxTextWidth, 1 * window.innerWidth / 100, 14, '400');
+
+  // Add shake animation on hover (but not when hovering the button)
+  const galleryClass = `bookgallery-tilt${hovered && !buttonHovered ? ' bookgallery-shake' : ''}`;
+
+  const handleGalleryClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setIndex(i => (i === books.length - 1 ? 0 : i + 1));
+  };
 
   return (
     <div className="relative w-0 h-0">
       <div
-        className={`bookgallery-tilt${hovered ? ' bookgallery-tilt-hover' : ''}`}
+        className={galleryClass}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
         style={{
           position: 'absolute',
-          left: '-20vw',
-          top: '-15vh',
+          left: '-10vw',
+          top: '-8vh',
           transform: 'scale(1.2)',
           transformOrigin: 'top left',
-          width: 120,
-          height: 180,
+          width: '10vw',
+          height: '13vh',
           zIndex: 10,
+          cursor: 'pointer',
         }}
       >
-        <div style={{ position: 'relative', width: 120, height: 180 }}>
-          {bookBg && (
+        <a
+          href={`https://openlibrary.org/isbn/${book.isbn}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ textDecoration: 'none', display: 'block' }}
+        >
+          <div style={{ position: 'relative', width: '10vw' }}>
+            {bookBg && (
+              <img
+                src={bookBg}
+                alt="Book background"
+                style={{
+                  position: 'absolute',
+                  left: '6.5vw',
+                  top: '0vh',
+                  zIndex: 0,
+                  borderRadius: '1vw',
+                  transform: 'scale(1.1)',
+                  objectFit: 'cover',
+                }}
+              />
+            )}
+            {/* Book holder frame */}
             <img
-              src={bookBg}
-              alt="Book background"
+              src="/book_holder.webp"
+              alt="Book holder"
               style={{
                 position: 'absolute',
-                left: 120,
-                top: 80,
-                zIndex: 0,
-                borderRadius: 10,
-                transform: 'rotate(20deg) scale(1.1)',
-                objectFit: 'cover',
+                left: '10vw',
+                top: '6vh',
+                scale: '3',
+                zIndex: 2,
+                pointerEvents: 'none',
+                transform: 'rotate(-22deg)',
+                userSelect: 'none',
               }}
+              draggable={false}
             />
-          )}
-          {/* Book holder frame */}
-          <img
-            src="/book_holder.webp"
-            alt="Book holder"
-            style={{
-              position: 'absolute',
-              left: 150,
-              top: 140,
-              transform: 'scale(3)',
-              zIndex: 2,
-              pointerEvents: 'none',
-              userSelect: 'none',
-            }}
-            draggable={false}
-          />
-          <button
-            onClick={showNext}
-            className="text-white bg-black/40 rounded-full w-8 h-8 flex items-center justify-center ml-2 hover:bg-black/80"
-            aria-label="Next book"
-            style={{
-              position: 'absolute',
-              left: 250,
-              top: 200,
-              transform: 'rotate(22deg)',
-              zIndex: 10,
-              border: 'none',
-              boxShadow: 'none',
-            }}
-          >
-            &#8594;
-          </button>
-        </div>
-        <div className="flex flex-row items-center justify-center mt-2">
-          <div className="text-center" style={{
-            minWidth: 110,
-            position: 'absolute',
-            left: 90,
-            top: 235,
-            zIndex: 5,
-            transform: 'rotate(22deg)',
-          }}>
-            <div style={{ fontWeight: 600, color: 'black', fontSize: titleFontSize, fontFamily: 'Indie Flower, cursive', maxWidth: maxTextWidth, overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>{book.title}</div>
-            <div style={{ color: '#444', fontSize: authorFontSize, fontFamily: 'Indie Flower, cursive', maxWidth: maxTextWidth, overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>{book.author}</div>
           </div>
-        </div>
+          <div className="flex flex-row items-center justify-center mt-2">
+            <div className="text-center" style={{
+              minWidth: '7vw',
+              position: 'absolute',
+              left: '8vw',
+              top: '23.5vh',
+              zIndex: 5,
+              maxWidth: maxTextWidth,
+            }}>
+              <div style={{ fontWeight: 600, color: 'black', fontSize: titleFontSize, fontFamily: 'Indie Flower, cursive', maxWidth: maxTextWidth, overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>{book.title}</div>
+              <div style={{ color: '#444', fontSize: authorFontSize, fontFamily: 'Indie Flower, cursive', maxWidth: maxTextWidth, overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>{book.author}</div>
+            </div>
+          </div>
+        </a>
+        <button
+          onClick={showNext}
+          className="text-white bg-black/40 rounded-full flex items-center justify-center ml-3 hover:bg-black/80"
+          aria-label="Next book"
+          style={{
+            position: 'absolute',
+            left: '19vw',
+            top: '15vh',
+            width: '4vw',
+            height: '4vw',
+            fontSize: '2vw',
+            zIndex: 10,
+          }}
+          onMouseEnter={() => setButtonHovered(true)}
+          onMouseLeave={() => setButtonHovered(false)}
+        >
+          &#8594;
+        </button>
       </div>
+      <style>{`
+        .bookgallery-shake {
+          animation: bookgallery-shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+        }
+        @keyframes bookgallery-shake {
+          10%, 90% { transform: scale(1.2) translateX(-0.5px) rotate(-1deg); }
+          20%, 80% { transform: scale(1.2) translateX(1px) rotate(1deg); }
+          30%, 50%, 70% { transform: scale(1.2) translateX(-2px) rotate(-1deg);  }
+          40%, 60% { transform: scale(1.2) translateX(2px) rotate(1deg); }
+        }
+      `}</style>
     </div>
   );
 };

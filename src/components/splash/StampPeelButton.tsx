@@ -60,9 +60,8 @@ const StampPeelButton: React.FC<{ popupSide?: 'left' | 'right' }> = ({ popupSide
             border: 'none',
             outline: 'none',
             background: 'none',
+            height: '15vh',
             transform: hovered ? 'rotate(-8deg) scale(1.28) skewY(-8deg) translateY(-8px)' : 'scale(1.2)',
-            width: '100%',
-            height: '100%',
             display: 'block',
           }}
           onMouseEnter={() => setHovered(true)}

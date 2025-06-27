@@ -5,24 +5,39 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 const ProjectsSection: React.FC = () => {
   const projects = [
     {
-      title: "Snaptics Haptics Platform",
-      year: "2020",
-      description: "Low-cost open-source hardware for wearable multi-sensory haptics"
+      title: "Solar Battery Optimization System",
+      year: "2025",
+      description: "Optimal control using dynamic programming approach for realistic solar battery system, using real-world data from Lineage (for class)."
     },
     {
-      title: "Smart Grasper Surgical Robot",
-      year: "2018", 
-      description: "Intelligent surgical robot with advanced grasping capabilities"
+      title: "Dendritic Hotspot Analysis and Simulation Model",
+      year: "2024",
+      description: "Automated analysis and simulation-based (NEURON) model of dendritic hotspots in mice."
     },
     {
-      title: "Electric Car Conversion",
-      year: "2019",
-      description: "Complete electric vehicle conversion project"
+      title: "Free=moving Behavior Box Refurbishment",
+      year: "2024",
+      description: "Refurbishment of a 4 behavior boxes for free-moving mice, including new electronics and overhauled software."
     },
     {
-      title: "DIC Skin Deformation Tracking",
-      year: "2021",
-      description: "Advanced skin deformation tracking using digital image correlation"
+      title: "Hybrid (discrete + continous) model of small network of LIF neurons",
+      year: "2024",
+      description: "Model of a small network off LIF neurons leveraging the unique approach of hybrid systems to model discrete jumping behavior, performed stability analysis."
+    },
+    {
+      title: "LIF-network simualation of kindling/anti-kindling neuron stimulation",
+      year: "2024",
+      description: "LIF neuron based simulation of seizure inducing and inhibiting stimulation (for class)."
+    },
+    {
+      title: "Sobriety Encouraging Remote Control Car",
+      year: "2022",
+      description: "Bluetooth remote controlled car that encourages sobriety by disabling the car when alcohol is detected (for class)."
+    },
+    {
+      title: "FES Textile Sleeve Electronics",
+      year: "2022",
+      description: "Functional electrical stimulation textile sleeve with integrated electronics"
     },
     {
       title: "MOE Exoskeleton for Stroke Rehabilitation",
@@ -30,9 +45,24 @@ const ProjectsSection: React.FC = () => {
       description: "Modular exoskeleton system for stroke patient rehabilitation"
     },
     {
-      title: "FES Textile Sleeve Electronics",
-      year: "2022",
-      description: "Functional electrical stimulation textile sleeve with integrated electronics"
+      title: "DIC Skin Deformation Tracking",
+      year: "2021",
+      description: "Advanced skin deformation tracking using digital image correlation"
+    },
+    {
+      title: "Snaptics Haptics Platform",
+      year: "2020",
+      description: "Low-cost open-source hardware for wearable multi-sensory haptics"
+    },
+    {
+      title: "Electric Car Conversion",
+      year: "2019",
+      description: "Complete electric vehicle conversion project"
+    },
+    {
+      title: "Smart Grasper Surgical Robot",
+      year: "2018", 
+      description: "Intelligent surgical robot with advanced grasping capabilities"
     }
   ];
 

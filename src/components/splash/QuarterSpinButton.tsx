@@ -57,6 +57,8 @@ const QuarterSpinButton: React.FC = () => {
           alt="Quarter Button"
           className="w-32 h-32 md:w-40 md:h-40"
           style={{
+            height: '15vh',
+            width: 'auto',
             transform: `rotate(${angle}deg)`,
             transition: speed === 0 ? 'transform 0.2s cubic-bezier(0.23, 1, 0.32, 1)' : 'none',
           }}

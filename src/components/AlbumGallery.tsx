@@ -70,40 +70,33 @@ const AlbumGallery: React.FC = () => {
         {hasAlbums && (
           <button
             onClick={showNext}
-            className="text-white bg-black/40 rounded-full w-16 h-16 flex items-center justify-center text-3xl hover:bg-black/80"
+            className="text-white bg-black/40 rounded-full flex items-center justify-center ml-3 hover:bg-black/80"
+            style={{ width: '4vw', height: '4vw', fontSize: '2vw' , top: '15vh', position: 'relative' }}
             aria-label="Next album"
           >
             &#8635;
           </button>
         )}
-        <div className="relative flex flex-col items-center" style={{ width: 420, height: 420 }}>
+        <div className="relative flex flex-col items-center" style={{ width: '30vw' }}>
           <img
             src="/record_player.svg"
             alt="Record Player"
             style={{
               position: 'absolute',
-              left: 0,
-              top: 0,
-              width: 420,
-              height: 420,
               zIndex: -1,
               pointerEvents: 'none',
             }}
           />
-          {hasAlbums ? (
             <a
               href={recordLink}
               target="_blank"
               rel="noopener noreferrer"
               style={{
                 display: 'block',
-                width: 340,
-                height: 340,
                 overflow: 'hidden',
                 position: 'absolute',
-                left: '36%',
-                top: '50%',
-                transform: 'translate(-50%, -50%)',
+                left: '-1vw',
+                top: '-5vh',
                 zIndex: 1,
               }}
               onMouseEnter={() => setIsHovered(true)}
@@ -113,8 +106,7 @@ const AlbumGallery: React.FC = () => {
                 src={compositeImg}
                 alt={recordAlt}
                 style={{
-                  width: 340,
-                  height: 340,
+                  height: '25vw',
                   objectFit: 'cover',
                   transition: 'transform 0.3s, filter 0.2s',
                   transform: `rotate(${angle}deg)` ,
@@ -122,23 +114,6 @@ const AlbumGallery: React.FC = () => {
                 }}
               />
             </a>
-          ) : (
-            <img
-              src={compositeImg}
-              alt={recordAlt}
-              style={{
-                width: 340,
-                height: 340,
-                objectFit: 'cover',
-                position: 'absolute',
-                left: '36%',
-                top: '50%',
-                transform: `translate(-50%, -50%) rotate(${angle}deg)` ,
-                zIndex: 1,
-                transition: 'transform 0.3s, filter 0.2s',
-              }}
-            />
-          )}
           <img
             src="/needle.webp"
             alt="Needle"
@@ -146,11 +121,11 @@ const AlbumGallery: React.FC = () => {
               position: 'absolute',
               right: '20%',
               top: '20%',
-              width: 120,
-              height: 180,
+              width: '7vw',
+              height: '10vw',
               zIndex: 2,
               pointerEvents: 'none',
-              transform: 'scale(150%)',
+              transform: 'scale(1.5)',
               transformOrigin: '20% 10%',
             }}
           />

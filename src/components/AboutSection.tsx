@@ -1,61 +1,77 @@
-
 import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
+import { Github, Instagram } from 'lucide-react';
 
-const AboutSection: React.FC = () => {
+const About = () => {
   return (
-    <section id="about" className="min-h-screen flex items-center justify-center py-20 bg-black">
-      <div className="max-w-6xl mx-auto px-4">
-        <Card className="shadow-lg border-white/20 bg-black/80 backdrop-blur-sm">
-          <CardHeader className="pb-4">
-            <CardTitle className="text-4xl md:text-5xl font-bold text-white mb-4 text-center">
-              About Gabriel Zook
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-8">
-            <div className="text-center">
-              <p className="text-xl text-gray-300 leading-relaxed max-w-3xl mx-auto">
-                Passionate MS/PhD student at UC Santa Barbara with a love for robotics and technology. 
-                Published researcher with hands-on experience in hardware design, robotics, and machine learning.
-              </p>
-            </div>
+    <div className="p-6 max-w-5xl mx-auto space-y-6">
+      {/* Top Blurb */}
+      <p className="text-lg leading-relaxed">
+        I'm an ECE MS/PhD student at UC Santa Barbara, working at the Ikuko Smith lab where I study visual processing in mice <i>in vivo</i>.
+      </p>
 
-            <div className="grid md:grid-cols-2 gap-8">
-              <div className="bg-white/10 rounded-lg p-6">
-                <h3 className="text-2xl font-bold text-white mb-4">Contact</h3>
-                <div className="space-y-2 text-gray-300">
-                  <p>📧 gabyzook@gmail.com</p>
-                  <p>📱 (425) 524-1542</p>
-                  <p>📍 Goleta, CA</p>
-                </div>
-              </div>
-
-              <div className="bg-white/10 rounded-lg p-6">
-                <h3 className="text-2xl font-bold text-white mb-4">Languages & Interests</h3>
-                <div className="space-y-2 text-gray-300">
-                  <p><strong>Languages:</strong> English, Japanese (spoken)</p>
-                  <p><strong>Interests:</strong> Philosophy, travel, music production, photography, technology, writing</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-white/10 rounded-lg p-6">
-              <h3 className="text-2xl font-bold text-white mb-4">Distinctions</h3>
-              <div className="grid md:grid-cols-2 gap-4 text-gray-300">
-                <div>
-                  <p>🏆 Chevron Scholarship Awardee 2022-2023</p>
-                  <p>🎖️ IEEE-Eta Kappa Nu Inductee</p>
-                </div>
-                <div>
-                  <p>🏅 NSF GRFP Honorable Mention (2024)</p>
-                </div>
-              </div>
-            </div>
+      {/* Card Section */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Left: Photo */}
+        <Card className="aspect-square flex items-center justify-center">
+          <CardContent className="text-center text-gray-500">
+            <img
+              src="/office_photo.jpg"
+              alt="Computer photo"
+              className="w-full h-auto mt-4"
+              style={{ borderRadius: '5vw' }}
+            />
           </CardContent>
         </Card>
+
+        {/* Right: Stacked Cards + Social */}
+        <div className="flex flex-col gap-6">
+          {/* Awards */}
+          <Card>
+            <CardContent className="p-4">
+              <h2 className="text-xl font-semibold mb-2">Recognition</h2>
+              <ul className="list-disc pl-4 space-y-1">
+                <li>2024 NSF GRFP Honorable Mention</li>
+                <li>IEEE-Eta Kappa Nu Inductee</li>
+                <li>Chevron Scholarship Recipient (2022)</li>
+              </ul>
+            </CardContent>
+          </Card>
+          {/* Newsworthy */}
+            <Card>
+              <CardContent className="p-4">
+                <h2 className="text-xl font-semibold mb-2">In the News</h2>
+                <ul className="list-disc pl-4 space-y-1">
+                  <li><a href='https://mech.rice.edu/news/zook-brothers-bring-hardware-and-software-together'>The Brothers Zook (bad hair day)</a></li>
+                  <li><a href='https://snip.ly/9uy3xv'>ACT Score</a></li>
+                </ul>
+              </CardContent>
+            </Card>
+          {/* Social Links */}
+          <div className="flex gap-6 justify-center pt-2">
+            <a
+              href="https://github.com/gtzook"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-gray-800 transition"
+              aria-label="GitHub"
+            >
+              <Github size={32} />
+            </a>
+            <a
+              href="https://www.instagram.com/gabetakesphotos111/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-pink-600 transition"
+              aria-label="Instagram"
+            >
+              <Instagram size={32} />
+            </a>
+          </div>
+        </div>
       </div>
-    </section>
+    </div>
   );
 };
 
-export default AboutSection;
+export default About;
