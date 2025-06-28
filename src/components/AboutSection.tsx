@@ -19,7 +19,7 @@ const About = () => {
               src="/optimized/office_photo-400.jpg"
               alt="Computer photo"
               className="w-full h-auto mt-4"
-              style={{ borderRadius: '5vw' }} srcSet="/optimized/office_photo-400.jpg 400w, /optimized/office_photo-800.jpg 800w, /optimized/office_photo-1200.jpg 1200w" sizes="(max-width: 600px) 100vw, 50vw" />
+              style={{ borderRadius: '5vw', transform='rotate(90deg)'}} srcSet="/optimized/office_photo-400.jpg 400w, /optimized/office_photo-800.jpg 800w, /optimized/office_photo-1200.jpg 1200w" sizes="(max-width: 600px) 100vw, 50vw" />
 
           </CardContent>
         </Card>
