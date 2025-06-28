@@ -9,42 +9,42 @@ interface Book {
 
 // Fallback books data in case the file can't be loaded
 const FALLBACK_BOOKS: Book[] = [
-  {
-    title: "House of Leaves",
-    author: "Mark Z. Danielewski",
-    isbn: "House_of_Leaves",
-    cover: "/book_covers/House_of_Leaves.jpg"
-  },
-  {
-    title: "Infinite Jest",
-    author: "David Foster Wallace", 
-    isbn: "Infinite_Jest",
-    cover: "/book_covers/Infinite_Jest.jpg"
-  },
-  {
-    title: "One Hundred Years of Solitude",
-    author: "Gabriel García Márquez",
-    isbn: "One_Hundred_Years_of_Solitude", 
-    cover: "/book_covers/One_Hundred_Years_of_Solitude.jpg"
-  },
-  {
-    title: "If on a Winter's Night a Traveler",
-    author: "Italo Calvino",
-    isbn: "If_on_a_Winters_Night_a_Traveler",
-    cover: "/book_covers/If_on_a_Winters_Night_a_Traveler.jpg"
-  }
-];
+{
+  title: "House of Leaves",
+  author: "Mark Z. Danielewski",
+  isbn: "House_of_Leaves",
+  cover: "/book_covers/House_of_Leaves.jpg"
+},
+{
+  title: "Infinite Jest",
+  author: "David Foster Wallace",
+  isbn: "Infinite_Jest",
+  cover: "/book_covers/Infinite_Jest.jpg"
+},
+{
+  title: "One Hundred Years of Solitude",
+  author: "Gabriel García Márquez",
+  isbn: "One_Hundred_Years_of_Solitude",
+  cover: "/book_covers/One_Hundred_Years_of_Solitude.jpg"
+},
+{
+  title: "If on a Winter's Night a Traveler",
+  author: "Italo Calvino",
+  isbn: "If_on_a_Winters_Night_a_Traveler",
+  cover: "/book_covers/If_on_a_Winters_Night_a_Traveler.jpg"
+}];
+
 
 // Utility to parse the books_openlibrary.txt file
 function parseBooks(text: string): Book[] {
-  return text.split('\n')
-    .map(line => line.trim())
-    .filter(line => line)
-    .map(line => {
-      const [title, author, isbn, cover] = line.split('\t');
-      return { title, author, isbn, cover };
-    })
-    .filter(book => book.cover); // allow both local and remote covers
+  return text.split('\n').
+  map((line) => line.trim()).
+  filter((line) => line).
+  map((line) => {
+    const [title, author, isbn, cover] = line.split('\t');
+    return { title, author, isbn, cover };
+  }).
+  filter((book) => book.cover); // allow both local and remote covers
 }
 
 const BookGallery: React.FC = () => {
@@ -54,23 +54,23 @@ const BookGallery: React.FC = () => {
   const [buttonHovered, setButtonHovered] = useState(false);
 
   useEffect(() => {
-    fetch('/books_openlibrary.txt')
-      .then(res => {
-        if (!res.ok) {
-          throw new Error('File not found');
-        }
-        return res.text();
-      })
-      .then(text => setBooks(parseBooks(text)))
-      .catch(error => {
-        console.log('Using fallback books data:', error.message);
-        setBooks(FALLBACK_BOOKS);
-      });
+    fetch('/books_openlibrary.txt').
+    then((res) => {
+      if (!res.ok) {
+        throw new Error('File not found');
+      }
+      return res.text();
+    }).
+    then((text) => setBooks(parseBooks(text))).
+    catch((error) => {
+      console.log('Using fallback books data:', error.message);
+      setBooks(FALLBACK_BOOKS);
+    });
   }, []);
 
   // Preload all book cover images
   useEffect(() => {
-    books.forEach(book => {
+    books.forEach((book) => {
       if (book.cover) {
         const img = new window.Image();
         img.src = book.cover;
@@ -78,8 +78,8 @@ const BookGallery: React.FC = () => {
     });
   }, [books]);
 
-  const showPrev = () => setIndex(i => (i === 0 ? books.length - 1 : i - 1));
-  const showNext = () => setIndex(i => (i === books.length - 1 ? 0 : i + 1));
+  const showPrev = () => setIndex((i) => i === 0 ? books.length - 1 : i - 1);
+  const showNext = () => setIndex((i) => i === books.length - 1 ? 0 : i + 1);
 
   // Helper to get the background image path for a book
   function getBookBgPath(cover: string) {
@@ -126,7 +126,7 @@ const BookGallery: React.FC = () => {
 
   const handleGalleryClick = (e: React.MouseEvent) => {
     e.preventDefault();
-    setIndex(i => (i === books.length - 1 ? 0 : i + 1));
+    setIndex((i) => i === books.length - 1 ? 0 : i + 1);
   };
 
   return (
@@ -144,34 +144,34 @@ const BookGallery: React.FC = () => {
           width: '10vw',
           height: '13vh',
           zIndex: 10,
-          cursor: 'pointer',
-        }}
-      >
+          cursor: 'pointer'
+        }}>
+
         <a
           href={`https://openlibrary.org/isbn/${book.isbn}`}
           target="_blank"
           rel="noopener noreferrer"
-          style={{ textDecoration: 'none', display: 'block' }}
-        >
+          style={{ textDecoration: 'none', display: 'block' }}>
+
           <div style={{ position: 'relative', width: '10vw' }}>
-            {bookBg && (
-              <img
-                src={bookBg}
-                alt="Book background"
-                style={{
-                  position: 'absolute',
-                  left: '6.5vw',
-                  top: '0vh',
-                  zIndex: 0,
-                  borderRadius: '1vw',
-                  transform: 'scale(1.1)',
-                  objectFit: 'cover',
-                }}
-              />
-            )}
+            {bookBg &&
+            <img
+              src={bookBg}
+              alt="Book background"
+              style={{
+                position: 'absolute',
+                left: '6.5vw',
+                top: '0vh',
+                zIndex: 0,
+                borderRadius: '1vw',
+                transform: 'scale(1.1)',
+                objectFit: 'cover'
+              }} />
+
+            }
             {/* Book holder frame */}
             <img
-              src="/book_holder.webp"
+              src="/optimized/book_holder-400.webp"
               alt="Book holder"
               style={{
                 position: 'absolute',
@@ -181,10 +181,10 @@ const BookGallery: React.FC = () => {
                 zIndex: 2,
                 pointerEvents: 'none',
                 transform: 'rotate(-22deg)',
-                userSelect: 'none',
+                userSelect: 'none'
               }}
-              draggable={false}
-            />
+              draggable={false} srcSet="/optimized/book_holder-400.webp 400w, /optimized/book_holder-800.webp 800w, /optimized/book_holder-1200.webp 1200w" sizes="(max-width: 600px) 100vw, 50vw" />
+
           </div>
           <div className="flex flex-row items-center justify-center mt-2">
             <div className="text-center" style={{
@@ -193,7 +193,7 @@ const BookGallery: React.FC = () => {
               left: '8vw',
               top: '23.5vh',
               zIndex: 5,
-              maxWidth: maxTextWidth,
+              maxWidth: maxTextWidth
             }}>
               <div style={{ fontWeight: 600, color: 'black', fontSize: titleFontSize, fontFamily: 'Indie Flower, cursive', maxWidth: maxTextWidth, overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>{book.title}</div>
               <div style={{ color: '#444', fontSize: authorFontSize, fontFamily: 'Indie Flower, cursive', maxWidth: maxTextWidth, overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>{book.author}</div>
@@ -211,11 +211,11 @@ const BookGallery: React.FC = () => {
             width: '4vw',
             height: '4vw',
             fontSize: '2vw',
-            zIndex: 10,
+            zIndex: 10
           }}
           onMouseEnter={() => setButtonHovered(true)}
-          onMouseLeave={() => setButtonHovered(false)}
-        >
+          onMouseLeave={() => setButtonHovered(false)}>
+
           &#8594;
         </button>
       </div>
@@ -230,8 +230,8 @@ const BookGallery: React.FC = () => {
           40%, 60% { transform: scale(1.2) translateX(2px) rotate(1deg); }
         }
       `}</style>
-    </div>
-  );
+    </div>);
+
 };
 
 export default BookGallery;

@@ -21,18 +21,18 @@ const ContactSection: React.FC = () => {
               </div>
 
             <div className="flex justify-center space-x-4">
-              <Button 
+              <Button
                 onClick={() => window.open('mailto:gabe@gabezook.com', '_blank')}
-                className="bg-white text-black hover:bg-gray-200 px-8 py-3"
-              >
+                className="bg-white text-black hover:bg-gray-200 px-8 py-3">
+
                 Send Email
               </Button>
             </div>
           </CardContent>
         </Card>
       </div>
-    </section>
-  );
+    </section>);
+
 };
 
 export default ContactSection;

@@ -16,11 +16,11 @@ const About = () => {
         <Card className="aspect-square flex items-center justify-center">
           <CardContent className="text-center text-gray-500">
             <img
-              src="/office_photo.jpg"
+              src="/optimized/office_photo-400.jpg"
               alt="Computer photo"
               className="w-full h-auto mt-4"
-              style={{ borderRadius: '5vw' }}
-            />
+              style={{ borderRadius: '5vw' }} srcSet="/optimized/office_photo-400.jpg 400w, /optimized/office_photo-800.jpg 800w, /optimized/office_photo-1200.jpg 1200w" sizes="(max-width: 600px) 100vw, 50vw" />
+
           </CardContent>
         </Card>
 
@@ -65,8 +65,8 @@ const About = () => {
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-gray-800 transition"
-              aria-label="GitHub"
-            >
+              aria-label="GitHub">
+
               <Github size={32} />
             </a>
             <a
@@ -74,15 +74,15 @@ const About = () => {
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-pink-600 transition"
-              aria-label="Instagram"
-            >
+              aria-label="Instagram">
+
               <Instagram size={32} />
             </a>
           </div>
         </div>
       </div>
-    </div>
-  );
+    </div>);
+
 };
 
 export default About;

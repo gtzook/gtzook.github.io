@@ -12,12 +12,12 @@ const popupBoxStyle = {
   flexDirection: 'column' as const,
   alignItems: 'center' as const,
   gap: 8,
-  pointerEvents: 'auto' as const,
+  pointerEvents: 'auto' as const
 };
 
-const StampPeelButton: React.FC<{ popupSide?: 'left' | 'right' }> = ({ popupSide = 'right' }) => {
+const StampPeelButton: React.FC<{popupSide?: 'left' | 'right';}> = ({ popupSide = 'right' }) => {
   const [hovered, setHovered] = useState(false);
-  const [popupPos, setPopupPos] = useState<{ left: number, top: number } | null>(null);
+  const [popupPos, setPopupPos] = useState<{left: number;top: number;} | null>(null);
   const btnRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
@@ -25,7 +25,7 @@ const StampPeelButton: React.FC<{ popupSide?: 'left' | 'right' }> = ({ popupSide
       const rect = btnRef.current.getBoundingClientRect();
       setPopupPos({
         left: popupSide === 'left' ? rect.left - 240 : rect.right + 24,
-        top: rect.top + rect.height / 2 - 100,
+        top: rect.top + rect.height / 2 - 100
       });
     } else if (!hovered) {
       setPopupPos(null);
@@ -45,12 +45,12 @@ const StampPeelButton: React.FC<{ popupSide?: 'left' | 'right' }> = ({ popupSide
           cursor: 'pointer',
           width: 'auto',
           height: 'auto',
-          display: 'block',
+          display: 'block'
         }}
-        aria-label="Stamp Button"
-      >
+        aria-label="Stamp Button">
+
         <img
-          src="/stamp.webp"
+          src="/optimized/stamp-400.webp"
           alt="Stamp"
           style={{
             boxShadow: 'none',
@@ -62,11 +62,11 @@ const StampPeelButton: React.FC<{ popupSide?: 'left' | 'right' }> = ({ popupSide
             background: 'none',
             height: '15vh',
             transform: hovered ? 'rotate(-8deg) scale(1.28) skewY(-8deg) translateY(-8px)' : 'scale(1.2)',
-            display: 'block',
+            display: 'block'
           }}
           onMouseEnter={() => setHovered(true)}
-          onMouseLeave={() => setHovered(false)}
-        />
+          onMouseLeave={() => setHovered(false)} srcSet="/optimized/stamp-400.webp 400w, /optimized/stamp-800.webp 800w, /optimized/stamp-1200.webp 1200w" sizes="(max-width: 600px) 100vw, 50vw" />
+
       </button>
       {hovered && popupPos && ReactDOM.createPortal(
         <div
@@ -75,22 +75,22 @@ const StampPeelButton: React.FC<{ popupSide?: 'left' | 'right' }> = ({ popupSide
             left: popupSide === 'left' ? popupPos.left - 100 : popupPos.left,
             top: popupPos.top,
             minWidth: 220,
-            ...popupBoxStyle,
-          }}
-        >
+            ...popupBoxStyle
+          }}>
+
           <img
-            src="/pose.jpg"
+            src="/optimized/pose-400.jpg"
             alt="Pose"
-            style={{ width: 300, height: 300, objectFit: 'cover', borderRadius: 10, marginBottom: 10 }}
-          />
+            style={{ width: 300, height: 300, objectFit: 'cover', borderRadius: 10, marginBottom: 10 }} srcSet="/optimized/pose-400.jpg 400w, /optimized/pose-800.jpg 800w, /optimized/pose-1200.jpg 1200w" sizes="(max-width: 600px) 100vw, 50vw" />
+
           <div style={{ color: '#fff', fontSize: 22, fontFamily: 'inherit', maxWidth: 200 }}>
             Glacier National Park (2025)
           </div>
         </div>,
         document.body
       )}
-    </>
-  );
+    </>);
+
 };
 
 export default StampPeelButton;

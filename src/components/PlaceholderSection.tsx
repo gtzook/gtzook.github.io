@@ -9,11 +9,11 @@ interface PlaceholderSectionProps {
   bgColor?: string;
 }
 
-const PlaceholderSection: React.FC<PlaceholderSectionProps> = ({ 
-  id, 
-  title, 
-  description, 
-  bgColor = "bg-black" 
+const PlaceholderSection: React.FC<PlaceholderSectionProps> = ({
+  id,
+  title,
+  description,
+  bgColor = "bg-black"
 }) => {
   return (
     <section id={id} className={`min-h-screen flex items-center justify-center py-20 ${bgColor}`}>
@@ -37,8 +37,8 @@ const PlaceholderSection: React.FC<PlaceholderSectionProps> = ({
           </CardContent>
         </Card>
       </div>
-    </section>
-  );
+    </section>);
+
 };
 
 export default PlaceholderSection;

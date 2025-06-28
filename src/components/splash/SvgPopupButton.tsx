@@ -9,14 +9,14 @@ interface SvgPopupButtonProps {
   position: React.CSSProperties;
   size?: number;
   scale?: number;
-  popupOffset?: { x: number; y: number };
+  popupOffset?: {x: number;y: number;};
 }
 
 const SvgPopupButton: React.FC<SvgPopupButtonProps> = ({
   src, alt, popupText, position, size = 100, scale = 1, popupOffset = { x: 0, y: 0 }
 }) => {
   const [hovered, setHovered] = React.useState(false);
-  const [popupPos, setPopupPos] = React.useState<{ left: number, top: number } | null>(null);
+  const [popupPos, setPopupPos] = React.useState<{left: number;top: number;} | null>(null);
   const btnRef = React.useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -33,8 +33,8 @@ const SvgPopupButton: React.FC<SvgPopupButtonProps> = ({
       ref={btnRef}
       style={{ position: 'relative', cursor: 'pointer', width: size, height: size, transform: `scale(${scale})` }}
       onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-    >
+      onMouseLeave={() => setHovered(false)}>
+
       <img
         src={src}
         alt={alt}
@@ -43,9 +43,9 @@ const SvgPopupButton: React.FC<SvgPopupButtonProps> = ({
           height: size,
           filter: hovered ? 'brightness(0.7)' : 'none',
           transition: 'filter 0.2s',
-          display: 'block',
-        }}
-      />
+          display: 'block'
+        }} />
+
       {hovered && popupPos && ReactDOM.createPortal(
         <div
           style={{
@@ -60,14 +60,14 @@ const SvgPopupButton: React.FC<SvgPopupButtonProps> = ({
             fontSize: 20,
             padding: 20,
             zIndex: 1000,
-            whiteSpace: 'pre-line',
+            whiteSpace: 'pre-line'
           }}
-          dangerouslySetInnerHTML={{ __html: popupText }}
-        />,
+          dangerouslySetInnerHTML={{ __html: popupText }} />,
+
         document.body
       )}
-    </div>
-  );
+    </div>);
+
 };
 
 export default SvgPopupButton;

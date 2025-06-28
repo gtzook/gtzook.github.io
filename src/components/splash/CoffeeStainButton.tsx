@@ -13,12 +13,12 @@ const popupBoxStyle = {
   flexDirection: 'column' as const,
   alignItems: 'center' as const,
   gap: 8,
-  pointerEvents: 'auto' as const,
+  pointerEvents: 'auto' as const
 };
 
 const CoffeeStainButton: React.FC = () => {
   const [hovered, setHovered] = useState(false);
-  const [popupPos, setPopupPos] = useState<{ left: number, top: number } | null>(null);
+  const [popupPos, setPopupPos] = useState<{left: number;top: number;} | null>(null);
   const btnRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
@@ -26,7 +26,7 @@ const CoffeeStainButton: React.FC = () => {
       const rect = btnRef.current.getBoundingClientRect();
       setPopupPos({
         left: rect.right + 24,
-        top: rect.top + rect.height / 2 - 100,
+        top: rect.top + rect.height / 2 - 100
       });
     } else if (!hovered) {
       setPopupPos(null);
@@ -46,14 +46,14 @@ const CoffeeStainButton: React.FC = () => {
           padding: 0,
           cursor: 'pointer',
           transition: 'transform 0.3s cubic-bezier(0.23, 1, 0.32, 1)',
-          filter: hovered ? 'brightness(0.5)' : 'none',
+          filter: hovered ? 'brightness(0.5)' : 'none'
         }}
         aria-label="Coffee Stain Button"
         onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
-      >
+        onMouseLeave={() => setHovered(false)}>
+
         <img
-          src="/coffee_stain.webp"
+          src="/optimized/coffee_stain-400.webp"
           alt="Coffee Stain"
           className="h-32 md:h-40"
           style={{
@@ -62,9 +62,9 @@ const CoffeeStainButton: React.FC = () => {
             transform: 'rotate(30deg)',
             border: 'none',
             outline: 'none',
-            background: 'none',
-          }}
-        />
+            background: 'none'
+          }} srcSet="/optimized/coffee_stain-400.webp 400w, /optimized/coffee_stain-800.webp 800w, /optimized/coffee_stain-1200.webp 1200w" sizes="(max-width: 600px) 100vw, 50vw" />
+
       </button>
       {hovered && popupPos && ReactDOM.createPortal(
         <div
@@ -73,22 +73,22 @@ const CoffeeStainButton: React.FC = () => {
             left: popupPos.left,
             top: popupPos.top,
             minWidth: 220,
-            ...popupBoxStyle,
-          }}
-        >
+            ...popupBoxStyle
+          }}>
+
           <img
-            src="/white_sands.JPG"
+            src="/optimized/white_sands-400.JPG"
             alt="White Sands"
-            style={{ height: 200, objectFit: 'cover', borderRadius: 10, marginBottom: 10 }}
-          />
+            style={{ height: 200, objectFit: 'cover', borderRadius: 10, marginBottom: 10 }} srcSet="/optimized/white_sands-400.JPG 400w, /optimized/white_sands-800.JPG 800w, /optimized/white_sands-1200.JPG 1200w" sizes="(max-width: 600px) 100vw, 50vw" />
+
           <div style={{ color: '#fff', fontSize: 22, fontFamily: 'inherit', maxWidth: 200 }}>
             White Sands National Park
           </div>
         </div>,
         document.body
       )}
-    </>
-  );
+    </>);
+
 };
 
 export default CoffeeStainButton;

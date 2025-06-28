@@ -21,28 +21,28 @@ const Index = () => {
           <div className="sticky top-0 z-40 bg-black border-b border-white/20">
             <div className="max-w-7xl mx-auto px-4">
               <TabsList className="w-full justify-center bg-black border-none h-16">
-                <TabsTrigger 
-                  value="about" 
-                  className="text-white data-[state=active]:bg-white data-[state=active]:text-black px-8 py-3 text-lg"
-                >
+                <TabsTrigger
+                  value="about"
+                  className="text-white data-[state=active]:bg-white data-[state=active]:text-black px-8 py-3 text-lg">
+
                   About
                 </TabsTrigger>
-                <TabsTrigger 
-                  value="experience" 
-                  className="text-white data-[state=active]:bg-white data-[state=active]:text-black px-8 py-3 text-lg"
-                >
+                <TabsTrigger
+                  value="experience"
+                  className="text-white data-[state=active]:bg-white data-[state=active]:text-black px-8 py-3 text-lg">
+
                   Experience
                 </TabsTrigger>
-                <TabsTrigger 
-                  value="projects" 
-                  className="text-white data-[state=active]:bg-white data-[state=active]:text-black px-8 py-3 text-lg"
-                >
+                <TabsTrigger
+                  value="projects"
+                  className="text-white data-[state=active]:bg-white data-[state=active]:text-black px-8 py-3 text-lg">
+
                   Projects
                 </TabsTrigger>
-                <TabsTrigger 
-                  value="contact" 
-                  className="text-white data-[state=active]:bg-white data-[state=active]:text-black px-8 py-3 text-lg"
-                >
+                <TabsTrigger
+                  value="contact"
+                  className="text-white data-[state=active]:bg-white data-[state=active]:text-black px-8 py-3 text-lg">
+
                   Contact
                 </TabsTrigger>
               </TabsList>
@@ -66,8 +66,8 @@ const Index = () => {
           </TabsContent>
         </Tabs>
       </div>
-    </div>
-  );
+    </div>);
+
 };
 
 export default Index;

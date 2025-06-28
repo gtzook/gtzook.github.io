@@ -21,32 +21,32 @@ const Navigation: React.FC = () => {
           <div className="hidden md:flex items-center space-x-8">
             <button
               onClick={() => scrollToSection('splash')}
-              className="text-gray-300 hover:text-white transition-colors duration-200"
-            >
+              className="text-gray-300 hover:text-white transition-colors duration-200">
+
               Home
             </button>
             <button
               onClick={() => scrollToSection('about')}
-              className="text-gray-300 hover:text-white transition-colors duration-200"
-            >
+              className="text-gray-300 hover:text-white transition-colors duration-200">
+
               About
             </button>
             <button
               onClick={() => scrollToSection('experience')}
-              className="text-gray-300 hover:text-white transition-colors duration-200"
-            >
+              className="text-gray-300 hover:text-white transition-colors duration-200">
+
               Experience
             </button>
             <button
               onClick={() => scrollToSection('projects')}
-              className="text-gray-300 hover:text-white transition-colors duration-200"
-            >
+              className="text-gray-300 hover:text-white transition-colors duration-200">
+
               Projects
             </button>
             <Button
               onClick={() => scrollToSection('contact')}
-              className="bg-white text-black hover:bg-gray-200"
-            >
+              className="bg-white text-black hover:bg-gray-200">
+
               Contact
             </Button>
           </div>
@@ -59,8 +59,8 @@ const Navigation: React.FC = () => {
           </div>
         </div>
       </div>
-    </nav>
-  );
+    </nav>);
+
 };
 
 export default Navigation;

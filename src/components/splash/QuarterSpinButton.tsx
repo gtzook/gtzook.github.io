@@ -6,7 +6,7 @@ const QuarterSpinButton: React.FC = () => {
   const [hovered, setHovered] = useState(false);
   const [speed, setSpeed] = useState(0);
   const [angle, setAngle] = useState(0);
-  const [popupPos, setPopupPos] = useState<{ left: number, top: number } | null>(null);
+  const [popupPos, setPopupPos] = useState<{left: number;top: number;} | null>(null);
   const btnRef = useRef<HTMLButtonElement>(null);
   const requestRef = useRef<number | null>(null);
   const minSpeed = 0;
@@ -16,12 +16,12 @@ const QuarterSpinButton: React.FC = () => {
 
   useEffect(() => {
     function animate() {
-      setSpeed(prev => {
+      setSpeed((prev) => {
         if (hovered && prev < maxSpeed) return Math.min(maxSpeed, prev + accel);
         if (!hovered && prev > minSpeed) return Math.max(minSpeed, prev - decel);
         return prev;
       });
-      setAngle(prev => (prev + speed) % 360);
+      setAngle((prev) => (prev + speed) % 360);
       requestRef.current = requestAnimationFrame(animate);
     }
     requestRef.current = requestAnimationFrame(animate);
@@ -35,7 +35,7 @@ const QuarterSpinButton: React.FC = () => {
       const rect = btnRef.current.getBoundingClientRect();
       setPopupPos({
         left: rect.right + 24,
-        top: rect.top + rect.height / 2 - 220,
+        top: rect.top + rect.height / 2 - 220
       });
     } else if (!hovered) {
       setPopupPos(null);
@@ -50,19 +50,19 @@ const QuarterSpinButton: React.FC = () => {
         style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer' }}
         aria-label="Quarter Button"
         onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
-      >
+        onMouseLeave={() => setHovered(false)}>
+
         <img
-          src="/quarter.webp"
+          src="/optimized/quarter-400.webp"
           alt="Quarter Button"
           className="w-32 h-32 md:w-40 md:h-40"
           style={{
             height: '15vh',
             width: 'auto',
             transform: `rotate(${angle}deg)`,
-            transition: speed === 0 ? 'transform 0.2s cubic-bezier(0.23, 1, 0.32, 1)' : 'none',
-          }}
-        />
+            transition: speed === 0 ? 'transform 0.2s cubic-bezier(0.23, 1, 0.32, 1)' : 'none'
+          }} srcSet="/optimized/quarter-400.webp 400w, /optimized/quarter-800.webp 800w, /optimized/quarter-1200.webp 1200w" sizes="(max-width: 600px) 100vw, 50vw" />
+
       </button>
       {hovered && popupPos && ReactDOM.createPortal(
         <div
@@ -81,22 +81,22 @@ const QuarterSpinButton: React.FC = () => {
             flexDirection: 'column',
             alignItems: 'center',
             gap: 8,
-            pointerEvents: 'auto',
-          }}
-        >
+            pointerEvents: 'auto'
+          }}>
+
           <img
-            src="/mountains.jpg"
+            src="/optimized/mountains-400.jpg"
             alt="Mountains"
-            style={{ height: 300, objectFit: 'cover', borderRadius: 14, flexShrink: 0, marginBottom: 0 }}
-          />
+            style={{ height: 300, objectFit: 'cover', borderRadius: 14, flexShrink: 0, marginBottom: 0 }} srcSet="/optimized/mountains-400.jpg 400w, /optimized/mountains-800.jpg 800w, /optimized/mountains-1200.jpg 1200w" sizes="(max-width: 600px) 100vw, 50vw" />
+
           <div style={{ color: '#fff', fontSize: 22, fontFamily: 'inherit', maxWidth: 400 }}>
             Mt. Olympus! (2023)
           </div>
         </div>,
         document.body
       )}
-    </>
-  );
+    </>);
+
 };
 
 export default QuarterSpinButton;
