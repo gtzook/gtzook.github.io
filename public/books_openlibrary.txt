@@ -1,0 +1,7 @@
+Infinite Jest	David Foster Wallace		/book_covers/OL2943602W.jpg	https://openlibrary.org/works/OL2943602W
+House of Leaves	Mark Z. Danielewski		/book_covers/OL32195W.jpg	https://openlibrary.org/works/OL32195W
+If on a Winter’s Night a Traveler	Italo Calvino		/book_covers/OL21784995W.jpg	https://openlibrary.org/works/OL21784995W
+The Five People You Meet in Heaven	Mitch Albom	9780786868711	/book_covers/9780786868711.jpg	https://openlibrary.org/books/OL39480298M/The_Five_People_You_Meet_in_Heaven
+The Box Man	Kōbō Abe	9780375726514	/book_covers/9780375726514.jpg	https://openlibrary.org/books/OL7427011M/The_Box_Man
+A Personal Matter (Oe, Kenzaburo)	Kenzaburō Ōe	9780802150615	/book_covers/9780802150615.jpg	https://openlibrary.org/books/OL18888410M/A_personal_matter
+One Hundred Years of Solitude	Gabriel García Márquez		/book_covers/OL33647471W.jpg	https://openlibrary.org/works/OL33647471W
