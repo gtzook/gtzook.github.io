@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import DesktopSplash from './components/DesktopSplash';
+import DesktopSplash from '@/components/DesktopSplash';
 import MobileSplash from '@/components/MobileSplash';
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';

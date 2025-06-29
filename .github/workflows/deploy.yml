@@ -13,6 +13,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: List src/components directory for debugging
+        run: ls -lR src/components
+
+      - name: Verify current directory
+        run: pwd
+
+      - name: List all files in src/pages directory
+        run: ls -l src/pages
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
