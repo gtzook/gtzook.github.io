@@ -1,6 +1,7 @@
+import React, { useState, useEffect } from 'react';
+import DesktopSplash from '@/components/DesktopSplash';
+import MobileSplash from '@/components/MobileSplash';
 
-import React from 'react';
-import SplashScreen from '@/components/SplashScreen';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import AboutSection from '@/components/AboutSection';
 import ExperienceSection from '@/components/ExperienceSection';
@@ -8,11 +9,22 @@ import ProjectsSection from '@/components/ProjectsSection';
 import ContactSection from '@/components/ContactSection';
 
 const Index = () => {
+  const [isMobilePortrait, setIsMobilePortrait] = useState(false);
+
+  useEffect(() => {
+    const updateOrientation = () => {
+      setIsMobilePortrait(window.innerWidth < window.innerHeight);
+    };
+    updateOrientation();
+    window.addEventListener('resize', updateOrientation);
+    return () => window.removeEventListener('resize', updateOrientation);
+  }, []);
+
   return (
     <div className="min-h-screen bg-black">
-      {/* Splash Screen - Always at the top */}
+      {/* Splash Screen */}
       <section id="splash">
-        <SplashScreen />
+        {isMobilePortrait ? <MobileSplash /> : <DesktopSplash />}
       </section>
 
       {/* Tabs Section */}
@@ -23,26 +35,26 @@ const Index = () => {
               <TabsList className="w-full justify-center bg-black border-none h-16">
                 <TabsTrigger
                   value="about"
-                  className="text-white data-[state=active]:bg-white data-[state=active]:text-black px-8 py-3 text-lg">
-
+                  className="text-white data-[state=active]:bg-white data-[state=active]:text-black px-8 py-3 text-lg"
+                >
                   About
                 </TabsTrigger>
                 <TabsTrigger
                   value="experience"
-                  className="text-white data-[state=active]:bg-white data-[state=active]:text-black px-8 py-3 text-lg">
-
+                  className="text-white data-[state=active]:bg-white data-[state=active]:text-black px-8 py-3 text-lg"
+                >
                   Experience
                 </TabsTrigger>
                 <TabsTrigger
                   value="projects"
-                  className="text-white data-[state=active]:bg-white data-[state=active]:text-black px-8 py-3 text-lg">
-
+                  className="text-white data-[state=active]:bg-white data-[state=active]:text-black px-8 py-3 text-lg"
+                >
                   Projects
                 </TabsTrigger>
                 <TabsTrigger
                   value="contact"
-                  className="text-white data-[state=active]:bg-white data-[state=active]:text-black px-8 py-3 text-lg">
-
+                  className="text-white data-[state=active]:bg-white data-[state=active]:text-black px-8 py-3 text-lg"
+                >
                   Contact
                 </TabsTrigger>
               </TabsList>
@@ -66,8 +78,8 @@ const Index = () => {
           </TabsContent>
         </Tabs>
       </div>
-    </div>);
-
+    </div>
+  );
 };
 
 export default Index;

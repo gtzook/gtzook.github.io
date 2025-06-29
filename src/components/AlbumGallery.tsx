@@ -9,11 +9,9 @@ interface Album {
 }
 
 function getCompositeImagePath(album: Album) {
-  // Use albumId if available, fallback to cover basename
   if (album.albumId) {
     return `/album_composites/${album.albumId}_on_record.webp`;
   }
-  // fallback: use basename from cover url
   const coverName = album.cover.split('/').pop()?.split('.')[0] || 'unknown';
   return `/album_composites/${coverName}_on_record.webp`;
 }
@@ -25,12 +23,11 @@ const AlbumGallery: React.FC = () => {
   const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
-    fetch('/top_albums.json').
-    then((res) => res.json()).
-    then((data) => setAlbums(data));
+    fetch('/top_albums.json')
+      .then((res) => res.json())
+      .then((data) => setAlbums(data));
   }, []);
 
-  // Preload all composite images
   useEffect(() => {
     albums.forEach((album) => {
       const composite = getCompositeImagePath(album);
@@ -56,7 +53,7 @@ const AlbumGallery: React.FC = () => {
     return () => cancelAnimationFrame(animationFrame);
   }, [isHovered]);
 
-  const showNext = () => setIndex((i) => i === albums.length - 1 ? 0 : i + 1);
+  const showNext = () => setIndex((i) => (i === albums.length - 1 ? 0 : i + 1));
 
   const hasAlbums = albums.length > 0;
   const album = hasAlbums ? albums[index] : null;
@@ -67,72 +64,64 @@ const AlbumGallery: React.FC = () => {
   return (
     <div className="flex flex-col items-center justify-center h-full">
       <div className="flex items-center">
-        {hasAlbums &&
-        <button
-          onClick={showNext}
-          className="text-white bg-black/40 rounded-full flex items-center justify-center ml-3 hover:bg-black/80"
-          style={{ width: '4vw', height: '4vw', fontSize: '2vw', top: '15vh', position: 'relative' }}
-          aria-label="Next album">
-
+        {hasAlbums && (
+          <button
+            onClick={showNext}
+            className="text-white bg-black/40 rounded-full flex items-center justify-center ml-3 hover:bg-black/80"
+            style={{ width: '4vw', height: '4vw', fontSize: '2vw', top: '15vh', position: 'relative' }}
+            aria-label="Next album"
+          >
             &#8635;
           </button>
-        }
-        <div className="relative flex flex-col items-center" style={{ width: '30vw' }}>
+        )}
+
+        <div className="relative w-[25vw] aspect-square flex items-center justify-center">
           <img
             src="/record_player.svg"
             alt="Record Player"
-            style={{
-              position: 'absolute',
-              zIndex: -1,
-              pointerEvents: 'none'
-            }} />
+            className="absolute inset-0 w-full h-full object-contain pointer-events-none z-0"
+          />
 
+          {hasAlbums && (
             <a
-            href={recordLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              display: 'block',
-              overflow: 'hidden',
-              position: 'absolute',
-              left: '-1vw',
-              top: '-5vh',
-              zIndex: 1
-            }}
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}>
-
+              href={recordLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="absolute inset-0 z-10 flex items-center justify-center translate-x-[-3.2vw]"
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
+            >
               <img
-              src={compositeImg}
-              alt={recordAlt}
-              style={{
-                height: '25vw',
-                objectFit: 'cover',
-                transition: 'transform 0.3s, filter 0.2s',
-                transform: `rotate(${angle}deg)`,
-                filter: isHovered ? 'brightness(0.5)' : 'none'
-              }} />
-
+                src={compositeImg}
+                alt={recordAlt}
+                className="w-[90%] object-contain transition-transform duration-300 ease-in-out"
+                style={{
+                  transform: `rotate(${angle}deg)`,
+                  filter: isHovered ? 'brightness(0.5)' : 'none'
+                }}
+              />
             </a>
+          )}
+
           <img
             src="/optimized/needle-400.webp"
             alt="Needle"
+            className="absolute z-20 pointer-events-none"
             style={{
-              position: 'absolute',
               right: '20%',
               top: '20%',
               width: '7vw',
               height: '10vw',
-              zIndex: 2,
-              pointerEvents: 'none',
               transform: 'scale(1.5)',
               transformOrigin: '20% 10%'
-            }} srcSet="/optimized/needle-400.webp 400w, /optimized/needle-800.webp 800w, /optimized/needle-1200.webp 1200w" sizes="(max-width: 600px) 100vw, 50vw" />
-
+            }}
+            srcSet="/optimized/needle-400.webp 400w, /optimized/needle-800.webp 800w, /optimized/needle-1200.webp 1200w"
+            sizes="(max-width: 600px) 100vw, 50vw"
+          />
         </div>
       </div>
-    </div>);
-
+    </div>
+  );
 };
 
 export default AlbumGallery;
