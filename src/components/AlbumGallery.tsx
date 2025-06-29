@@ -67,8 +67,8 @@ const AlbumGallery: React.FC = () => {
         {hasAlbums && (
           <button
             onClick={showNext}
-            className="text-white bg-black/40 rounded-full flex items-center justify-center ml-3 hover:bg-black/80"
-            style={{ width: '4vw', height: '4vw', fontSize: '2vw', top: '15vh', position: 'relative' }}
+            className="text-white bg-black/40 rounded-full flex items-center justify-center -ml-3 hover:bg-black/80"
+            style={{ width: '4vw', height: '4vw', fontSize: '2vw', left: '-2vw', top: '0vh', position: 'relative' }}
             aria-label="Next album"
           >
             &#8635;
