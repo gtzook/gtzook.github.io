@@ -31,7 +31,7 @@ const MobileSplash: React.FC = () => {
         draggable={false}
       />
       <p className="text-lg md:text-xl font-medium text-white/80">
-        Web dev is hard! Please view my site on desktop, it looks much better there.
+        Web dev is hard! Please view my site in landscape mode!
       </p>
     </section>
   );

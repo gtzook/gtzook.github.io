@@ -61,6 +61,7 @@ const DesktopSplash: React.FC = () => {
         backgroundRepeat: 'no-repeat',
       }}
     >
+      {/* Scaled splash container */}
       <div
         className="absolute top-1/2 left-1/2"
         style={{
@@ -78,15 +79,15 @@ const DesktopSplash: React.FC = () => {
           <AlbumGallery />
         </div>
 
-        <div className="absolute z-[40] w-[1152px]" style={{ left: '50%', top: '162px', transform: 'translateX(-50%)' }}>
-          <div className="relative flex items-center justify-center h-[162px] w-full">
+        <div className="absolute z-[40] w-[1152px]" style={{ left: '50%', top: '0vh', transform: 'translateX(-50%)' }}>
+          <div className="relative flex items-center justify-center w-full">
             {!showInput ? (
               <img
                 src="/optimized/name_img-400.webp"
                 alt="Name"
                 className="object-contain select-none"
                 style={{
-                  height: '432px',
+                  height: '40vh',
                   width: 'auto',
                   cursor: 'pointer',
                   transition: 'transform 0.4s',
@@ -96,6 +97,7 @@ const DesktopSplash: React.FC = () => {
                     ? 'title-fall 0.7s forwards'
                     : undefined,
                   userSelect: 'none',
+                  zIndex: 1,
                 }}
                 onClick={handleTitleClick}
                 draggable={false}
@@ -169,42 +171,11 @@ const DesktopSplash: React.FC = () => {
           </div>
         </div>
 
-        <div className="absolute z-[100]" style={{ right: '38.4px', top: '21.6px', height: '162px' }}>
+        <div className="absolute z-[100]" style={{ right: '5vw', top: '1vh' }}>
           <CoupleShakeImage />
         </div>
 
-        <div className="absolute z-[100]" style={{ right: '384px', top: '540px', height: '129.6px' }}>
-          <SvgPopupButton
-            src="/rice_ring.svg"
-            alt="Rice Ring"
-            popupText={`<b>Attended Rice University</b> (2020-2024)\n<i>BS in Electrical Engineering</i> (magna cum laude)\n<i>BA in Philosophy</i> (cum laude)\n<i> Undergraduate Researcher in MAHI Lab</i>`}
-            position={{ left: 0, top: 0 }}
-            scale={1.5}
-            popupOffset={{ x: -700, y: 25 }}
-          />
-        </div>
-
-        <div className="absolute z-[100]" style={{ right: '96px', top: '540px', height: '129.6px' }}>
-          <SvgPopupButton
-            src="/ucsb_flag.svg"
-            alt="UCSB Flag"
-            popupText={`<b>Attending UCSB</b> (2024-)\nPursuing <i>MS/PhD in Electrical & Computer Engineering</i>\n<i>Researcher in Ikuko Smith Lab</i>\nFocus on audiovisual processing in mouse model`}
-            position={{ left: 0, top: 0 }}
-            scale={2}
-            popupOffset={{ x: -800, y: 50 }}
-          />
-        </div>
-
-        <div className="absolute z-[41]" style={{ bottom: '162px', left: '672px' }}>
-          <BagCycleButton
-            position={{ left: 0, top: 0 }}
-            scale={2.5}
-            itemOffset={{ x: 150, y: -60 }}
-            itemSize={130}
-            bagSize={100}
-          />
-        </div>
-
+        {/* Other buttons inside scaled container */}
         <div className="absolute z-[100]" style={{ left: '384px', top: '432px', height: '129.6px' }}>
           <QuarterSpinButton />
         </div>
@@ -235,6 +206,41 @@ const DesktopSplash: React.FC = () => {
             <div style={{ width: '9.6px', height: '21.6px', backgroundColor: 'black', borderRadius: '9999px', marginTop: '10.8px', animation: 'pulse 2s infinite' }} />
           </div>
         </div>
+      </div>
+
+      {/* Ring button fixed to viewport */}
+      <div className="absolute z-[100]" style={{ left: '70vw', top: '42vh' }}>
+        <SvgPopupButton
+          src="/rice_ring.svg"
+          alt="Rice Ring"
+          popupText={`<b>Attended Rice University</b> (2020-2024)\n<i>BS in Electrical Engineering</i> (magna cum laude)\n<i>BA in Philosophy</i> (cum laude)\n<i> Undergraduate Researcher in MAHI Lab</i>`}
+          position={{ left: 0, top: 0 }}
+          size={10}
+          popupOffset={{ x: -10, y: 5 }}
+        />
+      </div>
+
+      {/* UCSB Flag button fixed to viewport */}
+      <div className="absolute z-[100]" style={{ right: '5vw', top: '40vh' }}>
+        <SvgPopupButton
+          src="/ucsb_flag.svg"
+          alt="UCSB Flag"
+          popupText={`<b>Attending UCSB</b> (2024-)\nPursuing <i>MS/PhD in Electrical & Computer Engineering</i>\n<i>Researcher in Ikuko Smith Lab</i>\nFocus on audiovisual processing in mouse model`}
+          position={{ left: 0, top: 0 }}
+          size={12}
+          popupOffset={{ x: -10, y: 50 }}
+        />
+      </div>
+
+      {/* BagCycleButton fixed to viewport */}
+      <div className="absolute z-[100]" style={{ left: '35vw', top: '60vh' }}>
+        <BagCycleButton
+          position={{ left: '0', top: '0' }}
+          scale={1}
+          itemOffset={{ x: 20, y: -5 }}
+          itemSize={10}
+          bagSize={15}
+        />
       </div>
     </section>
   );

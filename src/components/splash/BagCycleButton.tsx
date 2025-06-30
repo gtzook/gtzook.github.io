@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 
 const BAG_ITEMS = [
   { src: '/chess_piece.svg', alt: 'Chess Piece', link: 'https://www.chess.com/member/gzook' },
@@ -6,8 +7,15 @@ const BAG_ITEMS = [
   { src: '/pickleball.svg', alt: 'Pickleball', link: null }
 ];
 
+interface ChessData {
+  rating?: number | null;
+  lastOnline?: number | null;
+  opening?: string;
+  result?: string;
+}
+
 interface BagCycleButtonProps {
-  position: React.CSSProperties;
+  position?: { left: string; top: string };
   scale?: number;
   itemOffset?: { x: number; y: number };
   itemSize?: number;
@@ -15,17 +23,21 @@ interface BagCycleButtonProps {
 }
 
 const BagCycleButton: React.FC<BagCycleButtonProps> = ({
-  position,
+  position = { left: '0vw', top: '0vh' },
   scale = 1,
   itemOffset = { x: 4, y: -12 },
-  itemSize = 6, // in vw
-  bagSize = 22 // in vw
+  itemSize = 6,
+  bagSize = 22,
 }) => {
   const [itemIndex, setItemIndex] = React.useState(0);
   const [hasStarted, setHasStarted] = React.useState(false);
   const [hovered, setHovered] = React.useState(false);
   const [itemHovered, setItemHovered] = React.useState(false);
   const [shakeAnimation, setShakeAnimation] = React.useState(false);
+  const [chessData, setChessData] = React.useState<ChessData | null>(null);
+  const [loadingChess, setLoadingChess] = React.useState(false);
+
+  const currentItem = BAG_ITEMS[itemIndex];
 
   const handleClick = () => {
     if (!hasStarted) {
@@ -42,70 +54,81 @@ const BagCycleButton: React.FC<BagCycleButtonProps> = ({
     }
   };
 
-  const currentItem = BAG_ITEMS[itemIndex];
+  React.useEffect(() => {
+    let isMounted = true;
+
+    const getLastGameData = async (): Promise<{ endTime: number; result: string; opening: string } | null> => {
+      try {
+        const archiveRes = await fetch('https://api.chess.com/pub/player/gzook/games/archives');
+        if (!archiveRes.ok) return null;
+        const archives = await archiveRes.json();
+        const latestArchiveUrl = archives.archives?.slice(-1)[0];
+        if (!latestArchiveUrl) return null;
+
+        const gamesRes = await fetch(latestArchiveUrl);
+        if (!gamesRes.ok) return null;
+        const gamesData = await gamesRes.json();
+        const latestGame = gamesData.games?.sort((a: any, b: any) => b.end_time - a.end_time)[0];
+        if (!latestGame) return null;
+
+        const pgn = latestGame.pgn || '';
+        const openingMatch = pgn.match(/^\[Opening "(.*?)"\]/m);
+        const opening = openingMatch ? openingMatch[1] : 'Unknown Opening';
+
+        const isWhite = latestGame.white.username.toLowerCase() === 'gzook';
+        const result = isWhite ? latestGame.white.result : latestGame.black.result;
+
+        return {
+          endTime: latestGame.end_time,
+          result,
+          opening
+        };
+      } catch {
+        return null;
+      }
+    };
+
+    const fetchChessData = async () => {
+      if (hasStarted && currentItem.alt === 'Chess Piece') {
+        setLoadingChess(true);
+        setChessData(null);
+        try {
+          const statsRes = await fetch('https://api.chess.com/pub/player/gzook/stats');
+          if (!statsRes.ok) throw new Error('Stats fetch failed');
+          const stats = await statsRes.json();
+          const rapidRating = stats?.chess_rapid?.last?.rating ?? null;
+
+          const lastGame = await getLastGameData();
+
+          if (isMounted) {
+            setChessData({
+              rating: rapidRating,
+              lastOnline: lastGame?.endTime ?? null,
+              opening: lastGame?.opening ?? '',
+              result: lastGame?.result ?? '',
+            });
+          }
+        } catch {
+          if (isMounted) setChessData(null);
+        } finally {
+          if (isMounted) setLoadingChess(false);
+        }
+      } else {
+        setChessData(null);
+        setLoadingChess(false);
+      }
+    };
+
+    fetchChessData();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [itemIndex, hasStarted, currentItem]);
+
   const showTooltip = currentItem.alt === 'Camera' && itemHovered;
   const showChessTooltip = currentItem.alt === 'Chess Piece' && itemHovered;
   const showPickleTooltip = currentItem.alt === 'Pickleball' && itemHovered;
-
-  const [chessData, setChessData] = React.useState<{
-    rating?: number;
-    lastOnline?: number;
-    opening?: string;
-    result?: string;
-  } | null>(null);
-
-  const getLastGameData = async (): Promise<{ endTime: number; result: string; opening: string } | null> => {
-    try {
-      const archiveRes = await fetch('https://api.chess.com/pub/player/gzook/games/archives');
-      const archives = await archiveRes.json();
-      const latestArchiveUrl = archives.archives?.slice(-1)[0];
-      if (!latestArchiveUrl) return null;
-
-      const gamesRes = await fetch(latestArchiveUrl);
-      const gamesData = await gamesRes.json();
-      const latestGame = gamesData.games?.sort((a: any, b: any) => b.end_time - a.end_time)[0];
-      if (!latestGame) return null;
-
-      const pgn = latestGame.pgn || '';
-      const openingMatch = pgn.match(/^\[Opening "(.*?)"\]/m);
-      const opening = openingMatch ? openingMatch[1] : 'Unknown Opening';
-
-      const isWhite = latestGame.white.username.toLowerCase() === 'gzook';
-      const result = isWhite ? latestGame.white.result : latestGame.black.result;
-
-      return {
-        endTime: latestGame.end_time,
-        result,
-        opening
-      };
-    } catch (error) {
-      console.error('Error fetching last game data:', error);
-      return null;
-    }
-  };
-
-  React.useEffect(() => {
-    if (hasStarted && currentItem.alt === 'Chess Piece' && !chessData) {
-      const fetchData = async () => {
-        try {
-          const statsRes = await fetch('https://api.chess.com/pub/player/gzook/stats');
-          const stats = await statsRes.json();
-          const rapidRating = stats?.chess_rapid?.last?.rating ?? null;
-          const lastGame = await getLastGameData();
-
-          setChessData({
-            rating: rapidRating,
-            lastOnline: lastGame?.endTime ?? null,
-            opening: lastGame?.opening ?? '',
-            result: lastGame?.result ?? ''
-          });
-        } catch (error) {
-          console.error('Error fetching chess data:', error);
-        }
-      };
-      fetchData();
-    }
-  }, [itemIndex, hasStarted, currentItem, chessData]);
 
   const formatResult = (result: string): { label: string; color: string } => {
     const lower = result.toLowerCase();
@@ -117,29 +140,33 @@ const BagCycleButton: React.FC<BagCycleButtonProps> = ({
   return (
     <div
       style={{
-        position: 'absolute',
-        transform: `scale(${scale})`,
-        ...position,
+        position: 'relative',
+        left: position.left,
+        top: position.top,
+        cursor: 'pointer',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        cursor: 'pointer'
+        transform: `scale(${scale})`,
+        width: `${bagSize}vw`,
       }}
       onClick={handleClick}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
     >
       <img
         src="/tote_bag.svg"
         alt="Bag"
         style={{
-          width: `${bagSize}vw`,
+          width: '100%',
           marginBottom: '1vh',
-          filter: hovered ? 'drop-shadow(0 0.5vh 1.5vh rgba(0,0,0,0.18)) brightness(0.7)' : 'drop-shadow(0 0.5vh 1.5vh rgba(0,0,0,0.18))',
+          filter: hovered
+            ? 'drop-shadow(0 0.5vh 1.5vh rgba(0,0,0,0.18)) brightness(0.7)'
+            : 'drop-shadow(0 0.5vh 1.5vh rgba(0,0,0,0.18))',
           transition: 'filter 0.2s ease',
           animation: shakeAnimation ? 'bag-shake 0.4s ease-in-out' : undefined,
-          zIndex: 1
+          zIndex: 41,
         }}
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
       />
 
       {hasStarted && (
@@ -150,50 +177,52 @@ const BagCycleButton: React.FC<BagCycleButtonProps> = ({
             top: `${itemOffset.y}vw`,
             width: `${itemSize}vw`,
             height: 'auto',
-            zIndex: 2
+            zIndex: 42,
           }}
+          onMouseEnter={() => setItemHovered(true)}
+          onMouseLeave={() => setItemHovered(false)}
         >
-          <div
-            onMouseEnter={() => setItemHovered(true)}
-            onMouseLeave={() => setItemHovered(false)}
-            style={{ position: 'relative', width: '100%', height: '100%' }}
-          >
-            <img
-              src={currentItem.src}
-              alt={currentItem.alt}
-              style={{ width: '100%', height: 'auto', cursor: currentItem.link ? 'pointer' : 'default' }}
-              onClick={(e) => {
-                e.stopPropagation();
-                if (currentItem.link) window.open(currentItem.link, '_blank');
-              }}
-            />
+          <img
+            src={currentItem.src}
+            alt={currentItem.alt}
+            style={{ width: '100%', height: 'auto', cursor: currentItem.link ? 'pointer' : 'default' }}
+            onClick={(e) => {
+              e.stopPropagation();
+              if (currentItem.link) window.open(currentItem.link, '_blank');
+            }}
+          />
 
-            {(showChessTooltip || showPickleTooltip || showTooltip) && (
+          {(showChessTooltip || showPickleTooltip || showTooltip) &&
+            ReactDOM.createPortal(
               <div
                 style={{
-                  position: 'absolute',
-                  bottom: '9vw',
-                  left: '50%',
-                  transform: 'translateX(-50%)',
-                  backgroundColor: 'black',
+                  position: 'fixed',
+                  bottom: '50%',
+                  right: '50%',
+                  backgroundColor: 'rgba(0, 0, 0, 0.85)',
                   color: 'white',
-                  padding: '0.8vw 1vw',
-                  borderRadius: '0.6vw',
-                  boxShadow: '0 0.3vw 1vw rgba(0,0,0,0.4)',
-                  fontSize: '1.2vw',
-                  zIndex: 10,
-                  whiteSpace: 'nowrap',
+                  padding: '1.5vw 2vw',
+                  borderRadius: '1vw',
+                  boxShadow: '0 0.5vw 1.5vw rgba(0,0,0,0.7)',
+                  fontSize: '1.8vw',
+                  zIndex: 9999,
+                  whiteSpace: 'normal',
                   textAlign: 'center',
-                  maxWidth: '50vw'
+                  maxWidth: '60vw',
+                  minWidth: '300px',
                 }}
               >
                 {showChessTooltip ? (
-                  chessData ? (
+                  loadingChess ? (
+                    'Loading chess stats...'
+                  ) : chessData ? (
                     <>
                       <strong>Rapid Rating:</strong> {chessData.rating ?? 'N/A'}
                       <br />
                       <strong>Last Played:</strong>{' '}
-                      {new Date(chessData.lastOnline * 1000).toLocaleDateString()}
+                      {chessData.lastOnline
+                        ? new Date(chessData.lastOnline * 1000).toLocaleDateString()
+                        : 'N/A'}
                       <br />
                       {chessData.result && (() => {
                         const formatted = formatResult(chessData.result);
@@ -204,9 +233,11 @@ const BagCycleButton: React.FC<BagCycleButtonProps> = ({
                           </div>
                         );
                       })()}
+                      <br />
+                      <strong>Opening:</strong> {chessData.opening || 'N/A'}
                     </>
                   ) : (
-                    'Loading chess stats...'
+                    'Failed to load chess stats.'
                   )
                 ) : showPickleTooltip ? (
                   'Coming soon.'
@@ -221,7 +252,7 @@ const BagCycleButton: React.FC<BagCycleButtonProps> = ({
                         borderRadius: '0.4vw',
                         objectFit: 'cover',
                         border: '1px solid #333',
-                        marginBottom: '0.5vw'
+                        marginBottom: '0.5vw',
                       }}
                       srcSet="/optimized/melon-400.webp 400w, /optimized/melon-800.webp 800w, /optimized/melon-1200.webp 1200w"
                       sizes="(max-width: 600px) 100vw, 50vw"
@@ -229,9 +260,9 @@ const BagCycleButton: React.FC<BagCycleButtonProps> = ({
                     I take photos!
                   </>
                 )}
-              </div>
+              </div>,
+              document.body
             )}
-          </div>
         </div>
       )}
 

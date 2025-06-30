@@ -10,7 +10,7 @@ const CoupleShakeImage: React.FC = () => {
         alt="Couple"
         className="transition-transform duration-100 pointer-events-auto select-none"
         style={{
-          height: '26vh',
+          height: '40vh',
           width: 'auto',
           maxWidth: '90vw',
           transform: hovered ? 'rotate(-14deg) scale(1.04)' : 'none',
@@ -27,8 +27,8 @@ const CoupleShakeImage: React.FC = () => {
       <style>{`
         @keyframes shake-couple {
           0%, 100% { transform: rotate(-14deg) scale(1.04) translateX(0); }
-          25% { transform: rotate(-9deg) scale(1.04) translateX(-2vw); }
-          75% { transform: rotate(-19deg) scale(1.04) translateX(2vw); }
+          25% { transform: rotate(-9deg) scale(1.04) translateX(-0.1vw); }
+          75% { transform: rotate(-19deg) scale(1.04) translateX(.1vw); }
         }
       `}</style>
     </>

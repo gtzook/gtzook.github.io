@@ -5,36 +5,41 @@ interface SvgPopupButtonProps {
   src: string;
   alt: string;
   popupText: string;
-  position: React.CSSProperties;
-  size?: number; // base size in vw or fallback px
+  // position is now optional and treated as relative offsets inside wrapper
+  position?: React.CSSProperties;
+  size?: number; // vw units
   scale?: number;
-  popupOffset?: { x: number; y: number };
+  popupOffset?: { x: number; y: number }; // in vw/vh
 }
 
 const SvgPopupButton: React.FC<SvgPopupButtonProps> = ({
   src,
   alt,
   popupText,
-  position,
-  size = 12, // interpreted as vw for scaling
+  position = { left: 0, top: 0 },
+  size = 12,
   scale = 1,
   popupOffset = { x: 0, y: 0 },
 }) => {
   const [hovered, setHovered] = React.useState(false);
-  const [popupPos, setPopupPos] = React.useState<{ left: number; top: number } | null>(null);
+  const [popupPos, setPopupPos] = React.useState<{ left: string; top: string } | null>(null);
   const btnRef = React.useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (hovered && btnRef.current) {
       const rect = btnRef.current.getBoundingClientRect();
-      const scrollTop = window.scrollY || document.documentElement.scrollTop;
-      const scrollLeft = window.scrollX || document.documentElement.scrollLeft;
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+
+      // Convert button right/top pixel positions to vw/vh
+      const leftVW = ((rect.right + vw * 0.01 + popupOffset.x) / vw) * 100;
+      const topVH = ((rect.top + popupOffset.y) / vh) * 100;
 
       setPopupPos({
-        left: scrollLeft + rect.right + window.innerWidth * 0.01 + popupOffset.x,
-        top: scrollTop + rect.top + popupOffset.y,
+        left: `${leftVW}vw`,
+        top: `${topVH}vh`,
       });
-    } else if (!hovered) {
+    } else {
       setPopupPos(null);
     }
   }, [hovered, popupOffset]);
@@ -43,12 +48,12 @@ const SvgPopupButton: React.FC<SvgPopupButtonProps> = ({
     <div
       ref={btnRef}
       style={{
-        position: 'absolute',
+        position: 'relative', // relative inside absolute wrapper div
         cursor: 'pointer',
         width: `${size}vw`,
         height: `${size}vw`,
         transform: `scale(${scale})`,
-        ...position,
+        ...position, // small offset if needed
       }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}

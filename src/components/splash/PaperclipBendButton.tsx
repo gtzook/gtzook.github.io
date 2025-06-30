@@ -63,7 +63,7 @@ const PaperclipBendButton: React.FC<{ popupSide?: 'left' | 'right' }> = ({ popup
           src="/optimized/paperclip-400.webp"
           alt="Paperclip"
           style={{
-            height: '14vh',
+            height: '20vh',
             width: 'auto',
             maxWidth: '90vw',
             borderRadius: '1vw',
