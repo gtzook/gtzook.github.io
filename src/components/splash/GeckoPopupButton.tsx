@@ -13,7 +13,7 @@ const GeckoPopupButton: React.FC<GeckoPopupButtonProps> = ({
   popupImgSrc,
   alt = "Gecko Head",
   size = 96,
-  linkUrl = "/cam",
+  linkUrl = "/#/cam",
 }) => {
   const [hovered, setHovered] = useState(false);
 
