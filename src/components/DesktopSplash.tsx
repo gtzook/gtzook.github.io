@@ -9,6 +9,7 @@ import CoffeeStainButton from './splash/CoffeeStainButton';
 import CoupleShakeImage from './splash/CoupleShakeImage';
 import SvgPopupButton from './splash/SvgPopupButton';
 import BagCycleButton from './splash/BagCycleButton';
+import GeckoPopupButton from './splash/GeckoPopupButton'; // adjust path if needed
 
 const getScale = () => {
   const baseWidth = 1920;
@@ -175,20 +176,29 @@ const DesktopSplash: React.FC = () => {
           <CoupleShakeImage />
         </div>
 
+
         {/* Other buttons inside scaled container */}
-        <div className="absolute z-[100]" style={{ left: '384px', top: '432px', height: '129.6px' }}>
+        <div className="absolute z-[100]" style={{ left: '5vw', top: '40vh'}}>
+          <GeckoPopupButton
+            headSrc="/gecko_head.webp"
+            popupImgSrc="/my_gecko.webp"
+            alt="Gecko Head"
+          />
+        </div>
+
+        <div className="absolute z-[100]" style={{ left: '22vw', top: '40vh'}}>
           <QuarterSpinButton />
         </div>
 
-        <div className="absolute z-[999]" style={{ left: '345.6px', top: '75.6px' }}>
+        <div className="absolute z-[999]" style={{ left: '20vw', top: '5vh' }}>
           <StampPeelButton popupSide="right" />
         </div>
 
-        <div className="absolute z-[100]" style={{ left: '153.6px', top: '270px', height: '129.6px' }}>
+        <div className="absolute z-[100]" style={{ left: '8vw', top: '25vh'}}>
           <PaperclipBendButton popupSide="right" />
         </div>
 
-        <div className="absolute z-[100]" style={{ left: '115.2px', top: '75.6px', height: '129.6px' }}>
+        <div className="absolute z-[100]" style={{ left: '5vw', top: '5vh'}}>
           <CoffeeStainButton />
         </div>
 
