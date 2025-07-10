@@ -24,19 +24,19 @@
     "url": "https://open.spotify.com/album/5SgHbxeN3aPBeLfFXOqnxj"
   },
   {
-    "album": "so the flies don't come",
-    "albumId": "1aCdrqjxp4duqTRne80ecY",
-    "artist": "Kenny Segal",
-    "artistId": "13vr2QqzoWOWDyaAZDuEGO",
-    "cover": "https://i.scdn.co/image/ab67616d0000b27332acda39bec22b9a5dcd7aed",
-    "url": "https://open.spotify.com/album/1aCdrqjxp4duqTRne80ecY"
-  },
-  {
     "album": "A Little Rhythm and a Wicked Feeling",
     "albumId": "5OsXAPcYYYNTtkFuuB8TDc",
     "artist": "Magdalena Bay",
     "artistId": "1oPRcJUkloHaRLYx0olBLJ",
     "cover": "https://i.scdn.co/image/ab67616d0000b273ae69f02d74849157de206294",
     "url": "https://open.spotify.com/album/5OsXAPcYYYNTtkFuuB8TDc"
+  },
+  {
+    "album": "so the flies don't come",
+    "albumId": "1aCdrqjxp4duqTRne80ecY",
+    "artist": "Kenny Segal",
+    "artistId": "13vr2QqzoWOWDyaAZDuEGO",
+    "cover": "https://i.scdn.co/image/ab67616d0000b27332acda39bec22b9a5dcd7aed",
+    "url": "https://open.spotify.com/album/1aCdrqjxp4duqTRne80ecY"
   }
 ]
