@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 
-const tunnelUrl = "https://caesarpi.duckdns.org:8080";
+const tunnelUrl = "https://caesarpi.duckdns.org";
 const PASSWORD = "cocosister";
 
 export default function Cam() {
-  const [cameraOn, setCameraOn] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [unlocked, setUnlocked] = useState(false);
+  const [showFeed, setShowFeed] = useState(true);
 
   useEffect(() => {
     const link = document.createElement("link");
@@ -27,72 +26,28 @@ export default function Cam() {
     }
   }, []);
 
-  const toggleCamera = async (on: boolean) => {
-    try {
-      setLoading(true);
-      await fetch(`${tunnelUrl}/camera`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ on }),
-      });
-      setCameraOn(on);
-    } catch (err) {
-      console.error("Failed to toggle camera:", err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   if (!unlocked) return null;
-
-  const displayContent = () => {
-    if (loading) {
-      return (
-        <img
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Golden_laurel_wreath_T_HL_04_Kerameikos_Athens.png/960px-Golden_laurel_wreath_T_HL_04_Kerameikos_Athens.png"
-          alt="Laurel wreath"
-          style={styles.icon}
-        />
-      );
-    }
-
-    if (cameraOn) {
-      return (
-        <img
-          src={`${tunnelUrl}/video`}
-          alt="Live feed"
-          style={styles.feed}
-        />
-      );
-    }
-
-    // Camera off: red wax seal
-    return (
-      <img
-        src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Seal_of_the_Lords_de_Cantilupe%3B_c.1301._Red_Wax%3B_the_National_Archives%2C_UK._PRO_23-926.png/640px-Seal_of_the_Lords_de_Cantilupe%3B_c.1301._Red_Wax%3B_the_National_Archives%2C_UK._PRO_23-926.png"
-        alt="Roman seal"
-        style={styles.icon}
-      />
-    );
-  };
 
   return (
     <div style={styles.container}>
       <h1 style={styles.header}>CAESAR</h1>
 
-      <div style={styles.feedWrapper}>{displayContent()}</div>
-
-      <div style={styles.buttonRow}>
-        <button style={styles.button} onClick={() => toggleCamera(true)}>
-          ACTIVATE
-        </button>
-        <button
-          style={{ ...styles.button, backgroundColor: "#8B0000" }}
-          onClick={() => toggleCamera(false)}
-        >
-          DEACTIVATE
-        </button>
+      <div style={styles.feedWrapper}>
+        {showFeed ? (
+          <img
+            src={`${tunnelUrl}/video_feed`}
+            alt="Live feed"
+            style={styles.feed}
+          />
+        ) : (
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Seal_of_the_Lords_de_Cantilupe%3B_c.1301._Red_Wax%3B_the_National_Archives%2C_UK._PRO_23-926.png/640px-Seal_of_the_Lords_de_Cantilupe%3B_c.1301._Red_Wax%3B_the_National_Archives%2C_UK._PRO_23-926.png"
+            alt="Roman seal"
+            style={styles.icon}
+          />
+        )}
       </div>
+
     </div>
   );
 }
