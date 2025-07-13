@@ -19,8 +19,7 @@ const GeckoPopupButton: React.FC<GeckoPopupButtonProps> = ({
 
   return (
     <div
-      className="absolute z-[100]"
-      style={{ right: '2vw', bottom: '2vh' }}
+      className="relative"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >

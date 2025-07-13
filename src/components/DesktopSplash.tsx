@@ -184,9 +184,10 @@ const DesktopSplash: React.FC = () => {
         {/* Gecko Button - centered for visibility test */}
         <div className="absolute z-[150]" style={{ left: '960px', top: '540px', transform: 'translate(-50%, -50%)' }}>
           <GeckoPopupButton
-            headSrc="/gecko.png"
+            headSrc="/my_gecko.jpg"
             popupImgSrc="/my_gecko.jpg"
             alt="Gecko Head"
+            size={96}
           />
         </div>
 
