@@ -238,7 +238,7 @@ const DesktopSplash: React.FC = () => {
           popupText={`<b>Attending UCSB</b> (2024-)\nPursuing <i>MS/PhD in Electrical & Computer Engineering</i>\n<i>Researcher in Ikuko Smith Lab</i>\nFocus on audiovisual processing in mouse model`}
           position={{ left: 0, top: 0 }}
           size={12}
-          popupOffset={{ x: -10, y: 50 }}
+          popupOffset={{ x: -40, y: 50 }}
         />
       </div>
 
