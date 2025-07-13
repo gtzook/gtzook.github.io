@@ -79,12 +79,7 @@ const DesktopSplash: React.FC = () => {
         </div>
 
         {/* Album Gallery - bottom right, scaled 1.5x */}
-        <div className="absolute z-[30]" 
-          style={{
-            right: '57.6px', 
-            bottom: '0px', 
-            height: '500px'
-            }}>
+        <div className="absolute z-[30]" style={{ right: '57.6px', bottom: '0px', transformOrigin: 'bottom right' }}>
           <AlbumGallery />
         </div>
 

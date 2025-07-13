@@ -30,6 +30,7 @@ const GeckoPopupButton: React.FC<GeckoPopupButtonProps> = ({
           style={{
             width: `${size}px`,
             height: 'auto',
+            filter: 'drop-shadow(0 0 4px rgba(0,0,0,0.6))',
             transition: 'transform 0.3s ease',
             cursor: 'pointer',
           }}
