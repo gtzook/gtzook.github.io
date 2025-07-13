@@ -182,12 +182,12 @@ const DesktopSplash: React.FC = () => {
         </div>
 
         {/* Gecko Button - left edge */}
-        <div className="absolute z-[150]" style={{ left: '0px', top: '300px' }}>
+        <div className="absolute z-[150]" style={{ left: '0px', top: '400px' }}>
           <GeckoPopupButton
             headSrc="/gecko.png"
             popupImgSrc="/my_gecko.jpg"
             alt="Gecko Head"
-            size={96}
+            size={120}
           />
         </div>
 
