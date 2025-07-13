@@ -241,7 +241,7 @@ Pursuing <i>MS/PhD in Electrical & Computer Engineering</i>
 Focus on audiovisual processing in mouse model`}
           position={{ left: 0, top: 0 }}
           size={12}
-          popupOffset={{ x: 40, y: 50 }} // changed to show popup on the left
+          popupOffset={{ x: -200, y: 50 }} // changed to show popup on the left
         />
       </div>
 
