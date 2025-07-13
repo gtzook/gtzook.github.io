@@ -58,7 +58,7 @@ const DesktopSplash: React.FC = () => {
       className="w-full h-screen flex items-center justify-center bg-black overflow-hidden"
       style={{
         backgroundImage: 'url(/splash_bg.jpg)',
-        backgroundSize: 'cover',
+        backgroundSize: `${1920 * scale}px ${1080 * scale}px`,
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
       }}
@@ -182,7 +182,7 @@ const DesktopSplash: React.FC = () => {
         </div>
 
         {/* Gecko Button - left side, middle-lower */}
-        <div className="absolute z-[100]" style={{ left: '96px', top: '432px' }}>
+        <div className="absolute z-[150]" style={{ left: '96px', top: '432px' }}>
           <GeckoPopupButton
             headSrc="/gecko.png"
             popupImgSrc="/my_gecko.jpg"
