@@ -73,13 +73,13 @@ const DesktopSplash: React.FC = () => {
           transformOrigin: 'center center',
         }}
       >
-        {/* Book Gallery - bottom left */}
-        <div className="absolute z-[30]" style={{ left: '0px', bottom: '0px' }}>
+        {/* Book Gallery - bottom left, moved up */}
+        <div className="absolute z-[30]" style={{ left: '0px', bottom: '30px' }}>
           <BookGallery />
         </div>
 
-        {/* Album Gallery - bottom right */}
-        <div className="absolute z-[30]" style={{ right: '57.6px', bottom: '0px' }}>
+        {/* Album Gallery - bottom right, scaled 1.5x */}
+        <div className="absolute z-[30]" style={{ right: '57.6px', bottom: '0px', transform: 'scale(1.5)', transformOrigin: 'bottom right' }}>
           <AlbumGallery />
         </div>
 
@@ -181,10 +181,10 @@ const DesktopSplash: React.FC = () => {
           <CoupleShakeImage />
         </div>
 
-        {/* Gecko Button - centered for visibility test */}
-        <div className="absolute z-[150]" style={{ left: '960px', top: '540px', transform: 'translate(-50%, -50%)' }}>
+        {/* Gecko Button - left edge */}
+        <div className="absolute z-[150]" style={{ left: '0px', top: '300px' }}>
           <GeckoPopupButton
-            headSrc="/my_gecko.jpg"
+            headSrc="/gecko.png"
             popupImgSrc="/my_gecko.jpg"
             alt="Gecko Head"
             size={96}
