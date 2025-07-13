@@ -74,7 +74,7 @@ const DesktopSplash: React.FC = () => {
         }}
       >
         {/* Book Gallery - bottom left */}
-        <div className="absolute z-[30]" style={{ left: '0px', bottom: '54px' }}>
+        <div className="absolute z-[30]" style={{ left: '0px', bottom: '0px' }}>
           <BookGallery />
         </div>
 
@@ -181,8 +181,8 @@ const DesktopSplash: React.FC = () => {
           <CoupleShakeImage />
         </div>
 
-        {/* Gecko Button - left side, middle-lower */}
-        <div className="absolute z-[150]" style={{ left: '96px', top: '432px' }}>
+        {/* Gecko Button - left side, middle */}
+        <div className="absolute z-[150]" style={{ left: '96px', top: '300px' }}>
           <GeckoPopupButton
             headSrc="/gecko.png"
             popupImgSrc="/my_gecko.jpg"
