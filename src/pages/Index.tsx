@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import DesktopSplash from '@/components/DesktopSplash';
-import MobileSplash from '@/components/MobileSplash';
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import AboutSection from '@/components/AboutSection';
@@ -9,22 +8,12 @@ import ProjectsSection from '@/components/ProjectsSection';
 import ContactSection from '@/components/ContactSection';
 
 const Index = () => {
-  const [isMobilePortrait, setIsMobilePortrait] = useState(false);
-
-  useEffect(() => {
-    const updateOrientation = () => {
-      setIsMobilePortrait(window.innerWidth < window.innerHeight);
-    };
-    updateOrientation();
-    window.addEventListener('resize', updateOrientation);
-    return () => window.removeEventListener('resize', updateOrientation);
-  }, []);
 
   return (
     <div className="min-h-screen bg-black">
       {/* Splash Screen */}
       <section id="splash">
-        {isMobilePortrait ? <MobileSplash /> : <DesktopSplash />}
+        <DesktopSplash />
       </section>
 
       {/* Tabs Section */}
