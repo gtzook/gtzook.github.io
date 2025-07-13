@@ -206,7 +206,7 @@ const DesktopSplash: React.FC = () => {
           src="/optimized/coffee_cup-400.webp"
           alt="Coffee Cup"
           className="absolute pointer-events-none"
-          style={{ left: '-5vw', top: '-5vw', width: '10vw', zIndex: 101 }}
+          style={{ left: '-5vw', top: '-5vw', width: '30vw', zIndex: 101 }}
           srcSet="/optimized/coffee_cup-400.webp 400w, /optimized/coffee_cup-800.webp 800w, /optimized/coffee_cup-1200.webp 1200w"
           sizes="(max-width: 600px) 100vw, 50vw"
         />
@@ -235,10 +235,13 @@ const DesktopSplash: React.FC = () => {
         <SvgPopupButton
           src="/ucsb_flag.svg"
           alt="UCSB Flag"
-          popupText={`<b>Attending UCSB</b> (2024-)\nPursuing <i>MS/PhD in Electrical & Computer Engineering</i>\n<i>Researcher in Ikuko Smith Lab</i>\nFocus on audiovisual processing in mouse model`}
+          popupText={`<b>Attending UCSB</b> (2024-)
+Pursuing <i>MS/PhD in Electrical & Computer Engineering</i>
+<i>Researcher in Ikuko Smith Lab</i>
+Focus on audiovisual processing in mouse model`}
           position={{ left: 0, top: 0 }}
           size={12}
-          popupOffset={{ x: -40, y: 50 }}
+          popupOffset={{ x: 40, y: 50 }} // changed to show popup on the left
         />
       </div>
 
