@@ -85,7 +85,8 @@ const DesktopSplash: React.FC = () => {
             bottom: '0px', 
             minHeight: '200px', // adjust based on your design
             maxHeight: '500px', // adjust as needed
-            overflowY: 'auto' // optional: helps with scroll if content exceeds maxHeight }}>
+            overflowY: 'auto' // optional: helps with scroll if content exceeds maxHeight 
+            }}>
           <AlbumGallery />
         </div>
 
