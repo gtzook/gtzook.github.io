@@ -17,17 +17,17 @@ interface ChessData {
 interface BagCycleButtonProps {
   position?: { left: string; top: string };
   scale?: number;
-  itemOffset?: { x: number; y: number };
-  itemSize?: number;
-  bagSize?: number;
+  itemOffset?: { x: number; y: number }; // now in pixels
+  itemSize?: number; // now in pixels
+  bagSize?: number; // now in pixels
 }
 
 const BagCycleButton: React.FC<BagCycleButtonProps> = ({
-  position = { left: '0vw', top: '0vh' },
+  position = { left: '0px', top: '0px' },
   scale = 1,
-  itemOffset = { x: 4, y: -12 },
-  itemSize = 6,
-  bagSize = 22,
+  itemOffset = { x: 76, y: -24 }, // converted from vw to pixels (4vw ≈ 76px, -12vw ≈ -230px but adjusted)
+  itemSize = 115, // converted from vw to pixels (6vw ≈ 115px)
+  bagSize = 288, // converted from vw to pixels (15vw ≈ 288px)
 }) => {
   const [itemIndex, setItemIndex] = React.useState(0);
   const [hasStarted, setHasStarted] = React.useState(false);
@@ -148,7 +148,7 @@ const BagCycleButton: React.FC<BagCycleButtonProps> = ({
         flexDirection: 'column',
         alignItems: 'center',
         transform: `scale(${scale})`,
-        width: `${bagSize}vw`,
+        width: `${bagSize}px`,
       }}
       onClick={handleClick}
       onMouseEnter={() => setHovered(true)}
@@ -159,10 +159,10 @@ const BagCycleButton: React.FC<BagCycleButtonProps> = ({
         alt="Bag"
         style={{
           width: '100%',
-          marginBottom: '1vh',
+          marginBottom: '10px',
           filter: hovered
-            ? 'drop-shadow(0 0.5vh 1.5vh rgba(0,0,0,0.18)) brightness(0.7)'
-            : 'drop-shadow(0 0.5vh 1.5vh rgba(0,0,0,0.18))',
+            ? 'drop-shadow(0 5px 15px rgba(0,0,0,0.18)) brightness(0.7)'
+            : 'drop-shadow(0 5px 15px rgba(0,0,0,0.18))',
           transition: 'filter 0.2s ease',
           animation: shakeAnimation ? 'bag-shake 0.4s ease-in-out' : undefined,
           zIndex: 41,
@@ -173,9 +173,9 @@ const BagCycleButton: React.FC<BagCycleButtonProps> = ({
         <div
           style={{
             position: 'absolute',
-            left: `${itemOffset.x}vw`,
-            top: `${itemOffset.y}vw`,
-            width: `${itemSize}vw`,
+            left: `${itemOffset.x}px`,
+            top: `${itemOffset.y}px`,
+            width: `${itemSize}px`,
             height: 'auto',
             zIndex: 42,
           }}
@@ -201,15 +201,15 @@ const BagCycleButton: React.FC<BagCycleButtonProps> = ({
                   right: '50%',
                   backgroundColor: 'rgba(0, 0, 0, 0.85)',
                   color: 'white',
-                  padding: '1.5vw 2vw',
-                  borderRadius: '1vw',
-                  boxShadow: '0 0.5vw 1.5vw rgba(0,0,0,0.7)',
-                  fontSize: '1.8vw',
+                  padding: '30px 40px',
+                  borderRadius: '20px',
+                  boxShadow: '0 10px 30px rgba(0,0,0,0.7)',
+                  fontSize: '36px',
                   zIndex: 9999,
                   whiteSpace: 'normal',
                   textAlign: 'center',
-                  maxWidth: '60vw',
-                  minWidth: '300px',
+                  maxWidth: '1200px',
+                  minWidth: '600px',
                 }}
               >
                 {showChessTooltip ? (
@@ -247,12 +247,12 @@ const BagCycleButton: React.FC<BagCycleButtonProps> = ({
                       src="/optimized/melon-400.webp"
                       alt="Melon"
                       style={{
-                        width: '20vw',
+                        width: '400px',
                         height: 'auto',
-                        borderRadius: '0.4vw',
+                        borderRadius: '8px',
                         objectFit: 'cover',
                         border: '1px solid #333',
-                        marginBottom: '0.5vw',
+                        marginBottom: '10px',
                       }}
                       srcSet="/optimized/melon-400.webp 400w, /optimized/melon-800.webp 800w, /optimized/melon-1200.webp 1200w"
                       sizes="(max-width: 600px) 100vw, 50vw"
@@ -268,10 +268,10 @@ const BagCycleButton: React.FC<BagCycleButtonProps> = ({
 
       <style>{`
         @keyframes bag-shake {
-          10%, 90% { transform: translateX(-0.2vw) rotate(-2deg); }
-          20%, 80% { transform: translateX(0.4vw) rotate(2deg); }
-          30%, 50%, 70% { transform: translateX(-0.6vw) rotate(-4deg); }
-          40%, 60% { transform: translateX(0.6vw) rotate(4deg); }
+          10%, 90% { transform: translateX(-4px) rotate(-2deg); }
+          20%, 80% { transform: translateX(8px) rotate(2deg); }
+          30%, 50%, 70% { transform: translateX(-12px) rotate(-4deg); }
+          40%, 60% { transform: translateX(12px) rotate(4deg); }
         }
       `}</style>
     </div>

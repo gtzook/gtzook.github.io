@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import BookGallery from './BookGallery';
@@ -9,7 +10,7 @@ import CoffeeStainButton from './splash/CoffeeStainButton';
 import CoupleShakeImage from './splash/CoupleShakeImage';
 import SvgPopupButton from './splash/SvgPopupButton';
 import BagCycleButton from './splash/BagCycleButton';
-import GeckoPopupButton from './splash/GeckoPopupButton'; // adjust path if needed
+import GeckoPopupButton from './splash/GeckoPopupButton';
 
 const getScale = () => {
   const baseWidth = 1920;
@@ -72,15 +73,18 @@ const DesktopSplash: React.FC = () => {
           transformOrigin: 'center center',
         }}
       >
+        {/* Book Gallery - bottom left */}
         <div className="absolute z-[30]" style={{ left: '0px', bottom: '54px' }}>
           <BookGallery />
         </div>
 
+        {/* Album Gallery - bottom right */}
         <div className="absolute z-[30]" style={{ right: '57.6px', bottom: '0px' }}>
           <AlbumGallery />
         </div>
 
-        <div className="absolute z-[40] w-[1152px]" style={{ left: '50%', top: '0vh', transform: 'translateX(-50%)' }}>
+        {/* Title/Input - top center */}
+        <div className="absolute z-[40] w-[1152px]" style={{ left: '384px', top: '0px' }}>
           <div className="relative flex items-center justify-center w-full">
             {!showInput ? (
               <img
@@ -88,7 +92,7 @@ const DesktopSplash: React.FC = () => {
                 alt="Name"
                 className="object-contain select-none"
                 style={{
-                  height: '40vh',
+                  height: '432px',
                   width: 'auto',
                   cursor: 'pointer',
                   transition: 'transform 0.4s',
@@ -172,13 +176,13 @@ const DesktopSplash: React.FC = () => {
           </div>
         </div>
 
-        <div className="absolute z-[100]" style={{ right: '5vw', top: '1vh' }}>
+        {/* Couple Image - top right */}
+        <div className="absolute z-[100]" style={{ right: '96px', top: '10px' }}>
           <CoupleShakeImage />
         </div>
 
-
-        {/* Other buttons inside scaled container */}
-        <div className="absolute z-[100]" style={{ left: '5vw', top: '40vh'}}>
+        {/* Gecko Button - left side, middle-lower */}
+        <div className="absolute z-[100]" style={{ left: '96px', top: '432px' }}>
           <GeckoPopupButton
             headSrc="/gecko.png"
             popupImgSrc="/my_gecko.jpg"
@@ -186,74 +190,80 @@ const DesktopSplash: React.FC = () => {
           />
         </div>
 
-        <div className="absolute z-[100]" style={{ left: '22vw', top: '40vh'}}>
+        {/* Quarter Spin Button - left side, middle-lower */}
+        <div className="absolute z-[100]" style={{ left: '422px', top: '432px' }}>
           <QuarterSpinButton />
         </div>
 
-        <div className="absolute z-[999]" style={{ left: '20vw', top: '5vh' }}>
+        {/* Stamp Button - left-center, top */}
+        <div className="absolute z-[999]" style={{ left: '384px', top: '54px' }}>
           <StampPeelButton popupSide="right" />
         </div>
 
-        <div className="absolute z-[100]" style={{ left: '8vw', top: '25vh'}}>
+        {/* Paperclip Button - left side, upper-middle */}
+        <div className="absolute z-[100]" style={{ left: '154px', top: '270px' }}>
           <PaperclipBendButton popupSide="right" />
         </div>
 
-        <div className="absolute z-[100]" style={{ left: '5vw', top: '5vh'}}>
+        {/* Coffee Stain Button - top left */}
+        <div className="absolute z-[100]" style={{ left: '96px', top: '54px' }}>
           <CoffeeStainButton />
         </div>
 
+        {/* Coffee Cup - top left corner (outside viewport) */}
         <img
           src="/optimized/coffee_cup-400.webp"
           alt="Coffee Cup"
           className="absolute pointer-events-none"
-          style={{ left: '-15vw', top: '-15vw', width: '30vw', zIndex: 101 }}
+          style={{ left: '-288px', top: '-162px', width: '576px', zIndex: 101 }}
           srcSet="/optimized/coffee_cup-400.webp 400w, /optimized/coffee_cup-800.webp 800w, /optimized/coffee_cup-1200.webp 1200w"
           sizes="(max-width: 600px) 100vw, 50vw"
         />
 
-        <div className="absolute animate-bounce z-[50] pointer-events-none" style={{ left: '50%', bottom: '32.4px', transform: 'translateX(-50%)' }}>
+        {/* Scroll indicator - bottom center */}
+        <div className="absolute animate-bounce z-[50] pointer-events-none" style={{ left: '931.2px', bottom: '32.4px' }}>
           <div style={{ width: '57.6px', height: '64.8px', border: '2px solid black', borderRadius: '9999px', backgroundColor: 'rgba(255,255,255,0.8)', display: 'flex', justifyContent: 'center' }}>
             <div style={{ width: '9.6px', height: '21.6px', backgroundColor: 'black', borderRadius: '9999px', marginTop: '10.8px', animation: 'pulse 2s infinite' }} />
           </div>
         </div>
-      </div>
 
-      {/* Ring button fixed to viewport */}
-      <div className="absolute z-[100]" style={{ left: '70vw', top: '42vh' }}>
-        <SvgPopupButton
-          src="/rice_ring.svg"
-          alt="Rice Ring"
-          popupText={`<b>Attended Rice University</b> (2020-2024)\n<i>BS in Electrical Engineering</i> (magna cum laude)\n<i>BA in Philosophy</i> (cum laude)\n<i> Undergraduate Researcher in MAHI Lab</i>`}
-          position={{ left: 0, top: 0 }}
-          size={10}
-          popupOffset={{ x: -10, y: 5 }}
-        />
-      </div>
+        {/* Rice Ring Button - right side, middle */}
+        <div className="absolute z-[100]" style={{ left: '1344px', top: '454px' }}>
+          <SvgPopupButton
+            src="/rice_ring.svg"
+            alt="Rice Ring"
+            popupText={`<b>Attended Rice University</b> (2020-2024)\n<i>BS in Electrical Engineering</i> (magna cum laude)\n<i>BA in Philosophy</i> (cum laude)\n<i> Undergraduate Researcher in MAHI Lab</i>`}
+            position={{ left: 0, top: 0 }}
+            size={192}
+            popupOffset={{ x: -192, y: 96 }}
+          />
+        </div>
 
-      {/* UCSB Flag button fixed to viewport */}
-      <div className="absolute z-[100]" style={{ right: '5vw', top: '40vh' }}>
-        <SvgPopupButton
-          src="/ucsb_flag.svg"
-          alt="UCSB Flag"
-          popupText={`<b>Attending UCSB</b> (2024-)
+        {/* UCSB Flag Button - right side, middle */}
+        <div className="absolute z-[100]" style={{ right: '96px', top: '432px' }}>
+          <SvgPopupButton
+            src="/ucsb_flag.svg"
+            alt="UCSB Flag"
+            popupText={`<b>Attending UCSB</b> (2024-)
 Pursuing <i>MS/PhD in Electrical & Computer Engineering</i>
 <i>Researcher in Ikuko Smith Lab</i>
 Focus on audiovisual processing in mouse model`}
-          position={{ left: 0, top: 0 }}
-          size={12}
-          popupOffset={{ x: -200, y: 50 }} // changed to show popup on the left
-        />
-      </div>
+            position={{ left: 0, top: 0 }}
+            size={230}
+            popupOffset={{ x: -384, y: 96 }}
+          />
+        </div>
 
-      {/* BagCycleButton fixed to viewport */}
-      <div className="absolute z-[100]" style={{ left: '35vw', top: '60vh' }}>
-        <BagCycleButton
-          position={{ left: '0', top: '0' }}
-          scale={1}
-          itemOffset={{ x: 20, y: -5 }}
-          itemSize={10}
-          bagSize={15}
-        />
+        {/* Bag Cycle Button - center-bottom */}
+        <div className="absolute z-[100]" style={{ left: '672px', top: '648px' }}>
+          <BagCycleButton
+            position={{ left: '0px', top: '0px' }}
+            scale={1}
+            itemOffset={{ x: 38, y: -10 }}
+            itemSize={115}
+            bagSize={288}
+          />
+        </div>
       </div>
     </section>
   );
