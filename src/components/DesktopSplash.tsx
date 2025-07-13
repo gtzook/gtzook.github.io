@@ -181,8 +181,8 @@ const DesktopSplash: React.FC = () => {
           <CoupleShakeImage />
         </div>
 
-        {/* Gecko Button - left side, middle */}
-        <div className="absolute z-[150]" style={{ left: '96px', top: '300px' }}>
+        {/* Gecko Button - centered for visibility test */}
+        <div className="absolute z-[150]" style={{ left: '960px', top: '540px', transform: 'translate(-50%, -50%)' }}>
           <GeckoPopupButton
             headSrc="/gecko.png"
             popupImgSrc="/my_gecko.jpg"
