@@ -180,8 +180,8 @@ const DesktopSplash: React.FC = () => {
         {/* Other buttons inside scaled container */}
         <div className="absolute z-[100]" style={{ left: '5vw', top: '40vh'}}>
           <GeckoPopupButton
-            headSrc="/gecko_head.webp"
-            popupImgSrc="/my_gecko.webp"
+            headSrc="/gecko.png"
+            popupImgSrc="/my_gecko.jpg"
             alt="Gecko Head"
           />
         </div>
@@ -206,7 +206,7 @@ const DesktopSplash: React.FC = () => {
           src="/optimized/coffee_cup-400.webp"
           alt="Coffee Cup"
           className="absolute pointer-events-none"
-          style={{ left: '-384px', top: '-378px', width: '768px', zIndex: 101 }}
+          style={{ left: '-5vw', top: '-5vw', width: '10vw', zIndex: 101 }}
           srcSet="/optimized/coffee_cup-400.webp 400w, /optimized/coffee_cup-800.webp 800w, /optimized/coffee_cup-1200.webp 1200w"
           sizes="(max-width: 600px) 100vw, 50vw"
         />
