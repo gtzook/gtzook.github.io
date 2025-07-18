@@ -25,7 +25,7 @@ interface BagCycleButtonProps {
 const BagCycleButton: React.FC<BagCycleButtonProps> = ({
   position = { left: '0px', top: '0px' },
   scale = 1,
-  itemOffset = { x: 76, y: -24 }, // converted from vw to pixels (4vw ≈ 76px, -12vw ≈ -230px but adjusted)
+  itemOffset = { x: 0, y: 0}, // converted from vw to pixels (4vw ≈ 76px, -12vw ≈ -230px but adjusted)
   itemSize = 115, // converted from vw to pixels (6vw ≈ 115px)
   bagSize = 288, // converted from vw to pixels (15vw ≈ 288px)
 }) => {
@@ -233,8 +233,6 @@ const BagCycleButton: React.FC<BagCycleButtonProps> = ({
                           </div>
                         );
                       })()}
-                      <br />
-                      <strong>Opening:</strong> {chessData.opening || 'N/A'}
                     </>
                   ) : (
                     'Failed to load chess stats.'
@@ -253,6 +251,9 @@ const BagCycleButton: React.FC<BagCycleButtonProps> = ({
                         objectFit: 'cover',
                         border: '1px solid #333',
                         marginBottom: '10px',
+                        display: 'block',
+                        marginLeft: 'auto',
+                        marginRight: 'auto',
                       }}
                       srcSet="/optimized/melon-400.webp 400w, /optimized/melon-800.webp 800w, /optimized/melon-1200.webp 1200w"
                       sizes="(max-width: 600px) 100vw, 50vw"

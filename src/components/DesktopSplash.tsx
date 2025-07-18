@@ -260,8 +260,8 @@ Focus on audiovisual processing in mouse model`}
           <BagCycleButton
             position={{ left: '0px', top: '0px' }}
             scale={1}
-            itemOffset={{ x: 38, y: -10 }}
-            itemSize={115}
+            itemOffset={{ x: 400, y: -100 }}
+            itemSize={200}
             bagSize={288}
           />
         </div>
