@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-const tunnelUrl = "https://caesarpi.duckdns.org";
+const tunnelUrl = "https://stream.gabezook.com";
 const PASSWORD = "cocosister";
 
 export default function Cam() {
