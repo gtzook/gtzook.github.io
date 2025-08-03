@@ -3,24 +3,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Mobile splash screen adjustments */
-@media (max-width: 767px) {
-  .mobile-splash {
-    overflow-x: hidden;
-  }
-  
-  .mobile-splash img {
-    max-width: 100% !important;
-    height: auto !important;
-  }
-  
-  /* Prevent elements from going off-screen on mobile */
-  .mobile-splash > div > div {
-    min-width: 0 !important;
-    max-width: 100vw !important;
-  }
-}
-
 /* Definition of the design system. All colors, gradients, fonts, etc should be defined here. */
 
 @layer base {
