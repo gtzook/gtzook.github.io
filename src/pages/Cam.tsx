@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 
-const tunnelUrl = "http://caesarpi.duckdns.org:8080"; // your /video_feed
-const controlUrl = "http://caesarpi.duckdns.org:5000"; // your Flask controller
+const piUrl = "http://caesarpi.duckdns.org:8080"; // your /video_feed
 const PASSWORD = "cocosister";
 
 export default function Cam() {
@@ -32,16 +31,16 @@ export default function Cam() {
     if (!unlocked || !showFeed) return;
 
     // Start the stream
-    fetch(`${controlUrl}/start`, { method: "POST" });
+    fetch(`${piUrl}/start`, { method: "POST" });
 
     // Begin heartbeat
     heartbeatRef.current = window.setInterval(() => {
-      fetch(`${controlUrl}/heartbeat`, { method: "POST" });
+      fetch(`${piUrl}/heartbeat`, { method: "POST" });
     }, 5000);
 
     // Clean up on unmount
     const stopStream = () => {
-      fetch(`${controlUrl}/stop`, { method: "POST" });
+      fetch(`${piUrl}/stop`, { method: "POST" });
       if (heartbeatRef.current) clearInterval(heartbeatRef.current);
     };
 
@@ -62,7 +61,7 @@ export default function Cam() {
       <div style={styles.feedWrapper}>
         {showFeed ? (
           <img
-            src={`${tunnelUrl}/video_feed`}
+            src={`${piUrl}/video_feed`}
             alt="Live feed"
             style={styles.feed}
             onError={() => {
