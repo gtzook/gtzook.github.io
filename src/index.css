@@ -6,7 +6,16 @@
 /* Mobile splash screen adjustments */
 @media (max-width: 767px) {
   .mobile-splash {
-    overflow-x: hidden;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .mobile-elements {
+    /* Force mobile scaling and positioning */
+    width: 100vw !important;
+    height: 100vh !important;
+    max-width: 100vw !important;
+    max-height: 100vh !important;
   }
   
   .mobile-splash img {
@@ -14,10 +23,59 @@
     height: auto !important;
   }
   
-  /* Prevent elements from going off-screen on mobile */
-  .mobile-splash > div > div {
-    min-width: 0 !important;
-    max-width: 100vw !important;
+  /* Mobile specific element positioning */
+  .mobile-splash .mobile-elements > div {
+    position: absolute !important;
+  }
+  
+  /* Adjust specific elements for mobile */
+  .mobile-splash .mobile-elements > div:nth-child(1) {
+    /* Book Gallery - keep at bottom left but responsive */
+    left: 2vw !important;
+    bottom: 5vh !important;
+    transform: scale(0.8) !important;
+  }
+  
+  .mobile-splash .mobile-elements > div:nth-child(2) {
+    /* Album Gallery - bottom right, smaller */
+    right: 2vw !important;
+    bottom: 5vh !important;
+    transform: scale(0.6) !important;
+  }
+  
+  .mobile-splash .mobile-elements > div:nth-child(3) {
+    /* Title/Input - top center, responsive */
+    left: 50% !important;
+    top: 5vh !important;
+    transform: translateX(-50%) scale(0.5) !important;
+    width: 90vw !important;
+  }
+  
+  .mobile-splash .mobile-elements > div:nth-child(4) {
+    /* Couple Image - top right, smaller */
+    right: 2vw !important;
+    top: 2vh !important;
+    transform: scale(0.4) !important;
+  }
+  
+  .mobile-splash .mobile-elements > div:nth-child(5) {
+    /* Gecko Button - left side, centered */
+    left: 1vw !important;
+    top: 30vh !important;
+    transform: scale(0.7) !important;
+  }
+  
+  /* Hide some elements on mobile to reduce clutter */
+  .mobile-splash .mobile-elements > div:nth-child(n+6):nth-child(-n+11) {
+    display: none !important;
+  }
+  
+  /* Keep only essential interactive elements visible */
+  .mobile-splash .mobile-elements > div:nth-child(12),
+  .mobile-splash .mobile-elements > div:nth-child(13),
+  .mobile-splash .mobile-elements > div:nth-child(14) {
+    transform: scale(0.6) !important;
+    z-index: 100 !important;
   }
 }
 

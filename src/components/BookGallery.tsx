@@ -129,7 +129,7 @@ const BookGallery: React.FC = () => {
         width: '4vw',
         height: '4vw',
         fontSize: '2vw',
-        marginTop: window.innerWidth < 768 ? '15vh' : '20vh'
+        marginTop: '20vh'
       }}
       aria-label="Next book"
     >
