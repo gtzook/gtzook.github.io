@@ -18,10 +18,9 @@ const getScale = () => {
   const scaleW = window.innerWidth / baseWidth;
   const scaleH = window.innerHeight / baseHeight;
   
-  // For mobile devices, use viewport-constrained scaling
+  // For mobile devices, scale to fit width while maintaining proportions
   if (window.innerWidth < 768) {
-    // Use a much smaller, viewport-based scaling for mobile
-    return Math.min(window.innerWidth / baseWidth, window.innerHeight / baseHeight) * 0.8;
+    return window.innerWidth / baseWidth;
   }
   
   return Math.min(scaleW, scaleH);
@@ -72,7 +71,7 @@ const DesktopSplash: React.FC = () => {
     >
       {/* Scaled splash container */}
       <div
-        className={`absolute top-1/2 left-1/2 ${window.innerWidth < 768 ? 'mobile-elements' : ''}`}
+        className="absolute top-1/2 left-1/2"
         style={{
           width: '1920px',
           height: '1080px',
