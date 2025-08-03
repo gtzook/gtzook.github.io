@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 
-const piUrl = "http://caesarpi.duckdns.org:8080"; // your /video_feed
+const piUrl = "https://caesarpi.duckdns.org"; // updated to HTTPS and no port
 const PASSWORD = "cocosister";
 
 export default function Cam() {
