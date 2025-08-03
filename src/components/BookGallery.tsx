@@ -124,11 +124,12 @@ const BookGallery: React.FC = () => {
     {/* Navigation Button */}
     <button
       onClick={showNext}
-      className="text-white bg-black/40 rounded-full flex items-center justify-center hover:bg-black/80 ml-[-4vw] mt-[20vh]"
+      className="text-white bg-black/40 rounded-full flex items-center justify-center hover:bg-black/80 ml-[-4vw]"
       style={{
         width: '4vw',
         height: '4vw',
-        fontSize: '2vw'
+        fontSize: '2vw',
+        marginTop: window.innerWidth < 768 ? '15vh' : '20vh'
       }}
       aria-label="Next book"
     >
