@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
-const tunnelUrl = "https://stream.gabezook.com";
+const tunnelUrl = "http://caesarpi.duckdns.org:8080"; // your /video_feed
+const controlUrl = "http://caesarpi.duckdns.org:5000"; // your Flask controller
 const PASSWORD = "cocosister";
 
 export default function Cam() {
   const [unlocked, setUnlocked] = useState(false);
   const [showFeed, setShowFeed] = useState(true);
+  const heartbeatRef = useRef<number | null>(null);
 
   useEffect(() => {
     const link = document.createElement("link");
@@ -26,6 +28,31 @@ export default function Cam() {
     }
   }, []);
 
+  useEffect(() => {
+    if (!unlocked || !showFeed) return;
+
+    // Start the stream
+    fetch(`${controlUrl}/start`, { method: "POST" });
+
+    // Begin heartbeat
+    heartbeatRef.current = window.setInterval(() => {
+      fetch(`${controlUrl}/heartbeat`, { method: "POST" });
+    }, 5000);
+
+    // Clean up on unmount
+    const stopStream = () => {
+      fetch(`${controlUrl}/stop`, { method: "POST" });
+      if (heartbeatRef.current) clearInterval(heartbeatRef.current);
+    };
+
+    window.addEventListener("beforeunload", stopStream);
+
+    return () => {
+      stopStream();
+      window.removeEventListener("beforeunload", stopStream);
+    };
+  }, [unlocked, showFeed]);
+
   if (!unlocked) return null;
 
   return (
@@ -38,6 +65,10 @@ export default function Cam() {
             src={`${tunnelUrl}/video_feed`}
             alt="Live feed"
             style={styles.feed}
+            onError={() => {
+              alert("Camera feed unavailable.");
+              setShowFeed(false);
+            }}
           />
         ) : (
           <img
@@ -47,7 +78,6 @@ export default function Cam() {
           />
         )}
       </div>
-
     </div>
   );
 }
