@@ -17,6 +17,12 @@ const getScale = () => {
   const baseHeight = 1080;
   const scaleW = window.innerWidth / baseWidth;
   const scaleH = window.innerHeight / baseHeight;
+  
+  // For mobile devices, scale to fit width while maintaining proportions
+  if (window.innerWidth < 768) {
+    return window.innerWidth / baseWidth;
+  }
+  
   return Math.min(scaleW, scaleH);
 };
 
