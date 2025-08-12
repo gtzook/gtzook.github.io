@@ -6,6 +6,7 @@ const PASSWORD = "cocosister";
 export default function Cam() {
   const [unlocked, setUnlocked] = useState(false);
   const [showFeed, setShowFeed] = useState(true);
+  const [plotError, setPlotError] = useState(false);
   const heartbeatRef = useRef<number | null>(null);
 
   useEffect(() => {
@@ -45,7 +46,6 @@ export default function Cam() {
     };
 
     window.addEventListener("beforeunload", stopStream);
-
     return () => {
       stopStream();
       window.removeEventListener("beforeunload", stopStream);
@@ -57,7 +57,8 @@ export default function Cam() {
   return (
     <div style={styles.container}>
       <h1 style={styles.header}>CAESAR</h1>
-
+      
+      {/* Video Feed */}
       <div style={styles.feedWrapper}>
         {showFeed ? (
           <img
@@ -76,6 +77,34 @@ export default function Cam() {
             style={styles.icon}
           />
         )}
+      </div>
+
+      {/* Temperature Plot */}
+      <div style={styles.plotSection}>
+        <h2 style={styles.plotTitle}>TEMPERATURE READINGS</h2>
+        <div style={styles.plotWrapper}>
+          {!plotError ? (
+            <img
+              src={`${piUrl}/temp_plot`}
+              alt="Temperature plot"
+              style={styles.plot}
+              onError={() => {
+                console.error("Temperature plot unavailable");
+                setPlotError(true);
+              }}
+            />
+          ) : (
+            <div style={styles.plotError}>
+              <p>Temperature data unavailable</p>
+              <button 
+                style={styles.retryButton}
+                onClick={() => setPlotError(false)}
+              >
+                Retry
+              </button>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
@@ -104,6 +133,7 @@ const styles = {
     backgroundColor: "#111",
     boxShadow: "0 0 40px rgba(255, 215, 0, 0.2)",
     maxWidth: "90%",
+    marginBottom: "3rem",
   },
   feed: {
     maxHeight: "70vh",
@@ -115,6 +145,48 @@ const styles = {
     border: "2px solid #ccc",
     filter: "brightness(1.1)",
     opacity: 0.95,
+  },
+  plotSection: {
+    marginTop: "2rem",
+  },
+  plotTitle: {
+    fontSize: "2rem",
+    letterSpacing: "0.2rem",
+    color: "goldenrod",
+    textShadow: "1px 1px #222",
+    marginBottom: "1.5rem",
+  },
+  plotWrapper: {
+    border: "4px double goldenrod",
+    display: "inline-block",
+    padding: "1rem",
+    backgroundColor: "#111",
+    boxShadow: "0 0 30px rgba(255, 215, 0, 0.15)",
+    maxWidth: "90%",
+  },
+  plot: {
+    maxWidth: "100%",
+    height: "auto",
+    border: "2px solid #ccc",
+    display: "block",
+  },
+  plotError: {
+    padding: "2rem",
+    color: "goldenrod",
+    fontSize: "1.2rem",
+  },
+  retryButton: {
+    backgroundColor: "#b8860b",
+    color: "#fff",
+    border: "none",
+    padding: "0.8rem 1.5rem",
+    fontSize: "1rem",
+    fontWeight: "bold" as const,
+    borderRadius: "6px",
+    cursor: "pointer",
+    boxShadow: "2px 2px 6px rgba(255,215,0,0.3)",
+    transition: "background-color 0.3s ease",
+    marginTop: "1rem",
   },
   buttonRow: {
     marginTop: "2rem",
