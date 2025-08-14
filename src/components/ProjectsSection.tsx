@@ -4,89 +4,63 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 const ProjectsSection: React.FC = () => {
   const projects = [
-  {
-    title: "Solar Battery Optimization System",
-    year: "2025",
-    description: "Optimal control using dynamic programming approach for realistic solar battery system, using real-world data from Lineage (for class)."
-  },
-  {
-    title: "Dendritic Hotspot Analysis and Simulation Model",
-    year: "2024",
-    description: "Automated analysis and simulation-based (NEURON) model of dendritic hotspots in mice."
-  },
-  {
-    title: "Free-moving Behavior Box Refurbishment",
-    year: "2024",
-    description: "Refurbishment of a 4 behavior boxes for free-moving mice, including new electronics and overhauled software."
-  },
-  {
-    title: "Hybrid (discrete + continous) model of small network of LIF neurons",
-    year: "2024",
-    description: "Model of a small network off LIF neurons leveraging the unique approach of hybrid systems to model discrete jumping behavior, performed stability analysis."
-  },
-  {
-    title: "LIF-network simualation of kindling/anti-kindling neuron stimulation",
-    year: "2024",
-    description: "LIF neuron based simulation of seizure inducing and inhibiting stimulation (for class)."
-  },
-  {
-    title: "CYANO",
-    year: "2023",
-    description: "Bag-based bioreactor for cyanobacteria cultivation, including custom electronics and software for monitoring and control."
-  },
-  {
-    title: "Sobriety Encouraging Remote Control Car",
-    year: "2022",
-    description: "Bluetooth remote controlled car that encourages sobriety by disabling the car when alcohol is detected (for class)."
-  },
-  {
-    title: "FES Textile Sleeve Electronics",
-    year: "2022",
-    description: "Functional electrical stimulation textile sleeve with integrated electronics"
-  },
-  {
-    title: "MOE Exoskeleton for Stroke Rehabilitation",
-    year: "2022",
-    description: "Modular exoskeleton system for stroke patient rehabilitation"
-  },
-  {
-    title: "DIC Skin Deformation Tracking",
-    year: "2021",
-    description: "Advanced skin deformation tracking using digital image correlation"
-  },
-  {
-    title: "Snaptics Haptics Platform",
-    year: "2020",
-    description: "Low-cost open-source hardware for wearable multi-sensory haptics"
-  },
-  {
-    title: "Electric Car Conversion",
-    year: "2019",
-    description: "Complete electric vehicle conversion project"
-  },
-  {
-    title: "Smart Grasper Surgical Robot",
-    year: "2018",
-    description: "Intelligent surgical robot with advanced grasping capabilities"
-  }];
+    {
+      title: "Solar Strategizer",
+      year: "2025",
+      description: "Led team of six electrical engineering graduate students in optimizing strategy for simulated solar power generation scenario, considering equipment purchases, grid buy/sell arbitrage, and carbon emissions tradeoff over a long horizon, and synthesized this data for presentation to Lineage representatives."
+    },
+    {
+      title: "CYANO Photobioreactor",
+      year: "2024",
+      description: "Designed all electronics and led software development in team of six electrical- and bioengineers, including custom optical density sensor and interactive touchscreen GUI for bag-based photobioreactor."
+    },
+    {
+      title: "LIF Neuron Epilepsy Simulation",
+      year: "2024",
+      description: "Built a LIF neuron model based simulation of a small network to display the effect of kindling (seizure-inducing) and anti-kindling (seizure-countervailing) stimulation."
+    }
+  ];
 
 
   const skills = {
-    software: [
-    "ROS", "Linux", "EAGLE", "AutoCAD", "Solidworks", "Unity", "Matlab",
-    "LTSpice", "libGDX", "Arduino", "OpenCV", "GIMP", "Git"],
-
-    hardware: [
-    "PCB Design", "Microsoldering", "Pump systems", "3D Printing"],
-
+    research: [
+      "Paper writing", "Problem solving", "Interdisciplinary communication", 
+      "Data analysis/presentation", "Human subject experience"
+    ],
+    electronics: [
+      "(Micro)soldering", "PCB Design", "Microcontroller interfacing", "Component testing", 
+      "Simulation", "Pick-and-place machine", "Sensor calibration"
+    ],
+    animalHusbandry: [
+      "Husbandry", "Food monitoring", "Burr hole/viral injection", "Post-op care", 
+      "Chemogenetic injections", "Humane euthanasia"
+    ],
+    softwarePlatforms: [
+      "Linux", "Unity", "EAGLE", "SolidWorks", "ROS", "Git", "LTSpice", "iVerilog", 
+      "Docker", "Freesurfer", "SPM12", "NEURON", "GIMP", "LaTeX", "OpenCV", "libGDX"
+    ],
     programming: [
-    "Python", "Java", "C", "C++", "iVerilog", "MATLAB", "LabVIEW", "Ruby"],
-
-    skills: [
-    "Interdisciplinary communication", "Data presentation", "Experimental design",
-    "Curriculum building"]
-
+      "Python", "MATLAB", "C/C++", "Java", "Ruby", "LabVIEW"
+    ]
   };
+
+  const publications = [
+    {
+      title: "Ndnf interneurons in layer 1 facilitate audiovisual performance enhancement in visual discrimination tasks",
+      authors: "G. Zook, I. Smith",
+      venue: "Neuroscience 2025 (SfN), San Diego, CA, US, 2025. Poster presentation."
+    },
+    {
+      title: "Integrated Kinematic Assessment Using Onboard Sensing in an Upper Limb Robotic Exoskeleton for Dual Intervention with Neuromodulation Takeaways",
+      authors: "Zook, Gabriel T., et al.",
+      venue: "TEROS, 2023. Poster presentation."
+    },
+    {
+      title: "Snaptics: Low-Cost Open Source Hardware for Wearable Multi-Sensory Haptics",
+      authors: "Z. A. Zook, O. O. Ozor-Ilo, G. T. Zook and M. K. O'Malley",
+      venue: "2021 IEEE World Haptics Conference (WHC), Montreal, QC, Canada, 2021, pp. 925-930. doi: 10.1109/WHC49131.2021.9517172."
+    }
+  ];
 
   return (
     <section id="projects" className="min-h-screen flex items-center justify-center py-20 bg-black">
@@ -117,60 +91,74 @@ const ProjectsSection: React.FC = () => {
 
             <div>
               <h3 className="text-2xl font-bold text-white mb-6">Technical Skills</h3>
-              <div className="grid md:grid-cols-2 gap-6">
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <div className="bg-white/10 rounded-lg p-4">
-                  <h4 className="text-lg font-semibold text-white mb-3">Software</h4>
+                  <h4 className="text-lg font-semibold text-white mb-3">Research</h4>
                   <div className="flex flex-wrap gap-2">
-                    {skills.software.map((skill, index) =>
-                    <span key={index} className="bg-blue-600/20 text-blue-300 px-2 py-1 rounded text-sm">
+                    {skills.research.map((skill, index) => (
+                      <span key={index} className="bg-blue-600/20 text-blue-300 px-2 py-1 rounded text-sm">
                         {skill}
                       </span>
-                    )}
+                    ))}
                   </div>
                 </div>
 
                 <div className="bg-white/10 rounded-lg p-4">
-                  <h4 className="text-lg font-semibold text-white mb-3">Hardware</h4>
+                  <h4 className="text-lg font-semibold text-white mb-3">Electronics</h4>
                   <div className="flex flex-wrap gap-2">
-                    {skills.hardware.map((skill, index) =>
-                    <span key={index} className="bg-green-600/20 text-green-300 px-2 py-1 rounded text-sm">
+                    {skills.electronics.map((skill, index) => (
+                      <span key={index} className="bg-green-600/20 text-green-300 px-2 py-1 rounded text-sm">
                         {skill}
                       </span>
-                    )}
+                    ))}
                   </div>
                 </div>
 
                 <div className="bg-white/10 rounded-lg p-4">
-                  <h4 className="text-lg font-semibold text-white mb-3">Programming</h4>
+                  <h4 className="text-lg font-semibold text-white mb-3">Animal Husbandry</h4>
                   <div className="flex flex-wrap gap-2">
-                    {skills.programming.map((skill, index) =>
-                    <span key={index} className="bg-purple-600/20 text-purple-300 px-2 py-1 rounded text-sm">
+                    {skills.animalHusbandry.map((skill, index) => (
+                      <span key={index} className="bg-red-600/20 text-red-300 px-2 py-1 rounded text-sm">
                         {skill}
                       </span>
-                    )}
+                    ))}
                   </div>
                 </div>
 
                 <div className="bg-white/10 rounded-lg p-4">
-                  <h4 className="text-lg font-semibold text-white mb-3">Core Skills</h4>
+                  <h4 className="text-lg font-semibold text-white mb-3">Software Platforms</h4>
                   <div className="flex flex-wrap gap-2">
-                    {skills.skills.map((skill, index) =>
-                    <span key={index} className="bg-orange-600/20 text-orange-300 px-2 py-1 rounded text-sm">
+                    {skills.softwarePlatforms.map((skill, index) => (
+                      <span key={index} className="bg-purple-600/20 text-purple-300 px-2 py-1 rounded text-sm">
                         {skill}
                       </span>
-                    )}
+                    ))}
+                  </div>
+                </div>
+
+                <div className="bg-white/10 rounded-lg p-4 md:col-span-2 lg:col-span-1">
+                  <h4 className="text-lg font-semibold text-white mb-3">Programming Languages</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {skills.programming.map((skill, index) => (
+                      <span key={index} className="bg-orange-600/20 text-orange-300 px-2 py-1 rounded text-sm">
+                        {skill}
+                      </span>
+                    ))}
                   </div>
                 </div>
               </div>
             </div>
 
             <div className="bg-white/10 rounded-lg p-6">
-              <h3 className="text-2xl font-bold text-white mb-4">Publications</h3>
-              <div className="text-gray-300">
-                <p className="italic">
-                  "Snaptics: Low-Cost Open-Source Hardware for Wearable Multi-Sensory Haptics" 
-                  IEEE World Haptics Conference (WHC) 2021
-                </p>
+              <h3 className="text-2xl font-bold text-white mb-6">Papers & Presentations</h3>
+              <div className="space-y-4">
+                {publications.map((pub, index) => (
+                  <div key={index} className="text-gray-300">
+                    <p className="font-semibold text-white mb-1">{pub.title}</p>
+                    <p className="text-sm text-blue-300 mb-1">{pub.authors}</p>
+                    <p className="text-sm italic">{pub.venue}</p>
+                  </div>
+                ))}
               </div>
             </div>
           </CardContent>

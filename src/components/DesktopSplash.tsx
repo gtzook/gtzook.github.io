@@ -143,13 +143,13 @@ const DesktopSplash: React.FC = () => {
           alt="Coffee Cup"
           className="absolute pointer-events-none"
           style={{ 
-            left: '-20vw', 
-            top: '-10vh', 
-            width: '40vw', 
+            left: '-25vw', 
+            top: '-15vh', 
+            width: '60vw', 
             zIndex: 101 
           }}
           srcSet="/optimized/coffee_cup-400.webp 400w, /optimized/coffee_cup-800.webp 800w, /optimized/coffee_cup-1200.webp 1200w"
-          sizes="40vw"
+          sizes="60vw"
         />
 
         {/* Scroll indicator - bottom center */}
