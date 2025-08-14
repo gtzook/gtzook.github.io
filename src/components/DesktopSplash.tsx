@@ -34,9 +34,13 @@ const DesktopSplash: React.FC = () => {
   const [showInput, setShowInput] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const [showError, setShowError] = useState(false);
+  const [isPortrait, setIsPortrait] = useState(window.innerWidth < window.innerHeight);
 
   useEffect(() => {
-    const handleResize = () => setScale(getScale());
+    const handleResize = () => {
+      setScale(getScale());
+      setIsPortrait(window.innerWidth < window.innerHeight);
+    };
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
@@ -58,6 +62,120 @@ const DesktopSplash: React.FC = () => {
       return next;
     });
   };
+
+  // Portrait mode: simplified layout with just name and coffee cup
+  if (isPortrait) {
+    return (
+      <section
+        className="w-full h-screen flex items-center justify-center bg-black overflow-hidden"
+        style={{
+          backgroundImage: 'url(/splash_bg.jpg)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+        }}
+      >
+        {/* Name Image - centered */}
+        <div className="absolute z-[40] flex items-center justify-center w-full h-full">
+          {!showInput ? (
+            <img
+              src="/optimized/name_img-400.webp"
+              alt="Name"
+              className="object-contain select-none"
+              style={{
+                maxWidth: '80vw',
+                maxHeight: '40vh',
+                cursor: 'pointer',
+                transition: 'transform 0.4s',
+                animation: shakeTitle
+                  ? 'title-shake 0.4s'
+                  : fallTitle
+                  ? 'title-fall 0.7s forwards'
+                  : undefined,
+                userSelect: 'none',
+              }}
+              onClick={handleTitleClick}
+              draggable={false}
+              srcSet="/optimized/name_img-400.webp 400w, /optimized/name_img-800.webp 800w, /optimized/name_img-1200.webp 1200w"
+              sizes="80vw"
+            />
+          ) : (
+            <div className="flex flex-col items-center justify-center px-4">
+              <label className="text-black text-center font-medium text-2xl mb-4">
+                What is my other name?
+              </label>
+              <input
+                type="password"
+                value={inputValue}
+                onChange={(e) => {
+                  setInputValue(e.target.value);
+                  if (showError) setShowError(false);
+                }}
+                placeholder="Enter your answer..."
+                className="text-center outline-none bg-[#111] text-[#39FF14] tracking-wider px-4 py-3 rounded-lg border-2 border-gray-600 w-80 max-w-[80vw]"
+                style={{ fontSize: '18px' }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    if (inputValue.trim().toLowerCase() === 'saitotomoya') {
+                      setShowError(false);
+                      window.open(
+                        'https://drive.google.com/drive/folders/1ocll457sZSGOVpXuYkOgDL_5oLG0pBKO?usp=sharing',
+                        '_blank'
+                      );
+                    } else {
+                      setShowError(true);
+                    }
+                  }
+                }}
+              />
+              {showError && (
+                <div className="text-[#ff4444] text-center mt-2 text-sm font-mono">
+                  Incorrect password. Please try again.
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+
+        {/* Coffee Cup - top left */}
+        <img
+          src="/optimized/coffee_cup-400.webp"
+          alt="Coffee Cup"
+          className="absolute pointer-events-none"
+          style={{ 
+            left: '-20vw', 
+            top: '-10vh', 
+            width: '40vw', 
+            zIndex: 101 
+          }}
+          srcSet="/optimized/coffee_cup-400.webp 400w, /optimized/coffee_cup-800.webp 800w, /optimized/coffee_cup-1200.webp 1200w"
+          sizes="40vw"
+        />
+
+        {/* Scroll indicator - bottom center */}
+        <div className="absolute animate-bounce z-[50] pointer-events-none bottom-8 left-1/2 transform -translate-x-1/2">
+          <div className="w-12 h-16 border-2 border-black rounded-full bg-white/80 flex justify-center">
+            <div className="w-2 h-5 bg-black rounded-full mt-2 animate-pulse" />
+          </div>
+        </div>
+
+        <style>{`
+          @keyframes title-shake {
+            10%, 90% { transform: translateX(-2px) rotate(-1deg); }
+            20%, 80% { transform: translateX(4px) rotate(1deg); }
+            30%, 50%, 70% { transform: translateX(-8px) rotate(-2deg); }
+            40%, 60% { transform: translateX(8px) rotate(2deg); }
+          }
+          @keyframes title-fall {
+            to {
+              transform: translateY(100vh) rotate(20deg);
+              opacity: 0;
+            }
+          }
+        `}</style>
+      </section>
+    );
+  }
 
   return (
     <section
