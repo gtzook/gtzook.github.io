@@ -249,7 +249,7 @@ const BagCycleButton: React.FC<BagCycleButtonProps> = ({
                   )
                 ) : showPickleTooltip ? (
                   <img
-                    src="/public/flying.png"
+                    src="/flying.png"
                     alt="Pickleball"
                     style={{
                       height: '30vh',
