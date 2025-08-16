@@ -5,7 +5,7 @@ const BAG_ITEMS = [
   { src: '/chess_piece.svg', alt: 'Chess Piece', link: 'https://www.chess.com/member/gzook' },
   { src: '/camera.svg', alt: 'Camera', link: 'https://www.instagram.com/gabetakesphotos111/' },
   { src: '/pickleball.svg', alt: 'Pickleball', link: null },
-  { src: '/motorcycle_icon.svg', alt: 'Motorcycle Keychain', link: null }
+  { src: '/moto-keychain.png', alt: 'Motorcycle Keychain', link: null }
 ];
 
 interface ChessData {
@@ -175,9 +175,9 @@ const BagCycleButton: React.FC<BagCycleButtonProps> = ({
         <div
           style={{
             position: 'absolute',
-            left: `${itemOffset.x}px`,
-            top: `${itemOffset.y}px`,
-            width: `${itemSize}px`,
+            left: `${currentItem.alt === 'Motorcycle Keychain' ? itemOffset.x - 100 : itemOffset.x}px`,
+            top: `${currentItem.alt === 'Motorcycle Keychain' ? itemOffset.y - 100 : itemOffset.y}px`,
+            width: `${currentItem.alt === 'Motorcycle Keychain' ? itemSize * 2 : itemSize}px`,
             height: 'auto',
             zIndex: 42,
           }}
@@ -203,15 +203,23 @@ const BagCycleButton: React.FC<BagCycleButtonProps> = ({
                   right: '50%',
                   backgroundColor: 'rgba(0, 0, 0, 0.85)',
                   color: 'white',
-                  padding: '30px 40px',
                   borderRadius: '20px',
                   boxShadow: '0 10px 30px rgba(0,0,0,0.7)',
                   fontSize: '36px',
                   zIndex: 9999,
                   whiteSpace: 'normal',
                   textAlign: 'center',
-                  maxWidth: '1200px',
-                  minWidth: '600px',
+                  ...(showPickleTooltip || showMotorcycleTooltip
+                    ? {
+                        padding: '8px',
+                        maxWidth: 'fit-content',
+                        minWidth: 'unset',
+                      }
+                    : {
+                        padding: '30px 40px',
+                        maxWidth: '1200px',
+                        minWidth: '600px',
+                      }),
                 }}
               >
                 {showChessTooltip ? (
@@ -241,11 +249,10 @@ const BagCycleButton: React.FC<BagCycleButtonProps> = ({
                   )
                 ) : showPickleTooltip ? (
                   <img
-                    src="/lovable-uploads/3d4a9e92-c69b-437c-b599-5e70ba3844b5.png"
+                    src="/public/flying.png"
                     alt="Pickleball"
                     style={{
-                      height: '10vh',
-                      width: 'auto',
+                      height: '30vh',
                       borderRadius: '8px',
                       objectFit: 'cover',
                       border: '1px solid #333',
@@ -255,7 +262,19 @@ const BagCycleButton: React.FC<BagCycleButtonProps> = ({
                     }}
                   />
                 ) : showMotorcycleTooltip ? (
-                  'Motorcycle keychain (image coming soon)'
+                  <img
+                    src="/motorcycle.jpg"
+                    alt="Motorcycle"
+                    style={{
+                      height: '30vh',
+                      borderRadius: '8px',
+                      objectFit: 'cover',
+                      border: '1px solid #333',
+                      display: 'block',
+                      marginLeft: 'auto',
+                      marginRight: 'auto',
+                    }}
+                  />
                 ) : (
                   <>
                     <img
