@@ -4,7 +4,8 @@ import ReactDOM from 'react-dom';
 const BAG_ITEMS = [
   { src: '/chess_piece.svg', alt: 'Chess Piece', link: 'https://www.chess.com/member/gzook' },
   { src: '/camera.svg', alt: 'Camera', link: 'https://www.instagram.com/gabetakesphotos111/' },
-  { src: '/pickleball.svg', alt: 'Pickleball', link: null }
+  { src: '/lovable-uploads/9d57be3b-7b2e-4345-a15b-1c70f0250b41.png', alt: 'Pickleball', link: null },
+  { src: '/motorcycle-keychain.svg', alt: 'Motorcycle Keychain', link: null }
 ];
 
 interface ChessData {
@@ -129,6 +130,7 @@ const BagCycleButton: React.FC<BagCycleButtonProps> = ({
   const showTooltip = currentItem.alt === 'Camera' && itemHovered;
   const showChessTooltip = currentItem.alt === 'Chess Piece' && itemHovered;
   const showPickleTooltip = currentItem.alt === 'Pickleball' && itemHovered;
+  const showMotorcycleTooltip = currentItem.alt === 'Motorcycle Keychain' && itemHovered;
 
   const formatResult = (result: string): { label: string; color: string } => {
     const lower = result.toLowerCase();
@@ -192,7 +194,7 @@ const BagCycleButton: React.FC<BagCycleButtonProps> = ({
             }}
           />
 
-          {(showChessTooltip || showPickleTooltip || showTooltip) &&
+          {(showChessTooltip || showPickleTooltip || showTooltip || showMotorcycleTooltip) &&
             ReactDOM.createPortal(
               <div
                 style={{
@@ -238,6 +240,8 @@ const BagCycleButton: React.FC<BagCycleButtonProps> = ({
                     'Failed to load chess stats.'
                   )
                 ) : showPickleTooltip ? (
+                  'I play pickleball!'
+                ) : showMotorcycleTooltip ? (
                   'Coming soon.'
                 ) : (
                   <>
