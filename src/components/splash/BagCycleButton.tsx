@@ -5,7 +5,7 @@ const BAG_ITEMS = [
   { src: '/chess_piece.svg', alt: 'Chess Piece', link: 'https://www.chess.com/member/gzook' },
   { src: '/camera.svg', alt: 'Camera', link: 'https://www.instagram.com/gabetakesphotos111/' },
   { src: '/pickleball.svg', alt: 'Pickleball', link: null },
-  { src: '/motorcycle_keychain_icon.svg', alt: 'Motorcycle Keychain', link: null }
+  { src: '/motorcycle_icon.svg', alt: 'Motorcycle Keychain', link: null }
 ];
 
 interface ChessData {
@@ -244,8 +244,8 @@ const BagCycleButton: React.FC<BagCycleButtonProps> = ({
                     src="/lovable-uploads/3d4a9e92-c69b-437c-b599-5e70ba3844b5.png"
                     alt="Pickleball"
                     style={{
-                      width: '400px',
-                      height: 'auto',
+                      height: '10vh',
+                      width: 'auto',
                       borderRadius: '8px',
                       objectFit: 'cover',
                       border: '1px solid #333',
