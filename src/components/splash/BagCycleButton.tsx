@@ -238,7 +238,20 @@ const BagCycleButton: React.FC<BagCycleButtonProps> = ({
                     'Failed to load chess stats.'
                   )
                 ) : showPickleTooltip ? (
-                  'Coming soon.'
+                  <img
+                    src="/lovable-uploads/9d57be3b-7b2e-4345-a15b-1c70f0250b41.png"
+                    alt="Pickleball"
+                    style={{
+                      width: '400px',
+                      height: 'auto',
+                      borderRadius: '8px',
+                      objectFit: 'cover',
+                      border: '1px solid #333',
+                      display: 'block',
+                      marginLeft: 'auto',
+                      marginRight: 'auto',
+                    }}
+                  />
                 ) : (
                   <>
                     <img
