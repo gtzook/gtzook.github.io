@@ -16,6 +16,14 @@
     "url": "https://open.spotify.com/album/6U11VNHZAfYY3E9V4oFB2p"
   },
   {
+    "album": "Today Might Be The Hit",
+    "albumId": "7pjYZia3RiUqYGtZ2FRaXT",
+    "artist": "Sorry",
+    "artistId": "5eUda4BaWhUQWWJiP1ml5v",
+    "cover": "https://i.scdn.co/image/ab67616d0000b27374279837212d5a420e0e0422",
+    "url": "https://open.spotify.com/album/7pjYZia3RiUqYGtZ2FRaXT"
+  },
+  {
     "album": "A Little Rhythm and a Wicked Feeling",
     "albumId": "5OsXAPcYYYNTtkFuuB8TDc",
     "artist": "Magdalena Bay",
@@ -30,13 +38,5 @@
     "artistId": "4kIwETcbpuFgRukE8o7Opx",
     "cover": "https://i.scdn.co/image/ab67616d0000b2738e0a3d9b7de16c862cb68f9d",
     "url": "https://open.spotify.com/album/3grTaYSw0sYx5HEaR2m8Tt"
-  },
-  {
-    "album": "so the flies don't come",
-    "albumId": "1aCdrqjxp4duqTRne80ecY",
-    "artist": "Kenny Segal",
-    "artistId": "13vr2QqzoWOWDyaAZDuEGO",
-    "cover": "https://i.scdn.co/image/ab67616d0000b27332acda39bec22b9a5dcd7aed",
-    "url": "https://open.spotify.com/album/1aCdrqjxp4duqTRne80ecY"
   }
 ]
