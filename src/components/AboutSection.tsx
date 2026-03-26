@@ -7,7 +7,7 @@ const About = () => {
     <div className="p-6 max-w-5xl mx-auto space-y-6">
       {/* Top Blurb */}
       <p className="text-lg leading-relaxed">
-        I'm an ECE MS/PhD student at UC Santa Barbara, working at the Ikuko Smith lab where I study visual processing in mice <i>in vivo</i>.
+        I'm an ECE MS/PhD student at UC Santa Barbara, working at the dendrite iSLAB where I study visual processing<i>in vivo</i>.
       </p>
 
       {/* Card Section */}
@@ -32,7 +32,7 @@ const About = () => {
               <h2 className="text-xl font-semibold mb-2">Bio</h2>
               <p className="text-white-700">
               I grew up in Bellevue, WA, and was entranced by engineering at four years old, when I would steal out past bedtime to program my brother's FLL robot. 
-              I believe the best innovations are found where broad expertise intersects. Accordingly, I am currently entrenched in the world of neuroscience ad the Ikuko Smith lab at UCSB,
+              I believe the best innovations are found where broad expertise intersects. Accordingly, I am currently entrenched in the world of neuroscience at the dendrite iSLAB at UCSB,
               where I hope to gain core competence in neural processing to better apply my engineering background.
               </p>
             </CardContent>
