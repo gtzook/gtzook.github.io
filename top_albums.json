@@ -1,13 +1,5 @@
 [
   {
-    "album": "TANGK",
-    "albumId": "6U11VNHZAfYY3E9V4oFB2p",
-    "artist": "IDLES",
-    "artistId": "75mafsNqNE1WSEVxIKuY5C",
-    "cover": "https://i.scdn.co/image/ab67616d0000b273838fbd7f0f3d02d2235cd121",
-    "url": "https://open.spotify.com/album/6U11VNHZAfYY3E9V4oFB2p"
-  },
-  {
     "album": "Black Hole Superette",
     "albumId": "63y5mkLctupacSr20e0O6j",
     "artist": "Aesop Rock",
@@ -16,20 +8,20 @@
     "url": "https://open.spotify.com/album/63y5mkLctupacSr20e0O6j"
   },
   {
-    "album": "My Soft Machine (Deluxe)",
-    "albumId": "3grTaYSw0sYx5HEaR2m8Tt",
-    "artist": "Arlo Parks",
-    "artistId": "4kIwETcbpuFgRukE8o7Opx",
-    "cover": "https://i.scdn.co/image/ab67616d0000b2738e0a3d9b7de16c862cb68f9d",
-    "url": "https://open.spotify.com/album/3grTaYSw0sYx5HEaR2m8Tt"
+    "album": "TANGK",
+    "albumId": "6U11VNHZAfYY3E9V4oFB2p",
+    "artist": "IDLES",
+    "artistId": "75mafsNqNE1WSEVxIKuY5C",
+    "cover": "https://i.scdn.co/image/ab67616d0000b273838fbd7f0f3d02d2235cd121",
+    "url": "https://open.spotify.com/album/6U11VNHZAfYY3E9V4oFB2p"
   },
   {
-    "album": "SHALLOW (PPL SWIM IN SHALLOW WATER)",
-    "albumId": "5SgHbxeN3aPBeLfFXOqnxj",
-    "artist": "Saya Gray",
-    "artistId": "4EnymklUyqZwvmHQGlRssl",
-    "cover": "https://i.scdn.co/image/ab67616d0000b273093d53c7c101801e616515cc",
-    "url": "https://open.spotify.com/album/5SgHbxeN3aPBeLfFXOqnxj"
+    "album": "Today Might Be The Hit",
+    "albumId": "7pjYZia3RiUqYGtZ2FRaXT",
+    "artist": "Sorry",
+    "artistId": "5eUda4BaWhUQWWJiP1ml5v",
+    "cover": "https://i.scdn.co/image/ab67616d0000b27374279837212d5a420e0e0422",
+    "url": "https://open.spotify.com/album/7pjYZia3RiUqYGtZ2FRaXT"
   },
   {
     "album": "A Little Rhythm and a Wicked Feeling",
@@ -38,5 +30,13 @@
     "artistId": "1oPRcJUkloHaRLYx0olBLJ",
     "cover": "https://i.scdn.co/image/ab67616d0000b273ae69f02d74849157de206294",
     "url": "https://open.spotify.com/album/5OsXAPcYYYNTtkFuuB8TDc"
+  },
+  {
+    "album": "The Singer and the Song",
+    "albumId": "5vVrfTlAZqwpdCs52MjdZH",
+    "artist": "Labi Siffre",
+    "artistId": "5CzlICF8GCY0pRC82MKrhX",
+    "cover": "https://i.scdn.co/image/ab67616d0000b27397be3134250560894d37de57",
+    "url": "https://open.spotify.com/album/5vVrfTlAZqwpdCs52MjdZH"
   }
 ]
