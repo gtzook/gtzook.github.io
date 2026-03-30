@@ -1,284 +1,149 @@
-import React, { useState, useEffect } from "react";
+from flask import Flask, jsonify, send_file
+from picamera2 import Picamera2
+import threading
+import time
+import os
+import subprocess
 
-const piUrl = "https://caesarpi.duckdns.org";
-const PASSWORD = "cocosister";
+app = Flask(__name__)
+capture_lock = threading.Lock()
+plot_lock = threading.Lock()
 
-export default function Cam() {
-  const [unlocked, setUnlocked] = useState(false);
-  const [plotError, setPlotError] = useState(false);
-  const [plotUrl, setPlotUrl] = useState("");
-  const [snapshotUrl, setSnapshotUrl] = useState<string | null>(null);
-  const [isTakingPicture, setIsTakingPicture] = useState(false);
-  const [snapshotError, setSnapshotError] = useState<string | null>(null);
+TEMP_IMAGE_PATH = "/tmp/latest_snapshot.jpg"
+TEMP_PLOT_PATH = "/home/gzook/temp_plot.png"
+PLOT_SCRIPT_PATH = "/home/gzook/plot_temps.py"
 
-  useEffect(() => {
-    const link = document.createElement("link");
-    link.href =
-      "https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap";
-    link.rel = "stylesheet";
-    document.head.appendChild(link);
 
-    return () => {
-      document.head.removeChild(link);
-    };
-  }, []);
+@app.route("/health")
+def health():
+    return jsonify({"status": "ok"})
 
-  useEffect(() => {
-    const pw = prompt("Enter the password to enter Caesar's chamber:");
-    if (pw === PASSWORD) {
-      setUnlocked(true);
-    } else {
-      alert("Access denied.");
-    }
-  }, []);
 
-  useEffect(() => {
-    return () => {
-      if (snapshotUrl) {
-        URL.revokeObjectURL(snapshotUrl);
-      }
-    };
-  }, [snapshotUrl]);
+@app.route("/temp_plot")
+def temp_plot():
+    if not os.path.exists(TEMP_PLOT_PATH):
+        return jsonify({"error": f"Plot file not found: {TEMP_PLOT_PATH}"}), 404
 
-  const refreshPlot = () => {
-    setPlotError(false);
-    setPlotUrl(`${piUrl}/temp_plot?ts=${Date.now()}`);
-  };
+    return send_file(
+        TEMP_PLOT_PATH,
+        mimetype="image/png",
+        as_attachment=False,
+        max_age=0
+    )
 
-  const takePicture = async () => {
-    try {
-      setIsTakingPicture(true);
-      setSnapshotError(null);
 
-      const response = await fetch(`${piUrl}/snapshot`, {
-        method: "GET",
-        cache: "no-store",
-      });
+@app.route("/refresh_temp_plot", methods=["POST"])
+def refresh_temp_plot():
+    if not plot_lock.acquire(blocking=False):
+        return jsonify({"error": "Plot refresh already in progress"}), 429
 
-      if (!response.ok) {
-        let message = `Failed to take picture (${response.status})`;
+    try:
+        print("[temp_plot] Regenerating temperature plot...")
+        result = subprocess.run(
+            ["python3", PLOT_SCRIPT_PATH],
+            capture_output=True,
+            text=True,
+            timeout=120,
+            check=True,
+        )
 
-        try {
-          const data = await response.json();
-          if (data?.error) {
-            message = data.error;
-          }
-        } catch {
-        }
+        if result.stdout:
+            print("[temp_plot] stdout:", result.stdout)
+        if result.stderr:
+            print("[temp_plot] stderr:", result.stderr)
 
-        throw new Error(message);
-      }
+        if not os.path.exists(TEMP_PLOT_PATH):
+            return jsonify({"error": f"Plot file not found: {TEMP_PLOT_PATH}"}), 500
 
-      const blob = await response.blob();
-      const newUrl = URL.createObjectURL(blob);
+        return jsonify({"message": "Temperature plot refreshed"})
+    except subprocess.TimeoutExpired:
+        print("[temp_plot] Plot generation timed out.")
+        return jsonify({"error": "Temperature plot generation timed out"}), 500
+    except subprocess.CalledProcessError as e:
+        print("[temp_plot] Plot script failed.")
+        print("stdout:", e.stdout)
+        print("stderr:", e.stderr)
+        return jsonify({
+            "error": "Temperature plot generation failed",
+            "stdout": e.stdout,
+            "stderr": e.stderr
+        }), 500
+    except Exception as e:
+        print(f"[temp_plot] Error: {e}")
+        return jsonify({"error": str(e)}), 500
+    finally:
+        plot_lock.release()
 
-      setSnapshotUrl((prev) => {
-        if (prev) URL.revokeObjectURL(prev);
-        return newUrl;
-      });
-    } catch (err) {
-      console.error(err);
-      setSnapshotError(
-        err instanceof Error ? err.message : "Failed to take picture."
-      );
-    } finally {
-      setIsTakingPicture(false);
-    }
-  };
 
-  useEffect(() => {
-    if (!unlocked) return;
+def capture_to_file():
+    picam2 = None
+    try:
+        print("[camera] Opening camera...")
+        picam2 = Picamera2()
 
-    takePicture();
-    refreshPlot();
-  }, [unlocked]);
+        preview_config = picam2.create_preview_configuration(
+            main={"size": (640, 480), "format": "RGB888"},
+            buffer_count=2
+        )
 
-  if (!unlocked) return null;
+        still_config = picam2.create_still_configuration(
+            main={"size": (3280, 2464)},
+            buffer_count=1
+        )
 
-  return (
-    <div style={styles.container}>
-      <h1 style={styles.header}>CAESAR</h1>
+        print("[camera] Configuring preview...")
+        picam2.configure(preview_config)
 
-      <div style={styles.feedWrapper}>
-        {snapshotUrl ? (
-          <img
-            src={snapshotUrl}
-            alt="Latest cage snapshot"
-            style={styles.feed}
-          />
-        ) : (
-          <div style={styles.placeholderWrapper}>
-            <p style={styles.placeholderText}>
-              Taking first snapshot...
-            </p>
-          </div>
-        )}
-      </div>
+        print("[camera] Starting camera...")
+        picam2.start()
 
-      <div style={styles.buttonRow}>
-        <button
-          style={{
-            ...styles.button,
-            opacity: isTakingPicture ? 0.7 : 1,
-            cursor: isTakingPicture ? "not-allowed" : "pointer",
-          }}
-          onClick={takePicture}
-          disabled={isTakingPicture}
-        >
-          {isTakingPicture ? "Taking picture..." : "Take Picture"}
-        </button>
+        print("[camera] Letting AE/AWB settle...")
+        time.sleep(1.5)
 
-        <button
-          style={styles.button}
-          onClick={refreshPlot}
-        >
-          Refresh Temperature Plot
-        </button>
-      </div>
+        print("[camera] Switching mode and capturing...")
+        picam2.switch_mode_and_capture_file(still_config, TEMP_IMAGE_PATH)
+        print(f"[camera] Saved to {TEMP_IMAGE_PATH}")
 
-      {snapshotError && <p style={styles.errorText}>{snapshotError}</p>}
+    finally:
+        if picam2 is not None:
+            try:
+                print("[camera] Stopping camera...")
+                picam2.stop()
+            except Exception as e:
+                print(f"[camera] Error during stop: {e}")
+            try:
+                print("[camera] Closing camera...")
+                picam2.close()
+            except Exception as e:
+                print(f"[camera] Error during close: {e}")
 
-      <div style={styles.plotSection}>
-        <h2 style={styles.plotTitle}>TEMPERATURE READINGS</h2>
-        <div style={styles.plotWrapper}>
-          {!plotError && plotUrl ? (
-            <img
-              src={plotUrl}
-              alt="Temperature plot"
-              style={styles.plot}
-              onError={() => {
-                console.error("Temperature plot unavailable");
-                setPlotError(true);
-              }}
-            />
-          ) : (
-            <div style={styles.plotError}>
-              <p>Temperature data unavailable</p>
-              <button
-                style={styles.retryButton}
-                onClick={refreshPlot}
-              >
-                Retry
-              </button>
-            </div>
-          )}
-        </div>
-      </div>
-    </div>
-  );
-}
 
-const styles = {
-  container: {
-    padding: "2rem",
-    backgroundColor: "#000",
-    fontFamily: "'Cinzel', serif",
-    color: "goldenrod",
-    textAlign: "center" as const,
-    minHeight: "100vh",
-  },
-  header: {
-    fontSize: "4rem",
-    letterSpacing: "0.3rem",
-    color: "goldenrod",
-    textShadow: "2px 2px #222",
-    marginBottom: "2rem",
-  },
-  feedWrapper: {
-    border: "6px double goldenrod",
-    display: "inline-block",
-    padding: "1rem",
-    backgroundColor: "#111",
-    boxShadow: "0 0 40px rgba(255, 215, 0, 0.2)",
-    maxWidth: "90%",
-    marginBottom: "2rem",
-    minWidth: "320px",
-  },
-  feed: {
-    maxWidth: "100%",
-    maxHeight: "70vh",
-    border: "2px solid #ccc",
-    display: "block",
-  },
-  placeholderWrapper: {
-    display: "flex",
-    flexDirection: "column" as const,
-    alignItems: "center",
-    justifyContent: "center",
-    gap: "1rem",
-    padding: "1rem",
-    minHeight: "200px",
-  },
-  placeholderText: {
-    fontSize: "1.1rem",
-    color: "goldenrod",
-    margin: 0,
-  },
-  plotSection: {
-    marginTop: "2rem",
-  },
-  plotTitle: {
-    fontSize: "2rem",
-    letterSpacing: "0.2rem",
-    color: "goldenrod",
-    textShadow: "1px 1px #222",
-    marginBottom: "1.5rem",
-  },
-  plotWrapper: {
-    border: "4px double goldenrod",
-    display: "inline-block",
-    padding: "1rem",
-    backgroundColor: "#111",
-    boxShadow: "0 0 30px rgba(255, 215, 0, 0.15)",
-    maxWidth: "90%",
-  },
-  plot: {
-    maxWidth: "100%",
-    height: "auto",
-    border: "2px solid #ccc",
-    display: "block",
-  },
-  plotError: {
-    padding: "2rem",
-    color: "goldenrod",
-    fontSize: "1.2rem",
-  },
-  retryButton: {
-    backgroundColor: "#b8860b",
-    color: "#fff",
-    border: "none",
-    padding: "0.8rem 1.5rem",
-    fontSize: "1rem",
-    fontWeight: "bold" as const,
-    borderRadius: "6px",
-    cursor: "pointer",
-    boxShadow: "2px 2px 6px rgba(255,215,0,0.3)",
-    transition: "background-color 0.3s ease",
-    marginTop: "1rem",
-  },
-  buttonRow: {
-    marginTop: "1rem",
-    marginBottom: "1rem",
-    display: "flex",
-    justifyContent: "center",
-    gap: "1rem",
-    flexWrap: "wrap" as const,
-  },
-  button: {
-    backgroundColor: "#b8860b",
-    color: "#fff",
-    border: "none",
-    padding: "1rem 2rem",
-    fontSize: "1.2rem",
-    fontWeight: "bold" as const,
-    borderRadius: "6px",
-    cursor: "pointer",
-    boxShadow: "2px 2px 6px rgba(255,215,0,0.3)",
-    transition: "background-color 0.3s ease",
-  },
-  errorText: {
-    color: "#ff8080",
-    fontSize: "1rem",
-    marginTop: "0.5rem",
-  },
-};
+@app.route("/snapshot", methods=["GET", "POST"])
+def snapshot():
+    if not capture_lock.acquire(blocking=False):
+        return jsonify({"error": "Capture already in progress"}), 429
+
+    try:
+        print("[snapshot] About to capture...")
+        capture_to_file()
+        print("[snapshot] Capture finished.")
+
+        if not os.path.exists(TEMP_IMAGE_PATH):
+            return jsonify({"error": "Snapshot file was not created"}), 500
+
+        return send_file(
+            TEMP_IMAGE_PATH,
+            mimetype="image/jpeg",
+            as_attachment=False,
+            max_age=0
+        )
+    except Exception as e:
+        print(f"[snapshot] Error: {e}")
+        return jsonify({"error": str(e)}), 500
+    finally:
+        capture_lock.release()
+
+
+if __name__ == "__main__":
+    print("[server] Snapshot server starting on port 8080...")
+    app.run(host="0.0.0.0", port=8080, threaded=True)
