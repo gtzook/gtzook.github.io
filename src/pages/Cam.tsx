@@ -6,6 +6,7 @@ const PASSWORD = "cocosister";
 export default function Cam() {
   const [unlocked, setUnlocked] = useState(false);
   const [plotError, setPlotError] = useState(false);
+  const [plotUrl, setPlotUrl] = useState("");
   const [snapshotUrl, setSnapshotUrl] = useState<string | null>(null);
   const [isTakingPicture, setIsTakingPicture] = useState(false);
   const [snapshotError, setSnapshotError] = useState<string | null>(null);
@@ -39,6 +40,11 @@ export default function Cam() {
     };
   }, [snapshotUrl]);
 
+  const refreshPlot = () => {
+    setPlotError(false);
+    setPlotUrl(`${piUrl}/temp_plot?ts=${Date.now()}`);
+  };
+
   const takePicture = async () => {
     try {
       setIsTakingPicture(true);
@@ -58,7 +64,6 @@ export default function Cam() {
             message = data.error;
           }
         } catch {
-          // ignore JSON parse failure
         }
 
         throw new Error(message);
@@ -81,6 +86,13 @@ export default function Cam() {
     }
   };
 
+  useEffect(() => {
+    if (!unlocked) return;
+
+    takePicture();
+    refreshPlot();
+  }, [unlocked]);
+
   if (!unlocked) return null;
 
   return (
@@ -96,13 +108,8 @@ export default function Cam() {
           />
         ) : (
           <div style={styles.placeholderWrapper}>
-            <img
-              src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Seal_of_the_Lords_de_Cantilupe%3B_c.1301._Red_Wax%3B_the_National_Archives%2C_UK._PRO_23-926.png/640px-Seal_of_the_Lords_de_Cantilupe%3B_c.1301._Red_Wax%3B_the_National_Archives%2C_UK._PRO_23-926.png"
-              alt="Roman seal"
-              style={styles.icon}
-            />
             <p style={styles.placeholderText}>
-              No snapshot yet. Press the button below to capture one.
+              Taking first snapshot...
             </p>
           </div>
         )}
@@ -120,6 +127,13 @@ export default function Cam() {
         >
           {isTakingPicture ? "Taking picture..." : "Take Picture"}
         </button>
+
+        <button
+          style={styles.button}
+          onClick={refreshPlot}
+        >
+          Refresh Temperature Plot
+        </button>
       </div>
 
       {snapshotError && <p style={styles.errorText}>{snapshotError}</p>}
@@ -127,9 +141,9 @@ export default function Cam() {
       <div style={styles.plotSection}>
         <h2 style={styles.plotTitle}>TEMPERATURE READINGS</h2>
         <div style={styles.plotWrapper}>
-          {!plotError ? (
+          {!plotError && plotUrl ? (
             <img
-              src={`${piUrl}/temp_plot?ts=${Date.now()}`}
+              src={plotUrl}
               alt="Temperature plot"
               style={styles.plot}
               onError={() => {
@@ -142,7 +156,7 @@ export default function Cam() {
               <p>Temperature data unavailable</p>
               <button
                 style={styles.retryButton}
-                onClick={() => setPlotError(false)}
+                onClick={refreshPlot}
               >
                 Retry
               </button>
@@ -193,17 +207,12 @@ const styles = {
     justifyContent: "center",
     gap: "1rem",
     padding: "1rem",
+    minHeight: "200px",
   },
   placeholderText: {
     fontSize: "1.1rem",
     color: "goldenrod",
     margin: 0,
-  },
-  icon: {
-    maxHeight: "40vh",
-    border: "2px solid #ccc",
-    filter: "brightness(1.1)",
-    opacity: 0.95,
   },
   plotSection: {
     marginTop: "2rem",
