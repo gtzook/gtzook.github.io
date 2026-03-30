@@ -1,19 +1,22 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 
-const piUrl = "https://caesarpi.duckdns.org"; // updated to HTTPS and no port
+const piUrl = "https://caesarpi.duckdns.org";
 const PASSWORD = "cocosister";
 
 export default function Cam() {
   const [unlocked, setUnlocked] = useState(false);
-  const [showFeed, setShowFeed] = useState(true);
   const [plotError, setPlotError] = useState(false);
-  const heartbeatRef = useRef<number | null>(null);
+  const [snapshotUrl, setSnapshotUrl] = useState<string | null>(null);
+  const [isTakingPicture, setIsTakingPicture] = useState(false);
+  const [snapshotError, setSnapshotError] = useState<string | null>(null);
 
   useEffect(() => {
     const link = document.createElement("link");
-    link.href = "https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap";
+    link.href =
+      "https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap";
     link.rel = "stylesheet";
     document.head.appendChild(link);
+
     return () => {
       document.head.removeChild(link);
     };
@@ -29,63 +32,104 @@ export default function Cam() {
   }, []);
 
   useEffect(() => {
-    if (!unlocked || !showFeed) return;
-
-    // Start the stream
-    fetch(`${piUrl}/start`, { method: "POST" });
-
-    // Begin heartbeat
-    heartbeatRef.current = window.setInterval(() => {
-      fetch(`${piUrl}/heartbeat`, { method: "POST" });
-    }, 5000);
-
-    // Clean up on unmount
-    const stopStream = () => {
-      fetch(`${piUrl}/stop`, { method: "POST" });
-      if (heartbeatRef.current) clearInterval(heartbeatRef.current);
-    };
-
-    window.addEventListener("beforeunload", stopStream);
     return () => {
-      stopStream();
-      window.removeEventListener("beforeunload", stopStream);
+      if (snapshotUrl) {
+        URL.revokeObjectURL(snapshotUrl);
+      }
     };
-  }, [unlocked, showFeed]);
+  }, [snapshotUrl]);
+
+  const takePicture = async () => {
+    try {
+      setIsTakingPicture(true);
+      setSnapshotError(null);
+
+      const response = await fetch(`${piUrl}/snapshot`, {
+        method: "GET",
+        cache: "no-store",
+      });
+
+      if (!response.ok) {
+        let message = `Failed to take picture (${response.status})`;
+
+        try {
+          const data = await response.json();
+          if (data?.error) {
+            message = data.error;
+          }
+        } catch {
+          // ignore JSON parse failure
+        }
+
+        throw new Error(message);
+      }
+
+      const blob = await response.blob();
+      const newUrl = URL.createObjectURL(blob);
+
+      setSnapshotUrl((prev) => {
+        if (prev) URL.revokeObjectURL(prev);
+        return newUrl;
+      });
+    } catch (err) {
+      console.error(err);
+      setSnapshotError(
+        err instanceof Error ? err.message : "Failed to take picture."
+      );
+    } finally {
+      setIsTakingPicture(false);
+    }
+  };
 
   if (!unlocked) return null;
 
   return (
     <div style={styles.container}>
       <h1 style={styles.header}>CAESAR</h1>
-      
-      {/* Video Feed */}
+
       <div style={styles.feedWrapper}>
-        {showFeed ? (
+        {snapshotUrl ? (
           <img
-            src={`${piUrl}/video_feed`}
-            alt="Live feed"
+            src={snapshotUrl}
+            alt="Latest cage snapshot"
             style={styles.feed}
-            onError={() => {
-              alert("Camera feed unavailable.");
-              setShowFeed(false);
-            }}
           />
         ) : (
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Seal_of_the_Lords_de_Cantilupe%3B_c.1301._Red_Wax%3B_the_National_Archives%2C_UK._PRO_23-926.png/640px-Seal_of_the_Lords_de_Cantilupe%3B_c.1301._Red_Wax%3B_the_National_Archives%2C_UK._PRO_23-926.png"
-            alt="Roman seal"
-            style={styles.icon}
-          />
+          <div style={styles.placeholderWrapper}>
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Seal_of_the_Lords_de_Cantilupe%3B_c.1301._Red_Wax%3B_the_National_Archives%2C_UK._PRO_23-926.png/640px-Seal_of_the_Lords_de_Cantilupe%3B_c.1301._Red_Wax%3B_the_National_Archives%2C_UK._PRO_23-926.png"
+              alt="Roman seal"
+              style={styles.icon}
+            />
+            <p style={styles.placeholderText}>
+              No snapshot yet. Press the button below to capture one.
+            </p>
+          </div>
         )}
       </div>
 
-      {/* Temperature Plot */}
+      <div style={styles.buttonRow}>
+        <button
+          style={{
+            ...styles.button,
+            opacity: isTakingPicture ? 0.7 : 1,
+            cursor: isTakingPicture ? "not-allowed" : "pointer",
+          }}
+          onClick={takePicture}
+          disabled={isTakingPicture}
+        >
+          {isTakingPicture ? "Taking picture..." : "Take Picture"}
+        </button>
+      </div>
+
+      {snapshotError && <p style={styles.errorText}>{snapshotError}</p>}
+
       <div style={styles.plotSection}>
         <h2 style={styles.plotTitle}>TEMPERATURE READINGS</h2>
         <div style={styles.plotWrapper}>
           {!plotError ? (
             <img
-              src={`${piUrl}/temp_plot`}
+              src={`${piUrl}/temp_plot?ts=${Date.now()}`}
               alt="Temperature plot"
               style={styles.plot}
               onError={() => {
@@ -96,7 +140,7 @@ export default function Cam() {
           ) : (
             <div style={styles.plotError}>
               <p>Temperature data unavailable</p>
-              <button 
+              <button
                 style={styles.retryButton}
                 onClick={() => setPlotError(false)}
               >
@@ -133,12 +177,27 @@ const styles = {
     backgroundColor: "#111",
     boxShadow: "0 0 40px rgba(255, 215, 0, 0.2)",
     maxWidth: "90%",
-    marginBottom: "3rem",
+    marginBottom: "2rem",
+    minWidth: "320px",
   },
   feed: {
+    maxWidth: "100%",
     maxHeight: "70vh",
     border: "2px solid #ccc",
     display: "block",
+  },
+  placeholderWrapper: {
+    display: "flex",
+    flexDirection: "column" as const,
+    alignItems: "center",
+    justifyContent: "center",
+    gap: "1rem",
+    padding: "1rem",
+  },
+  placeholderText: {
+    fontSize: "1.1rem",
+    color: "goldenrod",
+    margin: 0,
   },
   icon: {
     maxHeight: "40vh",
@@ -189,7 +248,8 @@ const styles = {
     marginTop: "1rem",
   },
   buttonRow: {
-    marginTop: "2rem",
+    marginTop: "1rem",
+    marginBottom: "1rem",
     display: "flex",
     justifyContent: "center",
     gap: "1rem",
@@ -206,5 +266,10 @@ const styles = {
     cursor: "pointer",
     boxShadow: "2px 2px 6px rgba(255,215,0,0.3)",
     transition: "background-color 0.3s ease",
+  },
+  errorText: {
+    color: "#ff8080",
+    fontSize: "1rem",
+    marginTop: "0.5rem",
   },
 };
