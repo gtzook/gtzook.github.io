@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import BookGallery from './BookGallery';
 import AlbumGallery from './AlbumGallery';
 import QuarterSpinButton from './splash/QuarterSpinButton';
@@ -20,7 +20,17 @@ const DesktopSplash: React.FC = () => {
   const [showInput, setShowInput] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const [showError, setShowError] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
 
+  useEffect(() => {
+    if (containerRef.current) {
+      // Scroll halfway through the content horizontally
+      const container = containerRef.current;
+      const scrollLeft = (container.scrollWidth - container.clientWidth) / 2;
+      container.scrollLeft = scrollLeft;
+    }
+  }, []);
+  
   const handleTitleClick = () => {
     if (fallTitle || showInput) return;
     setTitleClicks((c) => {
