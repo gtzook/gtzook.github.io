@@ -1,6 +1,5 @@
 import React from 'react';
 import DesktopSplash from '@/components/DesktopSplash';
-import { useIsMobile } from '@/hooks/use-mobile';
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import AboutSection from '@/components/AboutSection';
@@ -14,7 +13,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-black">
       {/* Splash Screen */}
-      <section id="splash" className={isMobile ? "mobile-splash" : ""}>
+      <section id="splash">
         <DesktopSplash />
       </section>
 
