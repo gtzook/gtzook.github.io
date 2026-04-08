@@ -240,7 +240,7 @@ const DesktopSplash: React.FC = () => {
         <div className="absolute splash-decorative" style={{ left: '35%', top: '60%' }}>
           <BagCycleButton
             position={{ left: '0px', top: '0px' }}
-            scale={1}
+            scale={1.5}
             itemOffset={{ x: 220, y: -120 }}
             itemSize={120}
             bagSize={160}
@@ -248,7 +248,7 @@ const DesktopSplash: React.FC = () => {
         </div>
 
         {/* Galleries */}
-        <div style={{ position: 'absolute', left: 0, bottom: 0, width: '400px' }}>
+        <div style={{ position: 'absolute', left: 0, bottom: 100, width: '400px' }}>
           <BookGallery />
         </div>
 
