@@ -10,7 +10,7 @@ const CoupleShakeImage: React.FC = () => {
         alt="Couple"
         className="transition-transform duration-100 pointer-events-auto select-none"
         style={{
-          height: '300px',
+          height: '350px',
           width: 'auto',
           transform: hovered ? 'rotate(-14deg) scale(1.04)' : 'none',
           animation: hovered ? 'shake-couple 0.4s infinite alternate' : 'none',
