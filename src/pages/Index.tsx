@@ -8,12 +8,10 @@ import ProjectsSection from '@/components/ProjectsSection';
 import ContactSection from '@/components/ContactSection';
 
 const Index = () => {
-  const isMobile = useIsMobile();
-
   return (
     <div className="min-h-screen bg-black">
       {/* Splash Screen */}
-      <section id="splash">
+      <section id="splash" className="">
         <DesktopSplash />
       </section>
 
