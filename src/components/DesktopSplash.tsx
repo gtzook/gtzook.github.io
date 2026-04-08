@@ -45,6 +45,10 @@ const DesktopSplash: React.FC = () => {
         overflowY: 'hidden',
         display: 'flex',
         alignItems: 'center', // keeps it visually centered vertically too
+        backgroundImage: 'url(/splash_bg.jpg)',
+        backgroundRepeat: 'repeat',
+        backgroundPosition: 'top left',
+        backgroundSize: '100px 100px',
       }}
     >
       <div
@@ -52,22 +56,10 @@ const DesktopSplash: React.FC = () => {
         style={{
           width: `${DESIGN_WIDTH}px`,
           minWidth: `${DESIGN_WIDTH}px`,
-          height: `${DESIGN_HEIGHT}px`, // 👈 change this
-          margin: '0 auto',
+          height: `${DESIGN_HEIGHT}px`,
           zIndex: 1,
         }}
       >
-        {/* background image */}
-        <div
-          className="absolute top-0 left-0 w-full h-full z-0"
-          style={{
-            backgroundImage: 'url(/splash_bg.jpg)',
-            backgroundRepeat: 'repeat',
-            backgroundPosition: 'top left',
-            backgroundSize: '100px 100px',
-          }}
-        />
-
         {/* Content container */}
         <section
           className="relative"
@@ -276,7 +268,6 @@ const DesktopSplash: React.FC = () => {
           <AlbumGallery />
         </div>
       </section>
-    </div>
     </div>
   );
 };
