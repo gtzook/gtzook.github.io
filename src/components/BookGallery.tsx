@@ -9,180 +9,115 @@ interface Book {
 }
 
 const BookGallery: React.FC = () => {
-  const [books, setBooks] = useState<Book[]>([]);
-  const [index, setIndex] = useState(0);
+  const [stack, setStack] = useState<Book[]>([]);
+  const [leavingIndex, setLeavingIndex] = useState<number | null>(null);
+  const [animating, setAnimating] = useState(false);
 
   useEffect(() => {
     fetch('/books_openlibrary.txt')
-      .then((res) => {
-        if (!res.ok) throw new Error('File not found');
-        return res.text();
-      })
+      .then((res) => res.text())
       .then((text) => {
         const parsed = text
           .split('\n')
-          .map((line) => line.trim())
+          .map((l) => l.trim())
           .filter(Boolean)
           .map((line) => {
             const [title, author, isbn, cover, url] = line.split('\t');
             return { title, author, isbn, cover, url };
-          })
-          .filter((book) => book.cover && book.url);
+          });
 
-        setBooks(parsed);
+        setStack(parsed);
       });
   }, []);
 
-  useEffect(() => {
-    books.forEach((book) => {
-      const img = new Image();
-      img.src = book.cover;
-    });
-  }, [books]);
+  const cycle = () => {
+    if (animating || stack.length === 0) return;
 
-  const showNext = () => setIndex((i) => (i + 1) % books.length);
+    setAnimating(true);
+    setLeavingIndex(0);
 
-  const book = books[index];
+    // After slide-left animation
+    setTimeout(() => {
+      setStack((prev) => {
+        const [first, ...rest] = prev;
+        return [...rest, first];
+      });
 
-  if (!book) return null;
+      setLeavingIndex(null);
+
+      // allow reflow before ending animation
+      setTimeout(() => {
+        setAnimating(false);
+      }, 50);
+    }, 300);
+  };
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        height: '100%',
-        width: '100%',
-        paddingLeft: '20px',
-      }}
-    >
-      <div style={{ display: 'flex', alignItems: 'flex-start', gap: '16px' }}>
-        {/* Book Column */}
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            width: '220px',
-          }}
-        >
-          {/* Book Display */}
-          <div
+    <div style={{ position: 'relative', width: 240, height: 320 }}>
+      {stack.map((book, i) => {
+        const isLeaving = i === leavingIndex;
+
+        return (
+          <a
+            key={book.isbn + i}
+            href={book.url}
+            target="_blank"
+            rel="noopener noreferrer"
             style={{
-              position: 'relative',
-              width: '100%',
-              aspectRatio: '3 / 4',
+              position: 'absolute',
+              inset: 0,
               display: 'flex',
-              alignItems: 'center',
               justifyContent: 'center',
+              alignItems: 'center',
+
+              transform: isLeaving
+                ? 'translateX(-160px) scale(0.9)'
+                : `translateX(${i * 6}px) translateY(${i * 6}px)`,
+
+              zIndex: isLeaving
+                ? 0
+                : stack.length - i,
+
+              opacity: isLeaving ? 0.7 : 1,
+
+              transition: 'transform 0.3s ease, opacity 0.3s ease',
+              pointerEvents: i === 0 ? 'auto' : 'none',
             }}
           >
-            {/* Clickable Area */}
-            <a
-              href={book.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                position: 'absolute',
-                inset: 0,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                borderRadius: '12px',
-                zIndex: 40,
-              }}
-            >
-              <img
-                src={book.cover}
-                alt={book.title}
-                style={{
-                  width: '120px',
-                  height: 'auto',
-                  marginLeft: '-40px',
-                  marginTop: '-40px',
-                  objectFit: 'contain',
-                }}
-              />
-            </a>
-
-            {/* Book Holder */}
             <img
-              src="/optimized/book_holder-400.webp"
-              alt="Book holder"
+              src={book.cover}
+              alt={book.title}
               style={{
-                position: 'absolute',
-                zIndex: 30,
-                width: '100%',
-                height: '100%',
-                objectFit: 'contain',
-                transform: 'rotate(-22deg) scale(2)',
-                transformOrigin: 'center',
-                pointerEvents: 'none',
+                width: '140px',
+                height: 'auto',
+                borderRadius: '8px',
+                boxShadow: '0 8px 20px rgba(0,0,0,0.25)',
+                background: 'white',
               }}
             />
-          </div>
+          </a>
+        );
+      })}
 
-          {/* Text */}
-          <div
-            style={{
-              marginLeft: '-60px',
-              marginTop: '-80px',
-              height: '60px',
-              textAlign: 'center',
-              zIndex: 40,
-            }}
-          >
-            <div
-              style={{
-                fontWeight: 'bold',
-                fontSize: book.title.length > 15 ? '12px' : '14px',
-                lineHeight: '1.2',
-                maxWidth: '150px',
-                overflow: 'hidden',
-                margin: '0 auto',
-              }}
-            >
-              {book.title}
-            </div>
-
-            <div
-              style={{
-                color: '#666',
-                fontSize: '12px',
-                marginTop: '6px',
-              }}
-            >
-              {book.author}
-            </div>
-          </div>
-        </div>
-
-        {/* Next Button */}
-        <button
-          onClick={showNext}
-          style={{
-            width: '40px',
-            height: '40px',
-            fontSize: '18px',
-            marginTop: '120px',
-            background: 'rgba(0,0,0,0.4)',
-            color: 'white',
-            borderRadius: '9999px',
-            border: 'none',
-            cursor: 'pointer',
-          }}
-          onMouseEnter={(e) =>
-            (e.currentTarget.style.background = 'rgba(0,0,0,0.8)')
-          }
-          onMouseLeave={(e) =>
-            (e.currentTarget.style.background = 'rgba(0,0,0,0.4)')
-          }
-          aria-label="Next book"
-        >
-          →
-        </button>
-      </div>
+      {/* Button */}
+      <button
+        onClick={cycle}
+        style={{
+          position: 'absolute',
+          right: '-60px',
+          top: '50%',
+          transform: 'translateY(-50%)',
+          width: '40px',
+          height: '40px',
+          borderRadius: '50%',
+          border: 'none',
+          background: 'rgba(0,0,0,0.5)',
+          color: 'white',
+          cursor: 'pointer',
+        }}
+      >
+        →
+      </button>
     </div>
   );
 };
