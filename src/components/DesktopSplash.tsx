@@ -44,6 +44,7 @@ const DesktopSplash: React.FC = () => {
           overflowX: 'auto',
           overflowY: 'hidden',
           backgroundImage: 'url(/splash_bg.png)',
+          backgroundColor: 'white',
           backgroundRepeat: 'repeat',
           backgroundPosition: 'top left',
           backgroundSize: '100px 100px',
