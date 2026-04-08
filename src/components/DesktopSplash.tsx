@@ -218,7 +218,7 @@ const DesktopSplash: React.FC = () => {
           <QuarterSpinButton />
         </div>
 
-        <div className="absolute splash-decorative" style={{ right: '22%', top: '42%' }}>
+        <div className="absolute splash-decorative" style={{ right: '22%', top: '35%' }}>
           <SvgPopupButton
             src="/rice_ring.svg"
             alt="Rice Ring"
@@ -228,12 +228,12 @@ const DesktopSplash: React.FC = () => {
           />
         </div>
 
-        <div className="absolute splash-decorative" style={{ right: '5%', top: '45%' }}>
+        <div className="absolute splash-decorative" style={{ right: '5%', top: '42%' }}>
           <SvgPopupButton
             src="/ucsb_flag.svg"
             alt="UCSB Flag"
             popupText={`<b>Attending UCSB</b> (2024-)`}
-            size={200}
+            size={230}
             popupOffset={{ x: -384, y: 96 }}
           />
         </div>
