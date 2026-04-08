@@ -4,10 +4,18 @@ import { Github, Instagram } from 'lucide-react';
 
 const About = () => {
   return (
-    <div className="p-6 max-w-5xl mx-auto space-y-6">
+    <div
+      className="p-6 max-w-5xl mx-auto space-y-6"
+      style={{
+        backgroundImage: 'url("/cube_bg.png")', // replace with your uploaded image
+        backgroundRepeat: 'repeat',
+        backgroundSize: 'auto', // keeps original size of the pattern
+        backgroundPosition: 'center',
+      }}
+    >
       {/* Top Blurb */}
       <p className="text-lg leading-relaxed">
-        I'm an ECE MS/PhD student at UC Santa Barbara, working at the dendrite iSLAB where I study visual processing<i>in vivo</i>.
+        I'm an ECE MS/PhD student at UC Santa Barbara, working at the dendrite iSLAB where I study visual processing <i>in vivo</i>.
       </p>
 
       {/* Card Section */}
@@ -19,8 +27,10 @@ const About = () => {
               src="/optimized/office_photo-400.jpg"
               alt="Computer photo"
               className="w-full h-auto mt-4"
-              style={{ borderRadius: '5vw', transform:'rotate(-90deg)'}} srcSet="/optimized/office_photo-400.jpg 400w, /optimized/office_photo-800.jpg 800w, /optimized/office_photo-1200.jpg 1200w" sizes="(max-width: 600px) 100vw, 50vw" />
-
+              style={{ borderRadius: '5vw', transform: 'rotate(-90deg)' }}
+              srcSet="/optimized/office_photo-400.jpg 400w, /optimized/office_photo-800.jpg 800w, /optimized/office_photo-1200.jpg 1200w"
+              sizes="(max-width: 600px) 100vw, 50vw"
+            />
           </CardContent>
         </Card>
 
@@ -31,9 +41,9 @@ const About = () => {
             <CardContent className="p-4">
               <h2 className="text-xl font-semibold mb-2">Bio</h2>
               <p className="text-white-700">
-              I grew up in Bellevue, WA, and was entranced by engineering at four years old, when I would steal out past bedtime to program my brother's FLL robot. 
-              I believe the best innovations are found where broad expertise intersects. Accordingly, I am currently entrenched in the world of neuroscience at the dendrite iSLAB at UCSB,
-              where I hope to gain core competence in neural processing to better apply my engineering background.
+                I grew up in Bellevue, WA, and was entranced by engineering at four years old, when I would steal out past bedtime to program my brother's FLL robot. 
+                I believe the best innovations are found where broad expertise intersects. Accordingly, I am currently entrenched in the world of neuroscience at the dendrite iSLAB at UCSB,
+                where I hope to gain core competence in neural processing to better apply my engineering background.
               </p>
             </CardContent>
           </Card>
@@ -49,15 +59,15 @@ const About = () => {
             </CardContent>
           </Card>
           {/* Newsworthy */}
-            <Card>
-              <CardContent className="p-4">
-                <h2 className="text-xl font-semibold mb-2">News</h2>
-                <ul className="list-disc pl-4 space-y-1">
-                  <li><a href='https://mech.rice.edu/news/zook-brothers-bring-hardware-and-software-together' className='underline'>The Brothers Zook</a> (bad hair day)</li>
-                  <li><a href='https://snip.ly/9uy3xv' className='underline'>ACT</a></li>
-                </ul>
-              </CardContent>
-            </Card>
+          <Card>
+            <CardContent className="p-4">
+              <h2 className="text-xl font-semibold mb-2">News</h2>
+              <ul className="list-disc pl-4 space-y-1">
+                <li><a href='https://mech.rice.edu/news/zook-brothers-bring-hardware-and-software-together' className='underline'>The Brothers Zook</a> (bad hair day)</li>
+                <li><a href='https://snip.ly/9uy3xv' className='underline'>ACT</a></li>
+              </ul>
+            </CardContent>
+          </Card>
           {/* Social Links */}
           <div className="flex gap-6 justify-center pt-2">
             <a
@@ -66,7 +76,6 @@ const About = () => {
               rel="noopener noreferrer"
               className="hover:text-gray-800 transition"
               aria-label="GitHub">
-
               <Github size={32} />
             </a>
             <a
@@ -75,14 +84,13 @@ const About = () => {
               rel="noopener noreferrer"
               className="hover:text-pink-600 transition"
               aria-label="Instagram">
-
               <Instagram size={32} />
             </a>
           </div>
         </div>
       </div>
-    </div>);
-
+    </div>
+  );
 };
 
 export default About;
