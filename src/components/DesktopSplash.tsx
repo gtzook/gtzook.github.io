@@ -37,26 +37,27 @@ const DesktopSplash: React.FC = () => {
   };
 
   return (
-    <div className="w-screen h-screen overflow-x-auto overflow-y-hidden relative">
-      {/* Fullscreen background */}
+    <div className="w-screen overflow-x-auto relative">
+      {/* Background image that only stretches horizontally */}
       <div
-        className="fixed top-0 left-0 w-screen h-screen z-0"
+        className="absolute top-0 left-0 w-full h-full z-0"
         style={{
           backgroundImage: 'url(/splash_bg.jpg)',
-          backgroundSize: 'cover',
+          backgroundSize: 'cover',       // fills width and crops vertically if needed
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
         }}
       />
-
-      {/* Content container scaled to design width */}
+    
+      {/* Content container (fixed design width for decorations) */}
       <section
         className="relative"
         style={{
           width: `${DESIGN_WIDTH}px`,
           minWidth: `${DESIGN_WIDTH}px`,
           margin: '0 auto',
-          height: '100vh',
+          height: '100vh',  // or any desired height
+          zIndex: 1,        // ensures content is above the bg
         }}
       >
         <style>{`
