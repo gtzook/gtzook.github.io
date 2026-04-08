@@ -37,21 +37,12 @@ const DesktopSplash: React.FC = () => {
     });
   };
       return (
-        <div
-        style={{
-          height: '100vh',        // limit splash to viewport height
-          overflow: 'hidden',     // hide vertical overflow
-          position: 'relative',
-        }}
-      >
     <div
         style={{
           width: '100%',
           height: '100%',
           overflowX: 'auto',
           overflowY: 'hidden',
-      
-          // ✅ background fills entire page height naturally
           backgroundImage: 'url(/splash_bg.jpg)',
           backgroundRepeat: 'repeat',
           backgroundPosition: 'top left',
@@ -267,7 +258,6 @@ const DesktopSplash: React.FC = () => {
         </div>
       <div style={{ height: `${DESIGN_HEIGHT}px` }} />
       </section>
-    </div>
     </div>
   );
 };
