@@ -43,7 +43,7 @@ const DesktopSplash: React.FC = () => {
           height: '100%',
           overflowX: 'auto',
           overflowY: 'hidden',
-          backgroundImage: 'url(/splash_bg.png)',
+          backgroundImage: 'url(/arabesque.png)',
           backgroundRepeat: 'repeat',
           backgroundPosition: 'top left',
           backgroundSize: '100px 100px',
