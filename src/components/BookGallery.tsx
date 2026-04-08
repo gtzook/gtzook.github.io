@@ -104,7 +104,7 @@ const BookGallery: React.FC = () => {
               width: '80px',
               height: '80px',
               fontSize: '36px',
-              marginRight: '120px',
+              marginRight: '0px',
               background: 'rgba(0,0,0,0.4)',
               color: 'white',
               borderRadius: '9999px',
