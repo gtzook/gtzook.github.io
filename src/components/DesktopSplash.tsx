@@ -39,17 +39,13 @@ const DesktopSplash: React.FC = () => {
       return (
     <div
       className="w-screen relative"
-      style={{ minHeight: '100vh', overflowX: 'auto' }}
+      style={{ minHeight: '100vh', overflowX: 'auto', overflowY: 'auto' }}
     >
       <div
         className="relative"
         style={{
           width: `${DESIGN_WIDTH}px`,
-          minWidth: `${DESIGN_WIDTH}px`,
-          minHeight: `${DESIGN_HEIGHT}px`,
-          margin: '0 auto',
-          zIndex: 1,
-          position: 'relative',
+          minHeight: '100vh',
         }}
       >
         {/* background image */}
@@ -72,6 +68,7 @@ const DesktopSplash: React.FC = () => {
             minHeight: `${DESIGN_HEIGHT}px`,
             margin: '0 auto',
             zIndex: 1,
+            overflow: 'visible',
           }}
         >
         <style>{`
