@@ -120,5 +120,6 @@ const BookGallery: React.FC = () => {
       ↻
     </button>
   </div>
+  );
 );
 
