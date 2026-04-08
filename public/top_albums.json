@@ -8,14 +8,6 @@
     "url": "https://open.spotify.com/album/63y5mkLctupacSr20e0O6j"
   },
   {
-    "album": "TANGK",
-    "albumId": "6U11VNHZAfYY3E9V4oFB2p",
-    "artist": "IDLES",
-    "artistId": "75mafsNqNE1WSEVxIKuY5C",
-    "cover": "https://i.scdn.co/image/ab67616d0000b273838fbd7f0f3d02d2235cd121",
-    "url": "https://open.spotify.com/album/6U11VNHZAfYY3E9V4oFB2p"
-  },
-  {
     "album": "Today Might Be The Hit",
     "albumId": "7pjYZia3RiUqYGtZ2FRaXT",
     "artist": "Sorry",
@@ -38,5 +30,13 @@
     "artistId": "5CzlICF8GCY0pRC82MKrhX",
     "cover": "https://i.scdn.co/image/ab67616d0000b27397be3134250560894d37de57",
     "url": "https://open.spotify.com/album/5vVrfTlAZqwpdCs52MjdZH"
+  },
+  {
+    "album": "Wikipedia",
+    "albumId": "0LXUCKAfv8QEUMZlJy0DpK",
+    "artist": "Jean Deaux",
+    "artistId": "4JqpJeNOhP6bAkolNMLwFg",
+    "cover": "https://i.scdn.co/image/ab67616d0000b27333931c416eec4dd7682f8a1b",
+    "url": "https://open.spotify.com/album/0LXUCKAfv8QEUMZlJy0DpK"
   }
 ]
