@@ -1,4 +1,58 @@
-return (
+import React, { useEffect, useState } from 'react';
+
+interface Book {
+  title: string;
+  author: string;
+  isbn: string;
+  cover: string;
+  url: string;
+}
+
+const BookGallery: React.FC = () => {
+  const [stack, setStack] = useState<Book[]>([]);
+  const [leavingIndex, setLeavingIndex] = useState<number | null>(null);
+  const [animating, setAnimating] = useState(false);
+
+  useEffect(() => {
+    fetch('/books_openlibrary.txt')
+      .then((res) => res.text())
+      .then((text) => {
+        const parsed = text
+          .split('\n')
+          .map((l) => l.trim())
+          .filter(Boolean)
+          .map((line) => {
+            const [title, author, isbn, cover, url] = line.split('\t');
+            return { title, author, isbn, cover, url };
+          });
+
+        setStack(parsed);
+      });
+  }, []);
+
+  const cycle = () => {
+    if (animating || stack.length === 0) return;
+
+    setAnimating(true);
+    setLeavingIndex(0);
+
+    // After slide-left animation
+    setTimeout(() => {
+      setStack((prev) => {
+        const [first, ...rest] = prev;
+        return [...rest, first];
+      });
+
+      setLeavingIndex(null);
+
+      // allow reflow before ending animation
+      setTimeout(() => {
+        setAnimating(false);
+      }, 50);
+    }, 300);
+  };
+
+  return (
   <div style={{ display: 'flex', alignItems: 'center' }}>
     {/* Book stack */}
     <div style={{ position: 'relative', width: 240, height: 320 }}>
@@ -67,3 +121,5 @@ return (
     </button>
   </div>
 );
+
+export default BookGallery;
