@@ -39,7 +39,6 @@ const DesktopSplash: React.FC = () => {
   return (
     <div
       className="w-screen overflow-x-auto overflow-y-hidden relative"
-      style={{ backgroundColor: '#fff', height: '100vh' }} // optional bg
     >
       <div
         className="relative"
