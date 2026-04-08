@@ -73,8 +73,8 @@ const AlbumGallery: React.FC = () => {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        height: '300%',
-        width: '300%',
+        height: '100%',
+        width: '100%',
       }}
     >
       <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -108,8 +108,8 @@ const AlbumGallery: React.FC = () => {
         <div
           style={{
             position: 'relative',
-            width: '260px',
-            height: '260px',
+            width: '500px',
+            height: '500px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
