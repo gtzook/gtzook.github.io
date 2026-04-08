@@ -102,7 +102,7 @@ const BookGallery: React.FC = () => {
         onClick={cycle}
         style={{
           position: 'absolute',
-          right: '30px',
+          right: '-120px',
           top: '50%',
           transform: 'translateY(-50%)',
           width: '80px',
