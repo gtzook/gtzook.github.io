@@ -26,8 +26,9 @@ const DesktopSplash: React.FC = () => {
     if (containerRef.current) {
       // Scroll halfway through the content horizontally
       const container = containerRef.current;
-      const scrollLeft = (container.scrollWidth - container.clientWidth) / 2;
-      container.scrollLeft = scrollLeft;
+       requestAnimationFrame(() => {
+        container.scrollLeft = (container.scrollWidth - container.clientWidth) / 2;
+      });
     }
   }, []);
   
