@@ -10,7 +10,7 @@ import SvgPopupButton from './splash/SvgPopupButton';
 import BagCycleButton from './splash/BagCycleButton';
 import GeckoPopupButton from './splash/GeckoPopupButton';
 
-const DESIGN_WIDTH = 1800;
+const DESIGN_WIDTH = 1900;
 
 const DesktopSplash: React.FC = () => {
   const [titleClicks, setTitleClicks] = useState(0);
