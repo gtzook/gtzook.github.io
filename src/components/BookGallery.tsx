@@ -113,7 +113,7 @@ const BookGallery: React.FC = () => {
           color: 'white',
           cursor: 'pointer',
         }}
-      >
+      \>
         >
       </button>
     </div>
