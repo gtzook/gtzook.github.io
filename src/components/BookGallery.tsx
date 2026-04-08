@@ -71,14 +71,12 @@ const BookGallery: React.FC = () => {
               alignItems: 'center',
 
               transform: isLeaving
-                ? 'translateX(-160px) scale(0.9)'
-                : `translateX(${i * 6}px) translateY(${i * 6}px)`,
+                ? 'translateX(-160px) rotate(-10deg) scale(${1 - i * 0.03})'
+                : `translateX(${i * 6}px) translateY(${i * 6}px) rotate(${i * 2}deg)`
 
               zIndex: isLeaving
                 ? 0
                 : stack.length - i,
-
-              opacity: isLeaving ? 0.7 : 1,
 
               transition: 'transform 0.3s ease, opacity 0.3s ease',
               pointerEvents: i === 0 ? 'auto' : 'none',
