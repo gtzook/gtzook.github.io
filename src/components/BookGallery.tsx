@@ -72,7 +72,7 @@ const BookGallery: React.FC = () => {
 
               transform: isLeaving
                 ? 'translateX(-160px) rotate(-10deg) scale(${1 - i * 0.03})'
-                : `translateX(${i * 6}px) translateY(${i * 6}px) rotate(${i * 2}deg)`
+                : `translateX(${i * 6}px) translateY(${i * 6}px) rotate(${i * 2}deg)`,
 
               zIndex: isLeaving
                 ? 0
