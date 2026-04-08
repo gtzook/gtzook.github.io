@@ -258,6 +258,7 @@ const DesktopSplash: React.FC = () => {
           <AlbumGallery />
         </div>
       </section>
+      <div style={{ height: `${DESIGN_HEIGHT}px` }} />
     </div>
   );
 };
