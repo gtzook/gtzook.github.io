@@ -187,7 +187,16 @@ const BagCycleButton: React.FC<BagCycleButtonProps> = ({
           <img
             src={currentItem.src}
             alt={currentItem.alt}
-            style={{ width: '100%', height: 'auto', cursor: currentItem.link ? 'pointer' : 'default' }}
+            style={{
+              width: '100%',
+              height: 'auto',
+              cursor: currentItem.link ? 'pointer' : 'default',
+              filter:
+                 itemHovered
+                  ? 'brightness(0.7)'
+                  : 'none', // only darken chess piece on hover
+              transition: 'filter 0.2s ease',
+            }}
             onClick={(e) => {
               e.stopPropagation();
               if (currentItem.link) window.open(currentItem.link, '_blank');
