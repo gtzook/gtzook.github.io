@@ -20,18 +20,20 @@ const DesktopSplash: React.FC = () => {
   const [showInput, setShowInput] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const [showError, setShowError] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
 
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  // Scroll horizontally to middle after mount
   useEffect(() => {
-    if (containerRef.current) {
-      // Scroll halfway through the content horizontally
-      const container = containerRef.current;
-       requestAnimationFrame(() => {
-        container.scrollLeft = (container.scrollWidth - container.clientWidth) / 2;
-      });
-    }
+    const container = scrollRef.current;
+    if (!container) return;
+
+    // double requestAnimationFrame to ensure content fully rendered
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      container.scrollLeft = (container.scrollWidth - container.clientWidth) / 2;
+    }));
   }, []);
-  
+
   const handleTitleClick = () => {
     if (fallTitle || showInput) return;
     setTitleClicks((c) => {
@@ -47,32 +49,32 @@ const DesktopSplash: React.FC = () => {
       return next;
     });
   };
-      return (
+
+  return (
     <div
+      ref={scrollRef}
+      style={{
+        position: 'sticky', // keep scrollbar visible until user scrolls past
+        top: 0,
+        width: '100%',
+        height: '100vh',
+        overflowX: 'auto',
+        overflowY: 'hidden',
+        backgroundImage: 'url(/splash_bg.png)',
+        backgroundColor: 'white',
+        backgroundRepeat: 'repeat',
+        backgroundSize: '100px 100px',
+      }}
+    >
+      {/* Inner content wrapper with full design width */}
+      <section
         style={{
-          width: '100%',
-          height: '100%',
-          overflowX: 'auto',
-          overflowY: 'hidden',
-          backgroundImage: 'url(/splash_bg.png)',
-          backgroundColor: 'white',
-          backgroundRepeat: 'repeat',
-          backgroundPosition: 'top left',
-          backgroundSize: '100px 100px',
+          width: `${DESIGN_WIDTH}px`,
+          height: `${DESIGN_HEIGHT}px`,
+          position: 'relative',
+          margin: '0 auto',
         }}
       >
-
-        {/* Content container */}
-        <section
-          className="relative"
-          style={{
-            width: `${DESIGN_WIDTH}px`,
-            position: 'relative',
-            margin: '0 auto',
-            zIndex: 1,
-            overflow: 'visible',
-          }}
-        >
         <style>{`
           @keyframes title-shake {
             10%, 90% { transform: translateX(-3px) rotate(-1deg); }
@@ -81,10 +83,7 @@ const DesktopSplash: React.FC = () => {
             40%, 60% { transform: translateX(12px) rotate(2deg); }
           }
           @keyframes title-fall {
-            to {
-              transform: translateY(120vh) rotate(20deg);
-              opacity: 0;
-            }
+            to { transform: translateY(120vh) rotate(20deg); opacity: 0; }
           }
           @media (max-width: 640px) {
             .splash-decorative { display: none; }
@@ -96,12 +95,7 @@ const DesktopSplash: React.FC = () => {
           src="/optimized/coffee_cup-400.webp"
           alt="Coffee Cup"
           className="absolute pointer-events-none"
-          style={{
-            left: '-40px',
-            top: '-30px',
-            width: '300px',
-            zIndex: 101,
-          }}
+          style={{ left: '-40px', top: '-30px', width: '300px', zIndex: 101 }}
         />
 
         {/* Title / Input */}
@@ -209,27 +203,21 @@ const DesktopSplash: React.FC = () => {
         <div className="absolute splash-decorative" style={{ right: '5%', top: '1%' }}>
           <CoupleShakeImage />
         </div>
-
         <div className="absolute splash-decorative" style={{ left: 0, top: '37%', zIndex: 1000 }}>
           <GeckoPopupButton headSrc="/gecko.png" popupImgSrc="/my_gecko.jpg" alt="Gecko Head" size={140} />
         </div>
-
         <div className="absolute splash-decorative" style={{ left: '5%', top: '5%' }}>
           <CoffeeStainButton />
         </div>
-
         <div className="absolute splash-decorative" style={{ left: '8%', top: '25%' }}>
           <PaperclipBendButton popupSide="right" />
         </div>
-
         <div className="absolute splash-decorative" style={{ left: '15%', top: '5%' }}>
           <StampPeelButton popupSide="right" />
         </div>
-
         <div className="absolute splash-decorative" style={{ left: '22%', top: '40%' }}>
           <QuarterSpinButton />
         </div>
-
         <div className="absolute splash-decorative" style={{ right: '22%', top: '35%' }}>
           <SvgPopupButton
             src="/rice_ring.svg"
@@ -239,7 +227,6 @@ const DesktopSplash: React.FC = () => {
             popupOffset={{ x: -192, y: 96 }}
           />
         </div>
-
         <div className="absolute splash-decorative" style={{ right: '0%', top: '42%' }}>
           <SvgPopupButton
             src="/ucsb_flag.svg"
@@ -249,7 +236,6 @@ const DesktopSplash: React.FC = () => {
             popupOffset={{ x: -384, y: 96 }}
           />
         </div>
-
         <div className="absolute splash-decorative" style={{ left: '35%', top: '60%' }}>
           <BagCycleButton
             position={{ left: '0px', top: '0px' }}
@@ -264,11 +250,12 @@ const DesktopSplash: React.FC = () => {
         <div style={{ position: 'absolute', left: 100, bottom: 200, width: '400px' }}>
           <BookGallery />
         </div>
-
         <div style={{ position: 'absolute', right: 300, bottom: 0, width: '400px' }}>
           <AlbumGallery />
         </div>
-      <div style={{ height: `${DESIGN_HEIGHT}px` }} />
+
+        {/* Spacer for height */}
+        <div style={{ height: `${DESIGN_HEIGHT}px` }} />
       </section>
     </div>
   );
