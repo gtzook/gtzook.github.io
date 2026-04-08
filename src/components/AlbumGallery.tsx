@@ -82,10 +82,10 @@ const AlbumGallery: React.FC = () => {
           <button
             onClick={showNext}
             style={{
-              width: '40px',
-              height: '40px',
+              width: '80px',
+              height: '80px',
               fontSize: '18px',
-              marginRight: '8px',
+              marginRight: '80px',
               background: 'rgba(0,0,0,0.4)',
               color: 'white',
               borderRadius: '9999px',
