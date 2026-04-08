@@ -120,7 +120,7 @@ const DesktopSplash: React.FC = () => {
         >
           {!showInput ? (
             <img
-              src="/optimized/name_img-400.webp"
+              src="name_img.webp"
               alt="Name"
               draggable={false}
               onClick={handleTitleClick}
