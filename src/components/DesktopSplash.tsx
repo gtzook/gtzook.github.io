@@ -271,6 +271,8 @@ const DesktopSplash: React.FC = () => {
         </div>
       </section>
     </div>
+      
+    </div>
   );
 };
 
