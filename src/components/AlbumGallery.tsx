@@ -39,6 +39,7 @@ const AlbumGallery: React.FC = () => {
   useEffect(() => {
     let animationFrame: number;
     let lastTimestamp = performance.now();
+
     const animate = (timestamp: number) => {
       if (!isHovered) {
         const delta = timestamp - lastTimestamp;
@@ -47,76 +48,135 @@ const AlbumGallery: React.FC = () => {
       } else {
         lastTimestamp = timestamp;
       }
+
       animationFrame = requestAnimationFrame(animate);
     };
+
     animationFrame = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(animationFrame);
   }, [isHovered]);
 
-  const showNext = () => setIndex((i) => (i === albums.length - 1 ? 0 : i + 1));
+  const showNext = () =>
+    setIndex((i) => (i === albums.length - 1 ? 0 : i + 1));
 
   const hasAlbums = albums.length > 0;
   const album = hasAlbums ? albums[index] : null;
-  const compositeImg = hasAlbums && album ? getCompositeImagePath(album) : '/record.webp';
+  const compositeImg =
+    hasAlbums && album ? getCompositeImagePath(album) : '/record.webp';
   const recordAlt = hasAlbums ? album.album : 'Record';
   const recordLink = hasAlbums ? album.url : undefined;
 
   return (
-    <div className="flex flex-col items-center justify-center h-full">
-      <div className="flex items-center">
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: '100%',
+        width: '100%',
+      }}
+    >
+      <div style={{ display: 'flex', alignItems: 'center' }}>
         {hasAlbums && (
           <button
             onClick={showNext}
-            className="text-white bg-black/40 rounded-full flex items-center justify-center -ml-3 hover:bg-black/80"
-            style={{ width: '4vw', height: '4vw', fontSize: '2vw', left: '-4vw', top: '0vh', position: 'relative' }}
+            style={{
+              width: '40px',
+              height: '40px',
+              fontSize: '18px',
+              marginRight: '8px',
+              background: 'rgba(0,0,0,0.4)',
+              color: 'white',
+              borderRadius: '9999px',
+              border: 'none',
+              cursor: 'pointer',
+            }}
+            onMouseEnter={(e) =>
+              (e.currentTarget.style.background = 'rgba(0,0,0,0.8)')
+            }
+            onMouseLeave={(e) =>
+              (e.currentTarget.style.background = 'rgba(0,0,0,0.4)')
+            }
             aria-label="Next album"
           >
-            &#8635;
+            ↻
           </button>
         )}
 
-        <div className="relative w-[25vw] aspect-square flex items-center justify-center">
+        {/* Record Player Container */}
+        <div
+          style={{
+            position: 'relative',
+            width: '260px',
+            height: '260px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          {/* Player base */}
           <img
             src="/record_player.svg"
             alt="Record Player"
-            className="absolute inset-0 w-full h-full object-contain pointer-events-none z-0"
+            style={{
+              position: 'absolute',
+              inset: 0,
+              width: '100%',
+              height: '100%',
+              objectFit: 'contain',
+              pointerEvents: 'none',
+              zIndex: 0,
+            }}
           />
 
+          {/* Spinning record */}
           {hasAlbums && (
             <a
               href={recordLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="absolute inset-0 z-10 flex items-center justify-center translate-x-[-3.2vw]"
+              style={{
+                position: 'absolute',
+                inset: 0,
+                zIndex: 10,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                transform: 'translateX(-30px)', // replaces vw offset
+              }}
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
             >
               <img
                 src={compositeImg}
                 alt={recordAlt}
-                className="w-[90%] object-contain transition-transform duration-300 ease-in-out"
                 style={{
+                  width: '85%',
+                  objectFit: 'contain',
                   transform: `rotate(${angle}deg)`,
-                  filter: isHovered ? 'brightness(0.5)' : 'none'
+                  transition: 'transform 0.3s ease-in-out',
+                  filter: isHovered ? 'brightness(0.5)' : 'none',
                 }}
               />
             </a>
           )}
 
+          {/* Needle */}
           <img
             src="/optimized/needle-400.webp"
             alt="Needle"
-            className="absolute z-20 pointer-events-none"
             style={{
-              right: '20%',
-              top: '20%',
-              width: '7vw',
-              height: '10vw',
+              position: 'absolute',
+              right: '50px',
+              top: '40px',
+              width: '60px',
+              height: '90px',
               transform: 'scale(1.5)',
-              transformOrigin: '20% 10%'
+              transformOrigin: '20% 10%',
+              pointerEvents: 'none',
+              zIndex: 20,
             }}
-            srcSet="/optimized/needle-400.webp 400w, /optimized/needle-800.webp 800w, /optimized/needle-1200.webp 1200w"
-            sizes="(max-width: 600px) 100vw, 50vw"
           />
         </div>
       </div>
