@@ -54,7 +54,7 @@ const About = () => {
                 <h2 className="text-xl font-semibold mb-2">News</h2>
                 <ul className="list-disc pl-4 space-y-1">
                   <li><a href='https://mech.rice.edu/news/zook-brothers-bring-hardware-and-software-together' className='underline'>The Brothers Zook</a> (bad hair day)</li>
-                  <li><a href='https://snip.ly/9uy3xv' className='underline'>Test Score</a></li>
+                  <li><a href='https://snip.ly/9uy3xv' className='underline'>ACT</a></li>
                 </ul>
               </CardContent>
             </Card>
