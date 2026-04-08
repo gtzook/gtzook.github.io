@@ -53,7 +53,7 @@ const BookGallery: React.FC = () => {
   };
 
   return (
-    <div style={{ position: 'relative', width: 300, height: 400 }}>
+    <div style={{ position: 'relative', width: 600, height: 900 }}>
       {stack.map((book, i) => {
         const isLeaving = i === leavingIndex;
 
