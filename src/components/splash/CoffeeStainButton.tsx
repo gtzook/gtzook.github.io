@@ -3,15 +3,15 @@ import ReactDOM from 'react-dom';
 
 const popupBoxStyle = {
   background: 'rgba(30,30,30,0.97)',
-  borderRadius: '1vw',
-  boxShadow: '0 0.5vw 3vw rgba(0,0,0,0.35)',
-  padding: '1vw',
+  borderRadius: '14px', // ~1vw
+  boxShadow: '0 7px 43px rgba(0,0,0,0.35)', // 0 0.5vw 3vw
+  padding: '14px', // 1vw
   zIndex: 99999,
   textAlign: 'center' as const,
   display: 'flex',
   flexDirection: 'column' as const,
   alignItems: 'center' as const,
-  gap: '0.8vw',
+  gap: '11px', // 0.8vw
   pointerEvents: 'auto' as const,
 };
 
@@ -27,8 +27,8 @@ const CoffeeStainButton: React.FC = () => {
       const scrollLeft = window.scrollX || document.documentElement.scrollLeft;
 
       setPopupPos({
-        left: scrollLeft + rect.right + window.innerWidth * 0.01,
-        top: scrollTop + rect.top + rect.height / 2 - window.innerHeight * 0.18,
+        left: scrollLeft + rect.right + 14, // 1vw ~ 14px
+        top: scrollTop + rect.top + rect.height / 2 - 162, // window.innerHeight * 0.18 ~ 162px
       });
     } else if (!hovered) {
       setPopupPos(null);
@@ -58,9 +58,9 @@ const CoffeeStainButton: React.FC = () => {
           src="/optimized/coffee_stain-400.webp"
           alt="Coffee Stain"
           style={{
-            height: '22vh',
+            height: '198px', // 22vh ~ 198px for 900px height
             width: 'auto',
-            borderRadius: '4vw',
+            borderRadius: '57px', // 4vw ~ 57px for 1440px width
             transition: 'box-shadow 0.3s, filter 0.3s',
             transform: 'rotate(30deg)',
             border: 'none',
@@ -68,7 +68,7 @@ const CoffeeStainButton: React.FC = () => {
             background: 'none',
           }}
           srcSet="/optimized/coffee_stain-400.webp 400w, /optimized/coffee_stain-800.webp 800w, /optimized/coffee_stain-1200.webp 1200w"
-          sizes="(max-width: 600px) 100vw, 40vw"
+          sizes="(max-width: 600px) 100vw, 576px"
         />
       </button>
 
@@ -79,8 +79,8 @@ const CoffeeStainButton: React.FC = () => {
               position: 'absolute',
               left: popupPos.left,
               top: popupPos.top,
-              minWidth: '24vw',
-              maxWidth: '80vw',
+              minWidth: '345px', // 24vw ~ 345px
+              maxWidth: '1152px', // 80vw ~ 1152px
               ...popupBoxStyle,
             }}
           >
@@ -88,21 +88,21 @@ const CoffeeStainButton: React.FC = () => {
               src="/optimized/white_sands-400.JPG"
               alt="White Sands"
               style={{
-                height: '28vh',
+                height: '252px', // 28vh ~ 252px
                 width: 'auto',
                 maxWidth: '100%',
                 objectFit: 'cover',
-                borderRadius: '1vw',
+                borderRadius: '14px', // 1vw
               }}
               srcSet="/optimized/white_sands-400.JPG 400w, /optimized/white_sands-800.JPG 800w, /optimized/white_sands-1200.JPG 1200w"
-              sizes="(max-width: 600px) 100vw, 40vw"
+              sizes="(max-width: 600px) 100vw, 576px"
             />
             <div
               style={{
                 color: '#fff',
-                fontSize: '2vw',
+                fontSize: '29px', // 2vw ~ 28.8px
                 fontFamily: 'inherit',
-                maxWidth: '80vw',
+                maxWidth: '1152px', // 80vw
               }}
             >
               White Sands National Park
