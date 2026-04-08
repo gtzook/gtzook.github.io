@@ -11,7 +11,7 @@ import BagCycleButton from './splash/BagCycleButton';
 import GeckoPopupButton from './splash/GeckoPopupButton';
 
 const DESIGN_WIDTH = 1900;
-const DESIGN_HEIGHT = 1200;
+const DESIGN_HEIGHT = 1080;
 
 const DesktopSplash: React.FC = () => {
   const [titleClicks, setTitleClicks] = useState(0);
