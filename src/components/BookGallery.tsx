@@ -116,7 +116,7 @@ const BookGallery: React.FC = () => {
           cursor: 'pointer',
         }}
       >
-        →
+        >
       </button>
     </div>
   );
