@@ -187,12 +187,19 @@ const DesktopSplash: React.FC = () => {
           <CoupleShakeImage />
         </div>
 
-        <div className="absolute splash-decorative" style={{ left: 0, top: '37%' }}>
+        <div
+          className="absolute splash-decorative"
+          style={{
+            left: 0,
+            top: '37%',
+            zIndex: 1000,
+          }}
+          >
           <GeckoPopupButton
             headSrc="/gecko.png"
             popupImgSrc="/my_gecko.jpg"
             alt="Gecko Head"
-            size={80}
+            size={140}
           />
         </div>
 
@@ -234,6 +241,9 @@ const DesktopSplash: React.FC = () => {
 
         <div className="absolute splash-decorative" style={{ left: '35%', top: '60%' }}>
           <BagCycleButton
+            position={{ left: '0px', top: '0px' }}
+            scale={1}
+            itemOffset={{ x: 220, y: -120 }}  // 👈 adjust this
             itemSize={120}
             bagSize={160}
           />
