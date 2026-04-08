@@ -58,7 +58,7 @@ const CoffeeStainButton: React.FC = () => {
           src="/optimized/coffee_stain-400.webp"
           alt="Coffee Stain"
           style={{
-            height: '198px', // 22vh ~ 198px for 900px height
+            height: '250px', // 22vh ~ 198px for 900px height
             width: 'auto',
             borderRadius: '57px', // 4vw ~ 57px for 1440px width
             transition: 'box-shadow 0.3s, filter 0.3s',
