@@ -58,7 +58,7 @@ const DesktopSplash: React.FC = () => {
             backgroundImage: 'url(/splash_bg.jpg)',
             backgroundRepeat: 'no-repeat',
             backgroundPosition: 'top left',
-            backgroundSize: `${DESIGN_WIDTH}px auto`, // don't stretch vertically
+            backgroundSize: `cover`, // don't stretch vertically
           }}
         />
     
