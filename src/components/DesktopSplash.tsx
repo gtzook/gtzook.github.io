@@ -37,17 +37,31 @@ const DesktopSplash: React.FC = () => {
   };
 
   return (
-    <div className="w-screen overflow-x-auto relative">
-      {/* Background image that only stretches horizontally */}
+    <div
+      className="w-screen overflow-x-auto overflow-y-hidden relative"
+      style={{ backgroundColor: '#fff', height: '100vh' }} // optional bg
+    >
       <div
-        className="absolute top-0 left-0 w-full h-full z-0"
+        className="relative"
         style={{
-          backgroundImage: 'url(/splash_bg.jpg)',
-          backgroundSize: 'cover',       // fills width and crops vertically if needed
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
+          width: `${DESIGN_WIDTH}px`,
+          minWidth: `${DESIGN_WIDTH}px`,
+          margin: '0 auto',
+          height: 'auto', // let decorations determine height
+          zIndex: 1,
+          position: 'relative',
         }}
-      />
+      >
+        {/* background image */}
+        <div
+          className="absolute top-0 left-0 w-full h-full z-0"
+          style={{
+            backgroundImage: 'url(/splash_bg.jpg)',
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'top left',
+            backgroundSize: 'auto', // don't stretch vertically
+          }}
+        />
     
       {/* Content container (fixed design width for decorations) */}
       <section
