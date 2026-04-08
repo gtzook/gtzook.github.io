@@ -52,9 +52,11 @@ const StampPeelButton: React.FC<{ popupSide?: 'left' | 'right' }> = ({ popupSide
           boxShadow: 'none',
           padding: 0,
           cursor: 'pointer',
-          width: 'auto',
-          height: 'auto',
-          display: 'block',
+          width: '200px',   // 👈 give it space
+          height: '200px',  // 👈 give it space
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
         }}
         aria-label="Stamp Button"
         onMouseEnter={() => setHovered(true)}
@@ -64,22 +66,14 @@ const StampPeelButton: React.FC<{ popupSide?: 'left' | 'right' }> = ({ popupSide
           src="/optimized/stamp-400.webp"
           alt="Stamp"
           style={{
-            boxShadow: 'none',
-            borderRadius: '1vw',
-            transition: 'box-shadow 0.3s, filter 0.3s, transform 0.3s cubic-bezier(0.23, 1, 0.32, 1)',
-            filter: hovered ? 'drop-shadow(0 0.8vh 1.6vh rgba(0,0,0,0.18))' : 'none',
-            border: 'none',
-            outline: 'none',
-            background: 'none',
             height: '160px',
             width: 'auto',
+            transformOrigin: 'center',
             transform: hovered
               ? 'rotate(-8deg) scale(1.28) skewY(-8deg) translateY(-0.8vh)'
               : 'scale(1.2)',
             display: 'block',
           }}
-          srcSet="/optimized/stamp-400.webp 400w, /optimized/stamp-800.webp 800w, /optimized/stamp-1200.webp 1200w"
-          sizes="(max-width: 600px) 100vw, 40vw"
         />
       </button>
 
