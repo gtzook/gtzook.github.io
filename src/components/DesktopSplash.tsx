@@ -11,7 +11,7 @@ import BagCycleButton from './splash/BagCycleButton';
 import GeckoPopupButton from './splash/GeckoPopupButton';
 
 const DESIGN_WIDTH = 1900;
-const DESIGN_HEIGHT = 1080;
+const DESIGN_HEIGHT = 800;
 
 const DesktopSplash: React.FC = () => {
   const [titleClicks, setTitleClicks] = useState(0);
@@ -38,36 +38,25 @@ const DesktopSplash: React.FC = () => {
   };
       return (
     <div
-      className="w-screen relative"
-      style={{
-        height: '100vh',
-        overflowX: 'auto',
-        overflowY: 'hidden',
-        display: 'flex',
-        alignItems: 'center',
-        backgroundImage: 'url(/splash_bg.jpg)',
-        alignItems: 'center',
-        backgroundRepeat: 'repeat',
-        backgroundPosition: 'top left',
-        backgroundSize: '100px 100px',
-      }}
-    >
-      <div
-        className="relative"
         style={{
-          width: `${DESIGN_WIDTH}px`,
-          minWidth: `${DESIGN_WIDTH}px`,
-          height: `${DESIGN_HEIGHT}px`,
-          zIndex: 1,
+          width: '100%',
+          overflowX: 'auto',
+      
+          // ✅ background fills entire page height naturally
+          backgroundImage: 'url(/splash_bg.jpg)',
+          backgroundRepeat: 'repeat',
+          backgroundPosition: 'top left',
+          backgroundSize: '100px 100px',
         }}
       >
+
         {/* Content container */}
         <section
           className="relative"
           style={{
             width: `${DESIGN_WIDTH}px`,
             minWidth: `${DESIGN_WIDTH}px`,
-            height: `${DESIGN_HEIGHT}px`,
+            position: 'relative',
             margin: '0 auto',
             zIndex: 1,
             overflow: 'visible',
@@ -269,7 +258,6 @@ const DesktopSplash: React.FC = () => {
           <AlbumGallery />
         </div>
       </section>
-    </div>
     </div>
   );
 };
