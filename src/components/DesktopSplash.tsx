@@ -110,7 +110,7 @@ const DesktopSplash: React.FC = () => {
           style={{
             left: '18%',
             right: '18%',
-            top: 50px,
+            top: '50px',
             zIndex: 40,
             display: 'flex',
             justifyContent: 'center',
