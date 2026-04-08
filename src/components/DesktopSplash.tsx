@@ -38,10 +38,8 @@ const DesktopSplash: React.FC = () => {
   };
       return (
     <div
-      className="w-screen overflow-x-auto overflow-y-auto relative"
-      style={{
-        minHeight: `${DESIGN_HEIGHT}px`,
-      }}
+      className="w-screen relative"
+      style={{ minHeight: '100vh', overflowX: 'auto' }}
     >
       <div
         className="relative"
