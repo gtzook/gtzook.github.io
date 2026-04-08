@@ -99,7 +99,7 @@ const BookGallery: React.FC = () => {
 
       {/* Button */}
       <button
-            onClick={showNext}
+            onClick={cycle}
             style={{
               width: '80px',
               height: '80px',
