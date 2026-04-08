@@ -84,7 +84,7 @@ const AlbumGallery: React.FC = () => {
             style={{
               width: '80px',
               height: '80px',
-              fontSize: '18px',
+              fontSize: '36px',
               marginRight: '80px',
               background: 'rgba(0,0,0,0.4)',
               color: 'white',
