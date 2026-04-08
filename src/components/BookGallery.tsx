@@ -8,7 +8,6 @@ interface Book {
   url: string;
 }
 
-
 const BookGallery: React.FC = () => {
   const [books, setBooks] = useState<Book[]>([]);
   const [index, setIndex] = useState(0);
@@ -20,16 +19,18 @@ const BookGallery: React.FC = () => {
         return res.text();
       })
       .then((text) => {
-        const parsed = text.split('\n')
-        .map((line) => line.trim())
-        .filter(Boolean)
-        .map((line) => {
-          const [title, author, isbn, cover, url] = line.split('\t');
-          return { title, author, isbn, cover, url };
-        })
-        .filter((book) => book.cover && book.url);
+        const parsed = text
+          .split('\n')
+          .map((line) => line.trim())
+          .filter(Boolean)
+          .map((line) => {
+            const [title, author, isbn, cover, url] = line.split('\t');
+            return { title, author, isbn, cover, url };
+          })
+          .filter((book) => book.cover && book.url);
+
         setBooks(parsed);
-      })
+      });
   }, []);
 
   useEffect(() => {
@@ -42,103 +43,148 @@ const BookGallery: React.FC = () => {
   const showNext = () => setIndex((i) => (i + 1) % books.length);
 
   const book = books[index];
-  const getBookBgPath = (cover: string) => {
-    const match = cover.match(/\/book_covers\/(.+)\.jpg$/);
-    return match ? `/book_bgs/${match[1]}_bg.webp` : undefined;
-  };
 
   if (!book) return null;
 
-  const bookBg = getBookBgPath(book.cover);
-
   return (
-  <div className="flex flex-col items-start justify-center h-full w-full pl-[5vw]">
-  {/* Book and metadata block */}
-  <div className="flex items-start gap-[2vw]">
-    {/* Book + Text Column */}
-    <div className="flex flex-col items-center w-[20vw]">
-      {/* Book Display */}
-      <div className="relative w-full aspect-[3/4] flex items-center justify-center group pointer-events-none">
-        {/* Clickable background region */}
-        <div className="absolute z-0 ml-[-5vw] scale-[0.7 ] origin-top-left w-full h-full rounded-xl group relative pointer-events-auto">
-        {/* White Background */}
-        <div className="absolute inset-0 rounded-xl bg-white z-0 scale-[0.9] ml-[-5vw] non" />
-
-        {/* Darken on hover */}
-        <div className="absolute inset-0 rounded-xl bg-black/0 grou p-hover:bg-black/20 z-21 transition-colors" />
-
-        {/* Clickable link (same bounds) */}
-        <a
-          href={book.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="absolute inset-0 z-40 flex items-center justify-center rounded-xl"
-        >
-          <img
-            src={book.cover}
-            alt={book.title}
-            className="object-contain transition-transform duration-300 ml-[-5vw] mt-[-5vh] ease-in-out w-[10vw] h-auto"
-          />
-        </a>
-      </div>
-
-
-
-        {/* Book Holder */}
-        <img
-          src="/optimized/book_holder-400.webp"
-          alt="Book holder"
-          className="absolute z-30 pointer-events-none w-full h-full object-contain"
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        height: '100%',
+        width: '100%',
+        paddingLeft: '20px',
+      }}
+    >
+      <div style={{ display: 'flex', alignItems: 'flex-start', gap: '16px' }}>
+        {/* Book Column */}
+        <div
           style={{
-            transform: 'rotate(-22deg) scale(2)',
-            transformOrigin: 'center'
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            width: '220px',
           }}
-          srcSet="/optimized/book_holder-400.webp 400w, /optimized/book_holder-800.webp 800w, /optimized/book_holder-1200.webp 1200w"
-          sizes="(max-width: 600px) 100vw, 50vw"
-        />
-      </div>
-
-
-      {/* Text Block (Always below book, consistently aligned) */}
-      <div
-        className="flex flex-col items-center justify-center ml-[-8vw] z-40"
-        style={{ marginTop: '-7vw', height: '4.5vw' }}
-      >
-        <div className="w-full text-center">
+        >
+          {/* Book Display */}
           <div
-            className="font-bold text-black leading-snug max-h-[2.5em] max-w-[15em] z-40 overflow-hidden text-balance mx-auto"
             style={{
-              fontSize: book.title.length > 15 ? '1vw' : '1.3vw',
-              lineHeight: '1.2',
-              wordWrap: 'break-word',
+              position: 'relative',
+              width: '100%',
+              aspectRatio: '3 / 4',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
             }}
           >
-            {book.title}
+            {/* Clickable Area */}
+            <a
+              href={book.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                position: 'absolute',
+                inset: 0,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                borderRadius: '12px',
+                zIndex: 40,
+              }}
+            >
+              <img
+                src={book.cover}
+                alt={book.title}
+                style={{
+                  width: '120px',
+                  height: 'auto',
+                  marginLeft: '-40px',
+                  marginTop: '-40px',
+                  objectFit: 'contain',
+                }}
+              />
+            </a>
+
+            {/* Book Holder */}
+            <img
+              src="/optimized/book_holder-400.webp"
+              alt="Book holder"
+              style={{
+                position: 'absolute',
+                zIndex: 30,
+                width: '100%',
+                height: '100%',
+                objectFit: 'contain',
+                transform: 'rotate(-22deg) scale(2)',
+                transformOrigin: 'center',
+                pointerEvents: 'none',
+              }}
+            />
           </div>
-          <div className="text-gray-600 text-[1vw] mt-[0.5vw] z-40 truncate">
-            {book.author}
+
+          {/* Text */}
+          <div
+            style={{
+              marginLeft: '-60px',
+              marginTop: '-80px',
+              height: '60px',
+              textAlign: 'center',
+              zIndex: 40,
+            }}
+          >
+            <div
+              style={{
+                fontWeight: 'bold',
+                fontSize: book.title.length > 15 ? '12px' : '14px',
+                lineHeight: '1.2',
+                maxWidth: '150px',
+                overflow: 'hidden',
+                margin: '0 auto',
+              }}
+            >
+              {book.title}
+            </div>
+
+            <div
+              style={{
+                color: '#666',
+                fontSize: '12px',
+                marginTop: '6px',
+              }}
+            >
+              {book.author}
+            </div>
           </div>
         </div>
+
+        {/* Next Button */}
+        <button
+          onClick={showNext}
+          style={{
+            width: '40px',
+            height: '40px',
+            fontSize: '18px',
+            marginTop: '120px',
+            background: 'rgba(0,0,0,0.4)',
+            color: 'white',
+            borderRadius: '9999px',
+            border: 'none',
+            cursor: 'pointer',
+          }}
+          onMouseEnter={(e) =>
+            (e.currentTarget.style.background = 'rgba(0,0,0,0.8)')
+          }
+          onMouseLeave={(e) =>
+            (e.currentTarget.style.background = 'rgba(0,0,0,0.4)')
+          }
+          aria-label="Next book"
+        >
+          →
+        </button>
       </div>
     </div>
-    {/* Navigation Button */}
-    <button
-      onClick={showNext}
-      className="text-white bg-black/40 rounded-full flex items-center justify-center hover:bg-black/80 ml-[-4vw]"
-      style={{
-        width: '4vw',
-        height: '4vw',
-        fontSize: '2vw',
-        marginTop: '20vh'
-      }}
-      aria-label="Next book"
-    >
-      &#8594;
-    </button>
-  </div>
-</div>
   );
-}
+};
 
-export
-  default BookGallery;
+export default BookGallery;
