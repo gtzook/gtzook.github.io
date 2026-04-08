@@ -110,7 +110,7 @@ const DesktopSplash: React.FC = () => {
           style={{
             left: '18%',
             right: '18%',
-            top: 0,
+            top: 50px,
             zIndex: 40,
             display: 'flex',
             justifyContent: 'center',
@@ -222,7 +222,7 @@ const DesktopSplash: React.FC = () => {
           <PaperclipBendButton popupSide="right" />
         </div>
 
-        <div className="absolute splash-decorative" style={{ left: '20%', top: '5%' }}>
+        <div className="absolute splash-decorative" style={{ left: '15%', top: '5%' }}>
           <StampPeelButton popupSide="right" />
         </div>
 
