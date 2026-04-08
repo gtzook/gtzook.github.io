@@ -7,7 +7,7 @@ const About = () => {
     <div
       className="p-6 max-w-5xl mx-auto space-y-6"
       style={{
-        backgroundImage: 'url("/cube_bg.png")', // replace with your uploaded image
+        backgroundImage: 'url("/splash_bg.png")', // replace with your uploaded image
         backgroundRepeat: 'repeat',
         backgroundSize: 'auto', // keeps original size of the pattern
         backgroundPosition: 'center',
