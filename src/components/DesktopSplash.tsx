@@ -111,7 +111,7 @@ const DesktopSplash: React.FC = () => {
               draggable={false}
               onClick={handleTitleClick}
               style={{
-                width: '500px',
+                width: '700px',
                 cursor: 'pointer',
                 userSelect: 'none',
                 animation: shakeTitle
