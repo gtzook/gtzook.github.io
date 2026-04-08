@@ -57,9 +57,9 @@ const DesktopSplash: React.FC = () => {
           className="absolute top-0 left-0 w-full h-full z-0"
           style={{
             backgroundImage: 'url(/splash_bg.jpg)',
-            backgroundRepeat: 'no-repeat',
+            backgroundRepeat: 'repeat',
             backgroundPosition: 'top left',
-            backgroundSize: 'cover',
+            backgroundSize: '100px 100px',
           }}
         />
 
