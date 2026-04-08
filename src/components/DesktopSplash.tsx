@@ -228,7 +228,7 @@ const DesktopSplash: React.FC = () => {
           />
         </div>
 
-        <div className="absolute splash-decorative" style={{ right: '5%', top: '42%' }}>
+        <div className="absolute splash-decorative" style={{ right: '0%', top: '42%' }}>
           <SvgPopupButton
             src="/ucsb_flag.svg"
             alt="UCSB Flag"
