@@ -37,17 +37,26 @@ const DesktopSplash: React.FC = () => {
   };
 
   return (
-    <div className="w-full h-screen overflow-x-auto overflow-y-hidden">
-      <section
-        className="relative h-screen"
+    <div className="w-screen h-screen overflow-x-auto overflow-y-hidden relative">
+      {/* Fullscreen background */}
+      <div
+        className="fixed top-0 left-0 w-screen h-screen z-0"
         style={{
-          width: `${DESIGN_WIDTH}px`,
-          minWidth: `${DESIGN_WIDTH}px`,
-          margin: '0 auto',
           backgroundImage: 'url(/splash_bg.jpg)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
+        }}
+      />
+
+      {/* Content container scaled to design width */}
+      <section
+        className="relative"
+        style={{
+          width: `${DESIGN_WIDTH}px`,
+          minWidth: `${DESIGN_WIDTH}px`,
+          margin: '0 auto',
+          height: '100vh',
         }}
       >
         <style>{`
@@ -187,20 +196,8 @@ const DesktopSplash: React.FC = () => {
           <CoupleShakeImage />
         </div>
 
-        <div
-          className="absolute splash-decorative"
-          style={{
-            left: 0,
-            top: '37%',
-            zIndex: 1000,
-          }}
-          >
-          <GeckoPopupButton
-            headSrc="/gecko.png"
-            popupImgSrc="/my_gecko.jpg"
-            alt="Gecko Head"
-            size={140}
-          />
+        <div className="absolute splash-decorative" style={{ left: 0, top: '37%', zIndex: 1000 }}>
+          <GeckoPopupButton headSrc="/gecko.png" popupImgSrc="/my_gecko.jpg" alt="Gecko Head" size={140} />
         </div>
 
         <div className="absolute splash-decorative" style={{ left: '5%', top: '5%' }}>
@@ -243,13 +240,13 @@ const DesktopSplash: React.FC = () => {
           <BagCycleButton
             position={{ left: '0px', top: '0px' }}
             scale={1}
-            itemOffset={{ x: 220, y: -120 }}  // 👈 adjust this
+            itemOffset={{ x: 220, y: -120 }}
             itemSize={120}
             bagSize={160}
           />
         </div>
 
-        {/* Galleries (fixed size now) */}
+        {/* Galleries */}
         <div style={{ position: 'absolute', left: 0, bottom: 0, width: '400px' }}>
           <BookGallery />
         </div>
