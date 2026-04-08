@@ -222,17 +222,17 @@ const DesktopSplash: React.FC = () => {
             src="/rice_ring.svg"
             alt="Rice Ring"
             popupText={`<b>Attended Rice University</b> (2020-2024)`}
-            size={120}
+            size={200}
             popupOffset={{ x: -192, y: 96 }}
           />
         </div>
 
-        <div className="absolute splash-decorative" style={{ right: '5%', top: '40%' }}>
+        <div className="absolute splash-decorative" style={{ right: '5%', top: '45%' }}>
           <SvgPopupButton
             src="/ucsb_flag.svg"
             alt="UCSB Flag"
             popupText={`<b>Attending UCSB</b> (2024-)`}
-            size={140}
+            size={200}
             popupOffset={{ x: -384, y: 96 }}
           />
         </div>
