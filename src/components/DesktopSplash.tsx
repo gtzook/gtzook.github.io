@@ -262,7 +262,7 @@ const DesktopSplash: React.FC = () => {
         </div>
 
         {/* Galleries */}
-        <div style={{ position: 'absolute', left: 0, bottom: 100, width: '400px' }}>
+        <div style={{ position: 'absolute', left: 100, bottom: 200, width: '400px' }}>
           <BookGallery />
         </div>
 
