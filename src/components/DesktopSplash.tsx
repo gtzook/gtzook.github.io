@@ -257,8 +257,8 @@ const DesktopSplash: React.FC = () => {
         <div style={{ position: 'absolute', right: 300, bottom: 0, width: '400px' }}>
           <AlbumGallery />
         </div>
-      </section>
       <div style={{ height: `${DESIGN_HEIGHT}px` }} />
+      </section>
     </div>
   );
 };
