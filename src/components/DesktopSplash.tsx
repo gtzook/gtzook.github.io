@@ -1,6 +1,4 @@
-
 import React, { useState, useEffect } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
 import BookGallery from './BookGallery';
 import AlbumGallery from './AlbumGallery';
 import QuarterSpinButton from './splash/QuarterSpinButton';
@@ -12,38 +10,13 @@ import SvgPopupButton from './splash/SvgPopupButton';
 import BagCycleButton from './splash/BagCycleButton';
 import GeckoPopupButton from './splash/GeckoPopupButton';
 
-const getScale = () => {
-  const baseWidth = 1920;
-  const baseHeight = 1080;
-  const scaleW = window.innerWidth / baseWidth;
-  const scaleH = window.innerHeight / baseHeight;
-  
-  // For mobile devices, scale to fit width while maintaining proportions
-  if (window.innerWidth < 768) {
-    return window.innerWidth / baseWidth;
-  }
-  
-  return Math.min(scaleW, scaleH);
-};
-
 const DesktopSplash: React.FC = () => {
-  const [scale, setScale] = useState(getScale());
   const [titleClicks, setTitleClicks] = useState(0);
   const [shakeTitle, setShakeTitle] = useState(false);
   const [fallTitle, setFallTitle] = useState(false);
   const [showInput, setShowInput] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const [showError, setShowError] = useState(false);
-  const [isPortrait, setIsPortrait] = useState(window.innerWidth < window.innerHeight);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setScale(getScale());
-      setIsPortrait(window.innerWidth < window.innerHeight);
-    };
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
 
   const handleTitleClick = () => {
     if (fallTitle || showInput) return;
@@ -54,339 +27,301 @@ const DesktopSplash: React.FC = () => {
       if (next >= 5) {
         setTimeout(() => {
           setFallTitle(true);
-          setTimeout(() => {
-            setShowInput(true);
-          }, 700);
+          setTimeout(() => setShowInput(true), 700);
         }, 400);
       }
       return next;
     });
   };
 
-  // Portrait mode: simplified layout with just name and coffee cup
-  if (isPortrait) {
-    return (
-      <section
-        className="w-full h-screen flex items-center justify-center bg-black overflow-hidden"
-        style={{
-          backgroundImage: 'url(/splash_bg.jpg)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-        }}
-      >
-        {/* Name Image - centered */}
-        <div className="absolute z-[40] flex items-center justify-center w-full h-full">
-          {!showInput ? (
-            <img
-              src="/optimized/name_img-400.webp"
-              alt="Name"
-              className="object-contain select-none"
-              style={{
-                maxWidth: '80vw',
-                maxHeight: '40vh',
-                cursor: 'pointer',
-                transition: 'transform 0.4s',
-                animation: shakeTitle
-                  ? 'title-shake 0.4s'
-                  : fallTitle
-                  ? 'title-fall 0.7s forwards'
-                  : undefined,
-                userSelect: 'none',
-              }}
-              onClick={handleTitleClick}
-              draggable={false}
-              srcSet="/optimized/name_img-400.webp 400w, /optimized/name_img-800.webp 800w, /optimized/name_img-1200.webp 1200w"
-              sizes="80vw"
-            />
-          ) : (
-            <div className="flex flex-col items-center justify-center px-4">
-              <label className="text-black text-center font-medium text-2xl mb-4">
-                What is my other name?
-              </label>
-              <input
-                type="password"
-                value={inputValue}
-                onChange={(e) => {
-                  setInputValue(e.target.value);
-                  if (showError) setShowError(false);
-                }}
-                placeholder="Enter your answer..."
-                className="text-center outline-none bg-[#111] text-[#39FF14] tracking-wider px-4 py-3 rounded-lg border-2 border-gray-600 w-80 max-w-[80vw]"
-                style={{ fontSize: '18px' }}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter') {
-                    if (inputValue.trim().toLowerCase() === 'saitotomoya') {
-                      setShowError(false);
-                      window.open(
-                        'https://drive.google.com/drive/folders/1ocll457sZSGOVpXuYkOgDL_5oLG0pBKO?usp=sharing',
-                        '_blank'
-                      );
-                    } else {
-                      setShowError(true);
-                    }
-                  }
-                }}
-              />
-              {showError && (
-                <div className="text-[#ff4444] text-center mt-2 text-sm font-mono">
-                  Incorrect password. Please try again.
-                </div>
-              )}
-            </div>
-          )}
-        </div>
-
-        {/* Coffee Cup - top left */}
-        <img
-          src="/optimized/coffee_cup-400.webp"
-          alt="Coffee Cup"
-          className="absolute pointer-events-none"
-          style={{ 
-            left: '-25vw', 
-            top: '-15vh', 
-            width: '60vw', 
-            zIndex: 101 
-          }}
-          srcSet="/optimized/coffee_cup-400.webp 400w, /optimized/coffee_cup-800.webp 800w, /optimized/coffee_cup-1200.webp 1200w"
-          sizes="60vw"
-        />
-
-        {/* Scroll indicator - bottom center */}
-        <div className="absolute animate-bounce z-[50] pointer-events-none bottom-8 left-1/2 transform -translate-x-1/2">
-          <div className="w-12 h-16 border-2 border-black rounded-full bg-white/80 flex justify-center">
-            <div className="w-2 h-5 bg-black rounded-full mt-2 animate-pulse" />
-          </div>
-        </div>
-
-        <style>{`
-          @keyframes title-shake {
-            10%, 90% { transform: translateX(-2px) rotate(-1deg); }
-            20%, 80% { transform: translateX(4px) rotate(1deg); }
-            30%, 50%, 70% { transform: translateX(-8px) rotate(-2deg); }
-            40%, 60% { transform: translateX(8px) rotate(2deg); }
-          }
-          @keyframes title-fall {
-            to {
-              transform: translateY(100vh) rotate(20deg);
-              opacity: 0;
-            }
-          }
-        `}</style>
-      </section>
-    );
-  }
-
   return (
     <section
-      className="w-full h-screen flex items-center justify-center bg-black overflow-hidden"
+      className="relative w-full h-screen overflow-hidden"
       style={{
         backgroundImage: 'url(/splash_bg.jpg)',
-        backgroundSize: `${1920 * scale}px ${1080 * scale}px`,
+        backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
       }}
     >
-      {/* Scaled splash container */}
-      <div
-        className="absolute top-1/2 left-1/2"
+      <style>{`
+        @keyframes title-shake {
+          10%, 90% { transform: translateX(-3px) rotate(-1deg); }
+          20%, 80% { transform: translateX(6px) rotate(1deg); }
+          30%, 50%, 70% { transform: translateX(-12px) rotate(-2deg); }
+          40%, 60% { transform: translateX(12px) rotate(2deg); }
+        }
+        @keyframes title-fall {
+          to {
+            transform: translateY(120vh) rotate(20deg);
+            opacity: 0;
+          }
+        }
+        @media (max-width: 640px) {
+          .splash-decorative { display: none; }
+        }
+      `}</style>
+
+      {/* ── Coffee cup — top-left corner, partially off-screen ── */}
+      <img
+        src="/optimized/coffee_cup-400.webp"
+        alt="Coffee Cup"
+        className="absolute pointer-events-none"
         style={{
-          width: '1920px',
-          height: '1080px',
-          transform: `translate(-50%, -50%) scale(${scale})`,
-          transformOrigin: 'center center',
+          left: 'clamp(-120px, -8vw, -40px)',
+          top: 'clamp(-100px, -8vh, -30px)',
+          width: 'clamp(180px, 22vw, 420px)',
+          zIndex: 101,
+        }}
+        srcSet="/optimized/coffee_cup-400.webp 400w, /optimized/coffee_cup-800.webp 800w, /optimized/coffee_cup-1200.webp 1200w"
+        sizes="22vw"
+      />
+
+      {/* ── Title / Input — top center ── */}
+      <div
+        className="absolute"
+        style={{
+          left: '18%',
+          right: '18%',
+          top: 0,
+          zIndex: 40,
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'flex-start',
         }}
       >
-        {/* Book Gallery - bottom left, moved up */}
-        <div className="absolute z-[30]" style={{ left: '0px', bottom: '30px' }}>
-          <BookGallery />
-        </div>
-
-        {/* Album Gallery - bottom right, scaled 1.5x */}
-        <div className="absolute z-[30]" style={{ right: '57.6px', bottom: '0px', transformOrigin: 'bottom right' }}>
-          <AlbumGallery />
-        </div>
-
-        {/* Title/Input - top center */}
-        <div className="absolute z-[40] w-[1152px]" style={{ left: '384px', top: '0px' }}>
-          <div className="relative flex items-center justify-center w-full">
-            {!showInput ? (
-              <img
-                src="/optimized/name_img-400.webp"
-                alt="Name"
-                className="object-contain select-none"
+        {!showInput ? (
+          <img
+            src="/optimized/name_img-400.webp"
+            alt="Name"
+            draggable={false}
+            onClick={handleTitleClick}
+            style={{
+              width: 'clamp(280px, 38vw, 680px)',
+              height: 'auto',
+              cursor: 'pointer',
+              userSelect: 'none',
+              animation: shakeTitle
+                ? 'title-shake 0.4s'
+                : fallTitle
+                ? 'title-fall 0.7s forwards'
+                : undefined,
+            }}
+            srcSet="/optimized/name_img-400.webp 400w, /optimized/name_img-800.webp 800w, /optimized/name_img-1200.webp 1200w"
+            sizes="38vw"
+          />
+        ) : (
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              paddingTop: 'clamp(24px, 5vh, 80px)',
+            }}
+          >
+            <label
+              style={{
+                color: 'black',
+                fontWeight: 500,
+                fontSize: 'clamp(18px, 2.2vw, 36px)',
+                marginBottom: '0.5em',
+                textAlign: 'center',
+              }}
+            >
+              What is my other name?
+            </label>
+            <input
+              type="password"
+              value={inputValue}
+              autoFocus
+              onChange={(e) => {
+                setInputValue(e.target.value);
+                if (showError) setShowError(false);
+              }}
+              placeholder="Enter your answer..."
+              style={{
+                textAlign: 'center',
+                outline: 'none',
+                background: '#111',
+                color: '#39FF14',
+                letterSpacing: '0.1em',
+                fontSize: 'clamp(16px, 2vw, 32px)',
+                padding: '0.5em 1em',
+                borderRadius: '12px',
+                border: '2px solid #888',
+                width: 'clamp(220px, 22vw, 380px)',
+              }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  if (inputValue.trim().toLowerCase() === 'saitotomoya') {
+                    setShowError(false);
+                    window.open(
+                      'https://drive.google.com/drive/folders/1ocll457sZSGOVpXuYkOgDL_5oLG0pBKO?usp=sharing',
+                      '_blank'
+                    );
+                  } else {
+                    setShowError(true);
+                  }
+                }
+              }}
+            />
+            {showError && (
+              <div
                 style={{
-                  height: '432px',
-                  width: 'auto',
-                  cursor: 'pointer',
-                  transition: 'transform 0.4s',
-                  animation: shakeTitle
-                    ? 'title-shake 0.4s'
-                    : fallTitle
-                    ? 'title-fall 0.7s forwards'
-                    : undefined,
-                  userSelect: 'none',
-                  zIndex: 1,
+                  color: '#ff4444',
+                  textAlign: 'center',
+                  marginTop: '0.4em',
+                  fontSize: 'clamp(12px, 1.2vw, 18px)',
+                  fontFamily: 'Fira Mono, Consolas, monospace',
                 }}
-                onClick={handleTitleClick}
-                draggable={false}
-                srcSet="/optimized/name_img-400.webp 400w, /optimized/name_img-800.webp 800w, /optimized/name_img-1200.webp 1200w"
-                sizes="(max-width: 600px) 100vw, 50vw"
-              />
-            ) : (
-              <div className="flex flex-col items-center justify-center h-full">
-                <label
-                  className="text-black text-center font-medium"
-                  style={{ fontSize: '38.4px', marginBottom: '10.8px' }}
-                >
-                  What is my other name?
-                </label>
-                <input
-                  type="password"
-                  value={inputValue}
-                  onChange={(e) => {
-                    setInputValue(e.target.value);
-                    if (showError) setShowError(false);
-                  }}
-                  placeholder="Enter your answer..."
-                  className="text-center outline-none bg-[#111] text-[#39FF14] tracking-wider"
-                  style={{
-                    fontSize: '38.4px',
-                    padding: '19.2px',
-                    borderRadius: '19.2px',
-                    border: '3.84px solid #888',
-                    width: '384px',
-                    height: '54px',
-                    marginBottom: '10.8px',
-                  }}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter') {
-                      if (inputValue.trim().toLowerCase() === 'saitotomoya') {
-                        setShowError(false);
-                        window.open(
-                          'https://drive.google.com/drive/folders/1ocll457sZSGOVpXuYkOgDL_5oLG0pBKO?usp=sharing',
-                          '_blank'
-                        );
-                      } else {
-                        setShowError(true);
-                      }
-                    }
-                  }}
-                />
-                {showError && (
-                  <div
-                    className="text-[#ff4444] text-center"
-                    style={{ fontSize: '19.2px', marginTop: '5.4px', fontFamily: 'Fira Mono, Consolas, monospace' }}
-                  >
-                    Incorrect password. Please try again.
-                  </div>
-                )}
+              >
+                Incorrect password. Please try again.
               </div>
             )}
-            <style>{`
-              @keyframes title-shake {
-                10%, 90% { transform: translateX(-3.84px) rotate(-2deg); }
-                20%, 80% { transform: translateX(7.68px) rotate(2deg); }
-                30%, 50%, 70% { transform: translateX(-15.36px) rotate(-4deg); }
-                40%, 60% { transform: translateX(15.36px) rotate(4deg); }
-              }
-              @keyframes title-fall {
-                to {
-                  transform: translateY(1296px) rotate(20deg);
-                  opacity: 0;
-                }
-              }
-            `}</style>
           </div>
-        </div>
+        )}
+      </div>
 
-        {/* Couple Image - top right */}
-        <div className="absolute z-[100]" style={{ right: '96px', top: '10px' }}>
-          <CoupleShakeImage />
-        </div>
+      {/* ── Couple image — top right ── */}
+      <div
+        className="absolute splash-decorative"
+        style={{ right: '5%', top: '1%', zIndex: 100 }}
+      >
+        <CoupleShakeImage />
+      </div>
 
-        {/* Gecko Button - left edge */}
-        <div className="absolute z-[150]" style={{ left: '0px', top: '400px' }}>
-          <GeckoPopupButton
-            headSrc="/gecko.png"
-            popupImgSrc="/my_gecko.jpg"
-            alt="Gecko Head"
-            size={120}
-          />
-        </div>
-
-        {/* Quarter Spin Button - left side, middle-lower */}
-        <div className="absolute z-[100]" style={{ left: '422px', top: '432px' }}>
-          <QuarterSpinButton />
-        </div>
-
-        {/* Stamp Button - left-center, top */}
-        <div className="absolute z-[999]" style={{ left: '384px', top: '54px' }}>
-          <StampPeelButton popupSide="right" />
-        </div>
-
-        {/* Paperclip Button - left side, upper-middle */}
-        <div className="absolute z-[100]" style={{ left: '154px', top: '270px' }}>
-          <PaperclipBendButton popupSide="right" />
-        </div>
-
-        {/* Coffee Stain Button - top left */}
-        <div className="absolute z-[100]" style={{ left: '96px', top: '54px' }}>
-          <CoffeeStainButton />
-        </div>
-
-        {/* Coffee Cup - top left corner (outside viewport) */}
-        <img
-          src="/optimized/coffee_cup-400.webp"
-          alt="Coffee Cup"
-          className="absolute pointer-events-none"
-          style={{ left: '-288px', top: '-162px', width: '576px', zIndex: 101 }}
-          srcSet="/optimized/coffee_cup-400.webp 400w, /optimized/coffee_cup-800.webp 800w, /optimized/coffee_cup-1200.webp 1200w"
-          sizes="(max-width: 600px) 100vw, 50vw"
+      {/* ── Gecko — left edge, middle ── */}
+      <div
+        className="absolute splash-decorative"
+        style={{ left: 0, top: '37%', zIndex: 150 }}
+      >
+        <GeckoPopupButton
+          headSrc="/gecko.png"
+          popupImgSrc="/my_gecko.jpg"
+          alt="Gecko Head"
+          size={Math.round(window.innerWidth * 0.065)}
         />
+      </div>
 
-        {/* Scroll indicator - bottom center */}
-        <div className="absolute animate-bounce z-[50] pointer-events-none" style={{ left: '931.2px', bottom: '32.4px' }}>
-          <div style={{ width: '57.6px', height: '64.8px', border: '2px solid black', borderRadius: '9999px', backgroundColor: 'rgba(255,255,255,0.8)', display: 'flex', justifyContent: 'center' }}>
-            <div style={{ width: '9.6px', height: '21.6px', backgroundColor: 'black', borderRadius: '9999px', marginTop: '10.8px', animation: 'pulse 2s infinite' }} />
-          </div>
-        </div>
+      {/* ── Coffee Stain button — top left ── */}
+      <div
+        className="absolute splash-decorative"
+        style={{ left: '5%', top: '5%', zIndex: 100 }}
+      >
+        <CoffeeStainButton />
+      </div>
 
-        {/* Rice Ring Button - right side, middle */}
-        <div className="absolute z-[100]" style={{ left: '1344px', top: '454px' }}>
-          <SvgPopupButton
-            src="/rice_ring.svg"
-            alt="Rice Ring"
-            popupText={`<b>Attended Rice University</b> (2020-2024)\n<i>BS in Electrical Engineering</i> (magna cum laude)\n<i>BA in Philosophy</i> (cum laude)\n<i> Undergraduate Researcher in MAHI Lab</i>`}
-            position={{ left: 0, top: 0 }}
-            size={192}
-            popupOffset={{ x: -192, y: 96 }}
-          />
-        </div>
+      {/* ── Paperclip — left side, upper-middle ── */}
+      <div
+        className="absolute splash-decorative"
+        style={{ left: '8%', top: '25%', zIndex: 100 }}
+      >
+        <PaperclipBendButton popupSide="right" />
+      </div>
 
-        {/* UCSB Flag Button - right side, middle */}
-        <div className="absolute z-[100]" style={{ right: '96px', top: '432px' }}>
-          <SvgPopupButton
-            src="/ucsb_flag.svg"
-            alt="UCSB Flag"
-            popupText={`<b>Attending UCSB</b> (2024-)
+      {/* ── Stamp — left side below title ── */}
+      <div
+        className="absolute splash-decorative"
+        style={{ left: '20%', top: '5%', zIndex: 999 }}
+      >
+        <StampPeelButton popupSide="right" />
+      </div>
+
+      {/* ── Quarter Spin — left-center ── */}
+      <div
+        className="absolute splash-decorative"
+        style={{ left: '22%', top: '40%', zIndex: 100 }}
+      >
+        <QuarterSpinButton />
+      </div>
+
+      {/* ── Rice Ring — right side, middle ── */}
+      <div
+        className="absolute splash-decorative"
+        style={{ right: '22%', top: '42%', zIndex: 100 }}
+      >
+        <SvgPopupButton
+          src="/rice_ring.svg"
+          alt="Rice Ring"
+          popupText={`<b>Attended Rice University</b> (2020-2024)\n<i>BS in Electrical Engineering</i> (magna cum laude)\n<i>BA in Philosophy</i> (cum laude)\n<i> Undergraduate Researcher in MAHI Lab</i>`}
+          position={{ left: 0, top: 0 }}
+          size={Math.round(window.innerWidth * 0.1)}
+          popupOffset={{ x: -192, y: 96 }}
+        />
+      </div>
+
+      {/* ── UCSB Flag — far right, middle ── */}
+      <div
+        className="absolute splash-decorative"
+        style={{ right: '5%', top: '40%', zIndex: 100 }}
+      >
+        <SvgPopupButton
+          src="/ucsb_flag.svg"
+          alt="UCSB Flag"
+          popupText={`<b>Attending UCSB</b> (2024-)
 Pursuing <i>MS/PhD in Electrical & Computer Engineering</i>
 <i>Researcher in Ikuko Smith Lab</i>
 Focus on audiovisual processing in mouse model`}
-            position={{ left: 0, top: 0 }}
-            size={230}
-            popupOffset={{ x: -384, y: 96 }}
-          />
-        </div>
+          position={{ left: 0, top: 0 }}
+          size={Math.round(window.innerWidth * 0.12)}
+          popupOffset={{ x: -384, y: 96 }}
+        />
+      </div>
 
-        {/* Bag Cycle Button - center-bottom */}
-        <div className="absolute z-[100]" style={{ left: '672px', top: '648px' }}>
-          <BagCycleButton
-            position={{ left: '0px', top: '0px' }}
-            scale={1}
-            itemOffset={{ x: 400, y: -100 }}
-            itemSize={200}
-            bagSize={288}
+      {/* ── Bag Cycle — center-bottom ── */}
+      <div
+        className="absolute splash-decorative"
+        style={{ left: '35%', top: '60%', zIndex: 100 }}
+      >
+        <BagCycleButton
+          position={{ left: '0px', top: '0px' }}
+          scale={1}
+          itemOffset={{ x: 400, y: -100 }}
+          itemSize={Math.round(window.innerWidth * 0.1)}
+          bagSize={Math.round(window.innerWidth * 0.14)}
+        />
+      </div>
+
+      {/* ── Book Gallery — bottom left ── */}
+      <div className="absolute" style={{ left: 0, bottom: 0, zIndex: 30 }}>
+        <BookGallery />
+      </div>
+
+      {/* ── Album Gallery — bottom right ── */}
+      <div className="absolute" style={{ right: 0, bottom: 0, zIndex: 30 }}>
+        <AlbumGallery />
+      </div>
+
+      {/* ── Scroll indicator — bottom center ── */}
+      <div
+        className="absolute animate-bounce pointer-events-none"
+        style={{
+          bottom: '2vh',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          zIndex: 50,
+        }}
+      >
+        <div
+          style={{
+            width: 'clamp(36px, 3.5vw, 56px)',
+            height: 'clamp(48px, 4.5vw, 68px)',
+            border: '2px solid black',
+            borderRadius: '9999px',
+            backgroundColor: 'rgba(255,255,255,0.8)',
+            display: 'flex',
+            justifyContent: 'center',
+          }}
+        >
+          <div
+            style={{
+              width: 'clamp(6px, 0.7vw, 10px)',
+              height: 'clamp(12px, 1.5vw, 22px)',
+              backgroundColor: 'black',
+              borderRadius: '9999px',
+              marginTop: '10px',
+              animation: 'pulse 2s infinite',
+            }}
           />
         </div>
       </div>
