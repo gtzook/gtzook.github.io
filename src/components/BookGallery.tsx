@@ -99,23 +99,28 @@ const BookGallery: React.FC = () => {
 
       {/* Button */}
       <button
-        onClick={cycle}
-        style={{
-          position: 'absolute',
-          right: '-160px',
-          top: '50%',
-          transform: 'translateY(-50%)',
-          width: '80px',
-          height: '80px',
-          borderRadius: '50%',
-          border: 'none',
-          background: 'rgba(0,0,0,0.5)',
-          color: 'white',
-          cursor: 'pointer',
-        }}
-        >
-          ↻
-      </button>
+            onClick={showNext}
+            style={{
+              width: '80px',
+              height: '80px',
+              fontSize: '36px',
+              marginRight: '80px',
+              background: 'rgba(0,0,0,0.4)',
+              color: 'white',
+              borderRadius: '9999px',
+              border: 'none',
+              cursor: 'pointer',
+            }}
+            onMouseEnter={(e) =>
+              (e.currentTarget.style.background = 'rgba(0,0,0,0.8)')
+            }
+            onMouseLeave={(e) =>
+              (e.currentTarget.style.background = 'rgba(0,0,0,0.4)')
+            }
+            aria-label="Next album"
+          >
+            ↻
+          </button>
     </div>
   );
 };
