@@ -143,7 +143,7 @@ const AlbumGallery: React.FC = () => {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                transform: 'translateX(-30px)', // replaces vw offset
+                transform: 'translateX(-60px)', 
               }}
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
@@ -152,7 +152,7 @@ const AlbumGallery: React.FC = () => {
                 src={compositeImg}
                 alt={recordAlt}
                 style={{
-                  width: '85%',
+                  width: '100%',
                   objectFit: 'contain',
                   transform: `rotate(${angle}deg)`,
                   transition: 'transform 0.3s ease-in-out',
@@ -162,22 +162,6 @@ const AlbumGallery: React.FC = () => {
             </a>
           )}
 
-          {/* Needle */}
-          <img
-            src="/optimized/needle-400.webp"
-            alt="Needle"
-            style={{
-              position: 'absolute',
-              right: '50px',
-              top: '40px',
-              width: '60px',
-              height: '90px',
-              transform: 'scale(1.5)',
-              transformOrigin: '20% 10%',
-              pointerEvents: 'none',
-              zIndex: 20,
-            }}
-          />
         </div>
       </div>
     </div>
