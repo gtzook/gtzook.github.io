@@ -57,6 +57,8 @@ const StampPeelButton: React.FC<{ popupSide?: 'left' | 'right' }> = ({ popupSide
           display: 'block',
         }}
         aria-label="Stamp Button"
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
       >
         <img
           src="/optimized/stamp-400.webp"
@@ -77,8 +79,6 @@ const StampPeelButton: React.FC<{ popupSide?: 'left' | 'right' }> = ({ popupSide
               : 'scale(1.2)',
             display: 'block',
           }}
-          onMouseEnter={() => setHovered(true)}
-          onMouseLeave={() => setHovered(false)}
           srcSet="/optimized/stamp-400.webp 400w, /optimized/stamp-800.webp 800w, /optimized/stamp-1200.webp 1200w"
           sizes="(max-width: 600px) 100vw, 40vw"
         />
