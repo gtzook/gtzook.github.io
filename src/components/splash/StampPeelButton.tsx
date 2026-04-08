@@ -71,9 +71,8 @@ const StampPeelButton: React.FC<{ popupSide?: 'left' | 'right' }> = ({ popupSide
             border: 'none',
             outline: 'none',
             background: 'none',
-            height: '15vh',
+            height: '80px',
             width: 'auto',
-            maxWidth: '90vw',
             transform: hovered
               ? 'rotate(-8deg) scale(1.28) skewY(-8deg) translateY(-0.8vh)'
               : 'scale(1.2)',
