@@ -120,6 +120,6 @@ const BookGallery: React.FC = () => {
       ↻
     </button>
   </div>
+export default BookGallery;
 );
 
-export default BookGallery;
