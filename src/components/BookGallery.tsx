@@ -122,4 +122,4 @@ const BookGallery: React.FC = () => {
   </div>
   );
 );
-
+export default BookGallery;
