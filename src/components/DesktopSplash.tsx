@@ -11,7 +11,7 @@ import BagCycleButton from './splash/BagCycleButton';
 import GeckoPopupButton from './splash/GeckoPopupButton';
 
 const DESIGN_WIDTH = 1900;
-const DESIGN_HEIGHT = 1080;
+const DESIGN_HEIGHT = 950;
 
 const DesktopSplash: React.FC = () => {
   const [titleClicks, setTitleClicks] = useState(0);
@@ -44,8 +44,9 @@ const DesktopSplash: React.FC = () => {
         overflowX: 'auto',
         overflowY: 'hidden',
         display: 'flex',
-        alignItems: 'center', // keeps it visually centered vertically too
+        alignItems: 'center',
         backgroundImage: 'url(/splash_bg.jpg)',
+        alignItems: 'center',
         backgroundRepeat: 'repeat',
         backgroundPosition: 'top left',
         backgroundSize: '100px 100px',
