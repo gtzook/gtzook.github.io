@@ -285,7 +285,7 @@ const DesktopSplash: React.FC = () => {
           }}
         >
             This site does not look good on mobile :( <br />
-            Please look on a big screen 😎
+            Please peruse on a big screen 😎
         </div>
       )}
       </section>
