@@ -49,7 +49,17 @@ const DesktopSplash: React.FC = () => {
       return next;
     });
   };
-
+  const [isTallViewport, setIsTallViewport] = useState(false);
+  
+  useEffect(() => {
+    const checkAspect = () => {
+      setIsTallViewport(window.innerWidth < window.innerHeight);
+    };
+  
+    checkAspect();
+    window.addEventListener('resize', checkAspect);
+    return () => window.removeEventListener('resize', checkAspect);
+  }, []);
   return (
     <div
       ref={scrollRef}
@@ -256,6 +266,27 @@ const DesktopSplash: React.FC = () => {
 
         {/* Spacer for height */}
         <div style={{ height: `${DESIGN_HEIGHT}px` }} />
+        {isTallViewport && (
+        <div
+          style={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            zIndex: 9999,
+            background: 'rgba(0,0,0,0.75)',
+            color: 'white',
+            padding: '20px 30px',
+            borderRadius: '16px',
+            fontSize: '20px',
+            textAlign: 'center',
+            backdropFilter: 'blur(6px)',
+            pointerEvents: 'none', // doesn't block clicks
+          }}
+        >
+          This site does not format well on mobile :(
+        </div>
+      )}
       </section>
     </div>
   );
