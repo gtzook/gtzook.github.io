@@ -284,8 +284,10 @@ const DesktopSplash: React.FC = () => {
             pointerEvents: 'none', // doesn't block clicks
           }}
         >
-          This site does not look good on mobile :(
-          Please look on a big screen 😎
+          <div ...>
+            This site does not look good on mobile :( <br />
+            Please look on a big screen 😎
+          </div>
         </div>
       )}
       </section>
