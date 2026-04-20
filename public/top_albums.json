@@ -24,19 +24,19 @@
     "url": "https://open.spotify.com/album/5OsXAPcYYYNTtkFuuB8TDc"
   },
   {
-    "album": "Crying Laughing Loving Lying",
-    "albumId": "3KJxMjUnBZu3jLeQTIe6aQ",
-    "artist": "Labi Siffre",
-    "artistId": "5CzlICF8GCY0pRC82MKrhX",
-    "cover": "https://i.scdn.co/image/ab67616d0000b273ea5cea785aab2932281b90a5",
-    "url": "https://open.spotify.com/album/3KJxMjUnBZu3jLeQTIe6aQ"
-  },
-  {
     "album": "Wikipedia",
     "albumId": "0LXUCKAfv8QEUMZlJy0DpK",
     "artist": "Jean Deaux",
     "artistId": "4JqpJeNOhP6bAkolNMLwFg",
     "cover": "https://i.scdn.co/image/ab67616d0000b27333931c416eec4dd7682f8a1b",
     "url": "https://open.spotify.com/album/0LXUCKAfv8QEUMZlJy0DpK"
+  },
+  {
+    "album": "Thumbs",
+    "albumId": "0MgIgFlCpTYwLuPUocgbZs",
+    "artist": "BUSDRIVER",
+    "artistId": "43SXnO2N4X024u3l9MfvXD",
+    "cover": "https://i.scdn.co/image/ab67616d0000b273eede65a3ba13d37784869c0d",
+    "url": "https://open.spotify.com/album/0MgIgFlCpTYwLuPUocgbZs"
   }
 ]
