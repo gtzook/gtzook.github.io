@@ -16,14 +16,6 @@
     "url": "https://open.spotify.com/album/7pjYZia3RiUqYGtZ2FRaXT"
   },
   {
-    "album": "A Little Rhythm and a Wicked Feeling",
-    "albumId": "5OsXAPcYYYNTtkFuuB8TDc",
-    "artist": "Magdalena Bay",
-    "artistId": "1oPRcJUkloHaRLYx0olBLJ",
-    "cover": "https://i.scdn.co/image/ab67616d0000b273ae69f02d74849157de206294",
-    "url": "https://open.spotify.com/album/5OsXAPcYYYNTtkFuuB8TDc"
-  },
-  {
     "album": "Thumbs",
     "albumId": "0MgIgFlCpTYwLuPUocgbZs",
     "artist": "BUSDRIVER",
@@ -38,5 +30,13 @@
     "artistId": "4JqpJeNOhP6bAkolNMLwFg",
     "cover": "https://i.scdn.co/image/ab67616d0000b27333931c416eec4dd7682f8a1b",
     "url": "https://open.spotify.com/album/0LXUCKAfv8QEUMZlJy0DpK"
+  },
+  {
+    "album": "A Collection of Fleeting Moments and Daydreams",
+    "albumId": "1Ckbuzoh1dYKFnpNYmVEof",
+    "artist": "Orion Sun",
+    "artistId": "2efrqekWSHlvhATD50AG3m",
+    "cover": "https://i.scdn.co/image/ab67616d0000b27366f9ab70ba645b24de259447",
+    "url": "https://open.spotify.com/album/1Ckbuzoh1dYKFnpNYmVEof"
   }
 ]
