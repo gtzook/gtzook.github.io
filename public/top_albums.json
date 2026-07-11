@@ -16,6 +16,14 @@
     "url": "https://open.spotify.com/album/7pjYZia3RiUqYGtZ2FRaXT"
   },
   {
+    "album": "Wikipedia",
+    "albumId": "0LXUCKAfv8QEUMZlJy0DpK",
+    "artist": "Jean Deaux",
+    "artistId": "4JqpJeNOhP6bAkolNMLwFg",
+    "cover": "https://i.scdn.co/image/ab67616d0000b27333931c416eec4dd7682f8a1b",
+    "url": "https://open.spotify.com/album/0LXUCKAfv8QEUMZlJy0DpK"
+  },
+  {
     "album": "Thumbs",
     "albumId": "0MgIgFlCpTYwLuPUocgbZs",
     "artist": "BUSDRIVER",
@@ -30,13 +38,5 @@
     "artistId": "4kSGbjWGxTchKpIxXPJv0B",
     "cover": "https://i.scdn.co/image/ab67616d0000b27381ba6b8313211bef29a4cf6d",
     "url": "https://open.spotify.com/album/5fmYMNT1zRl5tCdji7YSFh"
-  },
-  {
-    "album": "Wikipedia",
-    "albumId": "0LXUCKAfv8QEUMZlJy0DpK",
-    "artist": "Jean Deaux",
-    "artistId": "4JqpJeNOhP6bAkolNMLwFg",
-    "cover": "https://i.scdn.co/image/ab67616d0000b27333931c416eec4dd7682f8a1b",
-    "url": "https://open.spotify.com/album/0LXUCKAfv8QEUMZlJy0DpK"
   }
 ]
